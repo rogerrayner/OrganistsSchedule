@@ -10,5 +10,5 @@ public class PhoneService(IMapper mapper, IPhoneRepository repository)
     : CrudServiceBase<PhoneDto, Phone>(mapper, repository),
         IPhoneService
 {
-    
+
 }

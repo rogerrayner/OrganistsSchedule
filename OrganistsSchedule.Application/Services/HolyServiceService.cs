@@ -10,5 +10,5 @@ public class HolyServiceService(IMapper mapper, IHolyServiceRepository repositor
         : CrudServiceBase<HolyServiceDto, HolyService>(mapper, repository),
         IHolyServiceService
 {
-    
+
 }

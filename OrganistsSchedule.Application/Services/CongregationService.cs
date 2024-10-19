@@ -10,5 +10,5 @@ public class CongregationService(IMapper mapper, ICongregationRepository reposit
     : CrudServiceBase<CongregationDto, Congregation>(mapper, repository),
         ICongregationService
 {
-    
+
 }

@@ -10,5 +10,5 @@ public class OrganistService(IMapper mapper, IOrganistRepository repository)
     : CrudServiceBase<OrganistDto, Organist>(mapper, repository),
         IOrganistService
 {
-    
+
 }

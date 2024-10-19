@@ -5,5 +5,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IHolyServiceService: ICrudServiceBase<HolyServiceDto, HolyService>
 {
-    
+
 }

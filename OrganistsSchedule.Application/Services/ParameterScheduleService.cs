@@ -10,5 +10,5 @@ public class ParameterScheduleService(IMapper mapper, IParameterScheduleReposito
     : CrudServiceBase<ParameterScheduleDto, ParameterSchedule>(mapper, repository),
         IParameterScheduleService
 {
-    
+
 }

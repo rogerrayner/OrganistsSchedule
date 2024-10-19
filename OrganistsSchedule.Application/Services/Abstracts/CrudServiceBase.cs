@@ -6,23 +6,29 @@ using OrganistsSchedule.Domain.Interfaces;
 namespace OrganistsSchedule.Application.Services;
 
 public abstract class CrudServiceBase<TDto, TEntity>(IMapper mapper, IRepositoryBase<TEntity> repository) 
-    : ICrudServiceBase<TDto, TEntity> 
+    : ICrudServiceBase<TDto, TEntity>
     where TDto : class
     where TEntity : class
 {
-    public async Task<IEnumerable<TDto>> GetAllAsync()
+    
+    public async Task<PagedResultDto<TDto>> GetAllAsync()
     {
         var entityList = await repository
             .GetAllAsync();
-        return mapper.Map<IEnumerable<TDto>>(entityList);
-    }
+        
+        var totalCount = entityList.Count;
+        var pagedResultDto = new PagedResultDto<TDto>(
+            mapper.Map<IEnumerable<TDto>>(entityList), 
+            totalCount);
 
+        return pagedResultDto;
+    }
     public async Task<TDto?> GetByIdAsync(long id)
     {
         var entity = await repository.GetByIdAsync(id);
         return mapper.Map<TDto>(entity);
     }
-
+    
     public async Task<TDto> CreateAsync(TDto dto)
     {
         return mapper.Map<TDto>(await repository.CreateAsync(mapper.Map<TEntity>(dto)));
