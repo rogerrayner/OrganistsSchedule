@@ -39,10 +39,6 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
             .WithOne(x => x.Congregation)
             .HasForeignKey<Address>(x => x.CongregationId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        /*
-         * TODO - após o capitulo de many to many voltar aqui e reavaliar esse relacionamento
-         */
            
         builder
             .HasMany(x => x.Organists)

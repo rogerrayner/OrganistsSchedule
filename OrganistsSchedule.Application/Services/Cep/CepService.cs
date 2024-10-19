@@ -21,7 +21,6 @@ public class CepService(ICepRepository cepRepository, IMapper mapper)
 
     public Task<CepDto> GetCepByOnlineServiceAsync(string cep)
     {
-        //TODO
         throw new NotImplementedException();
     }
 }

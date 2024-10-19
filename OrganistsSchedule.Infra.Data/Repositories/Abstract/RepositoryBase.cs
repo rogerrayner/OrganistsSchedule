@@ -14,16 +14,6 @@ public abstract class RepositoryBase<TEntity>(DbContext context)
             .ToListAsync();
     }
     
-    //TODO retirar comentario
-    /*private IQueryable<TEntity> CreateFilteredQueryAsync(Expression<Func<TEntity, bool>> predicate,
-        Expression<Func<TEntity, object>>[] includes)
-    {
-        var query = context.Set<TEntity>().Where(predicate);
-        return includes
-                .Aggregate(query, 
-                (current, includeProperty) => current.Include(includeProperty));
-    }*/ 
-    
     public virtual IQueryable<TEntity> CreateFilteredQuery()
     {
         return context.Set<TEntity>().AsQueryable();
