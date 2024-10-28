@@ -1,10 +1,9 @@
+using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Services;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
-public interface IControllerBase<TDto, TEntity> 
-    where TDto : class
-    where TEntity : class
+public interface IControllerBase<TDto, TEntity>
 {
     Task<PagedResultDto<TDto>> GetAllAsync();
     Task<TDto> GetByIdAsync(int id);

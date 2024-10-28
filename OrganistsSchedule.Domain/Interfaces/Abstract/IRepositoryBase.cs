@@ -1,9 +1,9 @@
 using System.Linq.Expressions;
+using OrganistsSchedule.Application.Interfaces;
 
 namespace OrganistsSchedule.Domain.Interfaces;
 
-public interface IRepositoryBase<TEntity> 
-    where TEntity : class
+public interface IRepositoryBase<TEntity>
 {
     Task<List<TEntity>> GetAllAsync();
     IQueryable<TEntity> CreateFilteredQuery();

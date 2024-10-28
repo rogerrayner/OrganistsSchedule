@@ -1,8 +1,7 @@
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface IPagedResultRequest<TDto>: 
+public interface IPagedResultRequest: 
     ILimitedResultRequest
-    where TDto : class
 {
     int SkipCount { get; set; }
 }

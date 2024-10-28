@@ -1,5 +1,5 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
@@ -10,10 +10,11 @@ public abstract class RepositoryBase<TEntity>(DbContext context)
 {
     public async Task<List<TEntity>> GetAllAsync()
     {
-        return await CreateFilteredQuery()
-            .ToListAsync();
+        var query = CreateFilteredQuery();
+        return await query.ToListAsync();
+
     }
-    
+
     public virtual IQueryable<TEntity> CreateFilteredQuery()
     {
         return context.Set<TEntity>().AsQueryable();

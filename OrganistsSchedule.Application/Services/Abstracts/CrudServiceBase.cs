@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using AutoMapper;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;

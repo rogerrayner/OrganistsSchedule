@@ -3,9 +3,7 @@ using OrganistsSchedule.Application.Services;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICrudServiceBase<TDto, TEntity> 
-    where TDto : class
-    where TEntity : class
+public interface ICrudServiceBase<TDto, TEntity>
 {
     Task<PagedResultDto<TDto>> GetAllAsync();
     Task<TDto?> GetByIdAsync(long id);
