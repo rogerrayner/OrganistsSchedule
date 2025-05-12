@@ -10,5 +10,8 @@ public class ParameterScheduleService(IMapper mapper, IParameterScheduleReposito
     : CrudServiceBase<ParameterScheduleDto, ParameterSchedule>(mapper, repository),
         IParameterScheduleService
 {
-
+    public ParameterSchedule GetByRangeDateAndCongregationIdAsync(long congregationId, DateTime startDate, DateTime endDate)
+    {
+        return repository.GetByRangeDateAndCongregationIdAsync(congregationId, startDate, endDate);
+    }
 }

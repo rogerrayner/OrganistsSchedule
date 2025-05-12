@@ -20,7 +20,7 @@ public class CongregationService(IMapper mapper, ICongregationRepository reposit
         if (congregation == null)
             throw new Exception("Congregation not found");
 
-        var organists = _organistService.GetByIdsAsync(organistIds);
+        var organists = _organistService.GetByIds(organistIds);
 
         foreach (var organist in organists)
         {

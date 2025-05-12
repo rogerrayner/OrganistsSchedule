@@ -22,6 +22,7 @@ public class HolyServiceConfiguration : IEntityTypeConfiguration<HolyService>
                 x.CongregationId,
                 x.OrganistId
             })
+            .IsUnique()
             .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
         
         #endregion
@@ -42,10 +43,14 @@ public class HolyServiceConfiguration : IEntityTypeConfiguration<HolyService>
         #region Relationships
 
         builder
-            .HasOne(x => x.Congregation);
+            .HasOne(x => x.Congregation)
+            .WithMany()
+            .HasForeignKey(x => x.CongregationId);
 
         builder
-            .HasOne(x => x.Organist);
+            .HasOne(x => x.Organist)
+            .WithMany()
+            .HasForeignKey(x => x.OrganistId);
 
         #endregion
     }

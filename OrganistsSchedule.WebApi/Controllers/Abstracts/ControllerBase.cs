@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Services;
@@ -5,7 +6,7 @@ using OrganistsSchedule.Application.Services;
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [ApiController]
-public abstract class ControllerBase<TDto, TEntity>(ICrudServiceBase<TDto, TEntity> serviceBase) 
+public abstract class ControllerBase<TDto, TEntity>(ICrudServiceBase<TDto, TEntity> serviceBase, IMapper mapper) 
     : Controller, IControllerBase<TDto, TEntity>
     where TDto : class
     where TEntity : class
@@ -14,34 +15,34 @@ public abstract class ControllerBase<TDto, TEntity>(ICrudServiceBase<TDto, TEnti
     [HttpGet]
     public async Task<PagedResultDto<TDto>> GetAllAsync()
     {
-        return await serviceBase.GetAllAsync();
+        return await serviceBase.GetAllDtoAsync();
     }
 
     [HttpGet("{id:long}")]
     public virtual async Task<TDto> GetByIdAsync(int id)
     {
-        return await serviceBase.GetByIdAsync(id);
+        return await serviceBase.GetDtoByIdAsync(id);
     }
 
     [HttpPost]
     public virtual async Task<TDto> CreateAsync(TDto dto)
     {
-        return await serviceBase.CreateAsync(dto);
+        return mapper.Map<TDto>(await serviceBase.CreateAsync(dto));
     }
 
     [HttpPut("{id:long}")]
-    public virtual async Task<TDto> UpdateAsync(TDto dto)
+    public virtual async Task<TDto> UpdateAsync(TDto dto, long id)
     {
         if (dto is null)
         {
             throw new ArgumentNullException(nameof(dto));
         }
-        return await serviceBase.UpdateAsync(dto);
+        return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id));
     }
 
     [HttpDelete("{id:long}")]
     public virtual async Task<TDto> DeleteAsync(int id)
     {
-        return await serviceBase.DeleteAsync(id);
+        return mapper.Map<TDto>(await serviceBase.DeleteAsync(id));
     }
 }

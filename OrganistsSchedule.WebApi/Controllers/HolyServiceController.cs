@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
@@ -7,8 +8,8 @@ using OrganistsSchedule.Domain.Entities;
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/holyServices")]
-public class HolyServiceController(IHolyServiceService serviceBase) 
-    : ControllerBase<HolyServiceDto, HolyService>(serviceBase)
+public class HolyServiceController(IHolyServiceService serviceBase, IMapper mapper) 
+    : ControllerBase<HolyServiceDto, HolyService>(serviceBase, mapper)
 {
 
     [HttpPost]

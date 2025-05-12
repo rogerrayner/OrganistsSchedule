@@ -320,8 +320,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CongregationId1 = table.Column<long>(type: "bigint", nullable: false),
-                    CongregationId = table.Column<int>(type: "integer", nullable: false),
+                    CongregationId = table.Column<long>(type: "bigint", nullable: false),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
@@ -333,8 +332,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_PARAMETERS_SCHEDULE", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PARAMETERS_SCHEDULE_CONGREGATIONS_CongregationId1",
-                        column: x => x.CongregationId1,
+                        name: "FK_PARAMETERS_SCHEDULE_CONGREGATIONS_CongregationId",
+                        column: x => x.CongregationId,
                         principalTable: "CONGREGATIONS",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -720,7 +719,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_DATE_OF_HOLY_SERVICE",
                 table: "HOLY_SERVICES",
-                columns: new[] { "Date", "CongregationId", "OrganistId" });
+                columns: new[] { "Date", "CongregationId", "OrganistId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_HOLY_SERVICES_CongregationId",
@@ -765,9 +765,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                 columns: new[] { "StartDate", "EndDate", "CongregationId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PARAMETERS_SCHEDULE_CongregationId1",
+                name: "IX_PARAMETERS_SCHEDULE_CongregationId",
                 table: "PARAMETERS_SCHEDULE",
-                column: "CongregationId1");
+                column: "CongregationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PARAMETERS_SCHEDULE_Id",
