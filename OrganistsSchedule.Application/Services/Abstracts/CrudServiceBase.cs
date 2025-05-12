@@ -22,7 +22,7 @@ public abstract class CrudServiceBase<TDto, TEntity>(IMapper mapper, IRepository
 
         return pagedResultDto;
     }
-    public async Task<TDto?> GetByIdAsync(long id)
+    public async Task<TDto> GetByIdAsync(long id)
     {
         var entity = await repository.GetByIdAsync(id);
         return mapper.Map<TDto>(entity);

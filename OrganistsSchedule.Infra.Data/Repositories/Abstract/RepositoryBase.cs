@@ -1,3 +1,4 @@
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;
@@ -8,6 +9,9 @@ public abstract class RepositoryBase<TEntity>(DbContext context)
     : IRepositoryBase<TEntity>
     where TEntity : class
 {
+    
+    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    
     public async Task<List<TEntity>> GetAllAsync()
     {
         var query = CreateFilteredQuery();
@@ -17,32 +21,53 @@ public abstract class RepositoryBase<TEntity>(DbContext context)
 
     public virtual IQueryable<TEntity> CreateFilteredQuery()
     {
-        return context.Set<TEntity>().AsQueryable();
+        return _dbSet.AsQueryable();
     }
 
     public async Task<TEntity?> GetByIdAsync(long id)
     {
-        return await context.Set<TEntity>().FindAsync(id);
+        return await _dbSet.FindAsync(id);
     }
 
     public async Task<TEntity> CreateAsync(TEntity entity)
     {
-        context.Set<TEntity>().Add(entity);
+        _dbSet.Add(entity);
         await context.SaveChangesAsync();
         return entity;
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        context.Set<TEntity>().Update(entity);
+        _dbSet.Update(entity);
         await context.SaveChangesAsync();
         return entity;
     }
 
     public async Task<TEntity> DeleteAsync(TEntity entity)
     {
-        context.Set<TEntity>().Remove(entity);
+        _dbSet.Remove(entity);
         await context.SaveChangesAsync();
         return entity;
+    }
+
+    public async Task<ICollection<TEntity>> BulkDeleteAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkDeleteAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
+    }
+
+    public async Task<ICollection<TEntity>> BulkUpdateAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkUpdateAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
+    }
+
+    public async Task<ICollection<TEntity>> BulkCreateAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkInsertAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
     }
 }

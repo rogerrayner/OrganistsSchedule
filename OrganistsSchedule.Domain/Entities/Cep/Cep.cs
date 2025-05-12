@@ -8,7 +8,4 @@ public sealed class Cep: EntityBase
     public long CityId { get; set; }
     public City? City { get; set; }
     
-    public ICollection<Address>? Addresses { get; set; }
-    
-    
 }

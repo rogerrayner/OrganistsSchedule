@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Infra.Data.Identity;
 
 namespace OrganistsSchedule.Infra.Data;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<UserIdentity>(options)
 {
     public virtual DbSet<Organist> Organists { get; set; }
     public virtual DbSet<Congregation> Congregations { get; set; }

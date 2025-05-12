@@ -10,7 +10,9 @@ public class AddressRepository(ApplicationDbContext context)
     public override IQueryable<Address> CreateFilteredQuery()
     {
         var query = context.Set<Address>()
-            .Include(x => x.Cep);
+            .Include(x => x.Cep)
+            .ThenInclude(x => x.City)
+            .ThenInclude(x => x.Country);
 
         return query;
     }

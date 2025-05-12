@@ -6,6 +6,4 @@ public sealed class City: EntityBase
     
     public long? CountryId { get; set; }
     public required Country Country { get; set; }
-    
-    public ICollection<Cep>? Addresses { get; set; }
 }

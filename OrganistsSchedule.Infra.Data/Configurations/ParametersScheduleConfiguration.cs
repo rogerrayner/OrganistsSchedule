@@ -19,7 +19,8 @@ public class ParametersScheduleConfiguration: IEntityTypeConfiguration<Parameter
             .HasIndex(x => new
             {
                 x.StartDate,
-                x.EndDate
+                x.EndDate,
+                x.CongregationId
             })
             .HasDatabaseName("IX_CONGREGATION_RANGE_DATE");
 

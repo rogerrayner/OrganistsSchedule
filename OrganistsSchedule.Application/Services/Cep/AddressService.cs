@@ -10,5 +10,5 @@ public class AddressService(IMapper mapper, IAddressRepository repository)
     : CrudServiceBase<AddressDto, Address>(mapper, repository), 
         IAddressService
 {
-    
+
 }

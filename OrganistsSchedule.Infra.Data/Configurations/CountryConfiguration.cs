@@ -44,15 +44,6 @@ public class CountryConfiguration: IEntityTypeConfiguration<Country>
         
         #endregion
         
-        #region Relationships
-        
-        builder
-            .HasMany(x => x.Cities)
-            .WithOne(x => x.Country)
-            .HasForeignKey(x => x.CountryId);
-
-        #endregion
-        
         #region Seeds
 
         builder.HasData(

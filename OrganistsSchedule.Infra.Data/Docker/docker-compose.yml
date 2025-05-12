@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: organists_schedule_db
+    environment:
+      POSTGRES_DB: organists_schedule
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: miguel2014!@
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data

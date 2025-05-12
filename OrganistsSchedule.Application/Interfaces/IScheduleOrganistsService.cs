@@ -4,5 +4,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IScheduleOrganistsService
 {
-    Task<List<HolyService>> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule);
+    List<HolyService> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule);
 }

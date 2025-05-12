@@ -17,24 +17,141 @@ namespace OrganistsSchedule.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("CongregationOrganist", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.Property<long>("CongregationsId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
-                    b.Property<long>("OrganistsId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
 
-                    b.HasKey("CongregationsId", "OrganistsId");
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
-                    b.HasIndex("OrganistsId");
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
-                    b.ToTable("CongregationOrganist");
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Address", b =>
@@ -52,16 +169,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<long?>("CongregationId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("CreatedBy")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("OrganistId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("StreetNumber")
@@ -77,13 +188,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasIndex("CepId");
 
-                    b.HasIndex("CongregationId")
-                        .IsUnique();
-
                     b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("OrganistId")
                         .IsUnique();
 
                     b.ToTable("ADDRESS", (string)null);
@@ -93,7 +198,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 1L,
                             CepId = 1L,
-                            CongregationId = 1L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 284L,
@@ -104,7 +208,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 2L,
                             CepId = 2L,
-                            CongregationId = 2L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 583L,
@@ -115,7 +218,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 3L,
                             CepId = 3L,
-                            CongregationId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 400L,
@@ -126,7 +228,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 4L,
                             CepId = 4L,
-                            CongregationId = 4L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 1549L,
@@ -137,7 +238,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 5L,
                             CepId = 5L,
-                            CongregationId = 5L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 44L,
@@ -148,7 +248,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 6L,
                             CepId = 6L,
-                            CongregationId = 6L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 76L,
@@ -159,7 +258,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 7L,
                             CepId = 7L,
-                            CongregationId = 7L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 340L,
@@ -170,7 +268,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 8L,
                             CepId = 8L,
-                            CongregationId = 8L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 97L,
@@ -181,7 +278,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 9L,
                             CepId = 9L,
-                            CongregationId = 9L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 75L,
@@ -192,7 +288,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 10L,
                             CepId = 10L,
-                            CongregationId = 10L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 13491L,
@@ -203,7 +298,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 11L,
                             CepId = 11L,
-                            CongregationId = 11L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 52L,
@@ -214,7 +308,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 12L,
                             CepId = 12L,
-                            CongregationId = 12L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 1123L,
@@ -225,7 +318,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 13L,
                             CepId = 13L,
-                            CongregationId = 13L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 10L,
@@ -236,7 +328,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 14L,
                             CepId = 14L,
-                            CongregationId = 14L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 678L,
@@ -247,7 +338,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 15L,
                             CepId = 15L,
-                            CongregationId = 15L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 112L,
@@ -258,7 +348,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 16L,
                             CepId = 16L,
-                            CongregationId = 16L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 806L,
@@ -269,7 +358,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 17L,
                             CepId = 17L,
-                            CongregationId = 17L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 352L,
@@ -280,7 +368,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 18L,
                             CepId = 18L,
-                            CongregationId = 18L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 201L,
@@ -291,7 +378,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 19L,
                             CepId = 19L,
-                            CongregationId = 19L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 452L,
@@ -302,7 +388,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 20L,
                             CepId = 20L,
-                            CongregationId = 20L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 70L,
@@ -313,7 +398,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 21L,
                             CepId = 21L,
-                            CongregationId = 21L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 337L,
@@ -324,7 +408,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 22L,
                             CepId = 22L,
-                            CongregationId = 22L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 140L,
@@ -335,7 +418,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 23L,
                             CepId = 23L,
-                            CongregationId = 23L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 129L,
@@ -346,7 +428,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 24L,
                             CepId = 24L,
-                            CongregationId = 24L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 228L,
@@ -357,7 +438,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 25L,
                             CepId = 25L,
-                            CongregationId = 25L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 1445L,
@@ -368,7 +448,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 26L,
                             CepId = 26L,
-                            CongregationId = 26L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 1415L,
@@ -379,7 +458,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 27L,
                             CepId = 27L,
-                            CongregationId = 27L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 235L,
@@ -390,7 +468,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 28L,
                             CepId = 28L,
-                            CongregationId = 28L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 699L,
@@ -401,7 +478,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 29L,
                             CepId = 29L,
-                            CongregationId = 29L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 252L,
@@ -412,7 +488,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 30L,
                             CepId = 30L,
-                            CongregationId = 30L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 63L,
@@ -423,7 +498,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 31L,
                             CepId = 31L,
-                            CongregationId = 31L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 690L,
@@ -434,7 +508,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 32L,
                             CepId = 32L,
-                            CongregationId = 32L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 177L,
@@ -445,7 +518,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 33L,
                             CepId = 33L,
-                            CongregationId = 33L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 55L,
@@ -456,7 +528,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 34L,
                             CepId = 34L,
-                            CongregationId = 34L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 42L,
@@ -467,7 +538,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 35L,
                             CepId = 35L,
-                            CongregationId = 35L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 415L,
@@ -478,7 +548,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 36L,
                             CepId = 36L,
-                            CongregationId = 36L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
                             StreetNumber = 599L,
@@ -1070,6 +1139,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("Id")
                         .IsUnique();
 
@@ -1631,7 +1702,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<bool>("IsYouthMeeting")
                         .HasColumnType("boolean");
 
-                    b.Property<long?>("OrganistId")
+                    b.Property<long>("OrganistId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -1644,13 +1715,13 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasIndex("CongregationId");
 
-                    b.HasIndex("Date")
-                        .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
-
                     b.HasIndex("Id")
                         .IsUnique();
 
                     b.HasIndex("OrganistId");
+
+                    b.HasIndex("Date", "CongregationId", "OrganistId")
+                        .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
 
                     b.ToTable("HOLY_SERVICES", (string)null);
                 });
@@ -1663,7 +1734,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AddressId")
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("CongregationId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Cpf")
@@ -1710,6 +1784,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasAlternateKey("Cpf");
 
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CongregationId");
+
                     b.HasIndex("Id")
                         .IsUnique();
 
@@ -1722,7 +1800,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            AddressId = 0L,
                             Cpf = "12345678909",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1737,7 +1814,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 2L,
-                            AddressId = 0L,
                             Cpf = "98765432100",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1752,7 +1828,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 3L,
-                            AddressId = 0L,
                             Cpf = "45678912365",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1767,7 +1842,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 4L,
-                            AddressId = 0L,
                             Cpf = "65432198734",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1782,7 +1856,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 5L,
-                            AddressId = 0L,
                             Cpf = "32165498729",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1797,7 +1870,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 6L,
-                            AddressId = 0L,
                             Cpf = "98732165473",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1812,7 +1884,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 7L,
-                            AddressId = 0L,
                             Cpf = "12378945601",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1827,7 +1898,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 8L,
-                            AddressId = 0L,
                             Cpf = "65498732185",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1842,7 +1912,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 9L,
-                            AddressId = 0L,
                             Cpf = "78945612322",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1857,7 +1926,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 10L,
-                            AddressId = 0L,
                             Cpf = "32198765498",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1872,7 +1940,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 11L,
-                            AddressId = 0L,
                             Cpf = "65412398756",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1887,7 +1954,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 12L,
-                            AddressId = 0L,
                             Cpf = "45698712344",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1902,7 +1968,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 13L,
-                            AddressId = 0L,
                             Cpf = "78912345655",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1917,7 +1982,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 14L,
-                            AddressId = 0L,
                             Cpf = "12345698766",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1932,7 +1996,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 15L,
-                            AddressId = 0L,
                             Cpf = "98712345632",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1947,7 +2010,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 16L,
-                            AddressId = 0L,
                             Cpf = "65478912310",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1962,7 +2024,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 17L,
-                            AddressId = 0L,
                             Cpf = "45612398721",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1977,7 +2038,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 18L,
-                            AddressId = 0L,
                             Cpf = "78932145688",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -1992,7 +2052,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 19L,
-                            AddressId = 0L,
                             Cpf = "12365478966",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -2007,7 +2066,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 20L,
-                            AddressId = 0L,
                             Cpf = "98765412333",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 0L,
@@ -2029,7 +2087,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CongregationId")
+                    b.Property<int>("CongregationId")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("CongregationId1")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -2052,12 +2113,12 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CongregationId");
+                    b.HasIndex("CongregationId1");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.HasIndex("StartDate", "EndDate")
+                    b.HasIndex("StartDate", "EndDate", "CongregationId")
                         .HasDatabaseName("IX_CONGREGATION_RANGE_DATE");
 
                     b.ToTable("PARAMETERS_SCHEDULE", (string)null);
@@ -2109,17 +2170,117 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.ToTable("PHONES", (string)null);
                 });
 
-            modelBuilder.Entity("CongregationOrganist", b =>
+            modelBuilder.Entity("OrganistsSchedule.Infra.Data.Identity.UserIdentity", b =>
                 {
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", null)
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
-                        .HasForeignKey("CongregationsId")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Infra.Data.Identity.UserIdentity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Infra.Data.Identity.UserIdentity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Organist", null)
+                    b.HasOne("OrganistsSchedule.Infra.Data.Identity.UserIdentity", null)
                         .WithMany()
-                        .HasForeignKey("OrganistsId")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Infra.Data.Identity.UserIdentity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2127,32 +2288,18 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Address", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Cep", "Cep")
-                        .WithMany("Addresses")
+                        .WithMany()
                         .HasForeignKey("CepId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
-                        .WithOne("Address")
-                        .HasForeignKey("OrganistsSchedule.Domain.Entities.Address", "CongregationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Organist", "Organist")
-                        .WithOne("Address")
-                        .HasForeignKey("OrganistsSchedule.Domain.Entities.Address", "OrganistId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.Navigation("Cep");
-
-                    b.Navigation("Congregation");
-
-                    b.Navigation("Organist");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Cep", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.City", "City")
-                        .WithMany("Addresses")
+                        .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2163,10 +2310,19 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.City", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Country", "Country")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("CountryId");
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Congregation", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Email", b =>
@@ -2189,18 +2345,36 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasOne("OrganistsSchedule.Domain.Entities.Organist", "Organist")
                         .WithMany()
-                        .HasForeignKey("OrganistId");
+                        .HasForeignKey("OrganistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Congregation");
 
                     b.Navigation("Organist");
                 });
 
+            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Organist", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
+                        .WithMany("Organists")
+                        .HasForeignKey("CongregationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Congregation");
+                });
+
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
                         .WithMany()
-                        .HasForeignKey("CongregationId")
+                        .HasForeignKey("CongregationId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2217,30 +2391,13 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Navigation("Organist");
                 });
 
-            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Cep", b =>
-                {
-                    b.Navigation("Addresses");
-                });
-
-            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.City", b =>
-                {
-                    b.Navigation("Addresses");
-                });
-
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Congregation", b =>
                 {
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Country", b =>
-                {
-                    b.Navigation("Cities");
+                    b.Navigation("Organists");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Organist", b =>
                 {
-                    b.Navigation("Address");
-
                     b.Navigation("Emails");
 
                     b.Navigation("PhoneNumber");

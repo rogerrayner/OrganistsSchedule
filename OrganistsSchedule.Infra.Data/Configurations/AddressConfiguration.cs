@@ -41,15 +41,6 @@ public class AddressConfiguration: IEntityTypeConfiguration<Address>
             .HasMaxLength(200);
         
         #endregion
-
-        #region Relationships
-        
-        builder
-            .HasOne(x => x.Cep)
-            .WithMany(x => x.Addresses)
-            .HasForeignKey(x => x.CepId);
-        
-        #endregion
         
         #region Seeds
         

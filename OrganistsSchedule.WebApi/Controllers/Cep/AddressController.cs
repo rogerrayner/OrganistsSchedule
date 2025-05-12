@@ -5,6 +5,7 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
+[Route("v1/addresses")]
 public class AddressController(IAddressService serviceBase) 
     : ControllerBase<AddressDto, Address>(serviceBase)
 {

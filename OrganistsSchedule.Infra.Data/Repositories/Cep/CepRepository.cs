@@ -18,8 +18,8 @@ public class CepRepository(ApplicationDbContext context)
 
     public override IQueryable<Cep> CreateFilteredQuery()
     {
-        //TODO validar relacionamentos para resolver o erro que está ocorrendo ao incluir cidade e país no result
         return _repository
-            .Include(x => x.City);
+            .Include(x => x.City)
+            .ThenInclude(x => x.Country);
     }
 }
