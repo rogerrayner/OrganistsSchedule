@@ -5,9 +5,11 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface ICrudServiceBase<TDto, TEntity>
 {
-    Task<PagedResultDto<TDto>> GetAllAsync();
-    Task<TDto> GetByIdAsync(long id);
-    Task<TDto> CreateAsync(TDto dto);
-    Task<TDto> UpdateAsync(TDto dto);
-    Task<TDto> DeleteAsync(long id);
+    Task<PagedResultDto<TDto>> GetAllDtoAsync();
+    Task<TDto> GetDtoByIdAsync(long id);
+    Task<List<TEntity>> GetAllAsync();
+    Task<TEntity> GetByIdAsync(long id);
+    Task<TEntity> CreateAsync(TDto dto);
+    Task<TEntity> UpdateAsync(TDto dto, long id);
+    Task<TEntity> DeleteAsync(long id);
 }

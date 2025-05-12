@@ -9,8 +9,8 @@ public abstract class CrudServiceBase<TDto, TEntity>(IMapper mapper, IRepository
     where TDto : class
     where TEntity : class
 {
-    
-    public async Task<PagedResultDto<TDto>> GetAllAsync()
+ 
+    public async Task<PagedResultDto<TDto>> GetAllDtoAsync()
     {
         var entityList = await repository
             .GetAllAsync();
@@ -22,25 +22,58 @@ public abstract class CrudServiceBase<TDto, TEntity>(IMapper mapper, IRepository
 
         return pagedResultDto;
     }
-    public async Task<TDto> GetByIdAsync(long id)
+    public async Task<TDto> GetDtoByIdAsync(long id)
     {
-        var entity = await repository.GetByIdAsync(id);
-        return mapper.Map<TDto>(entity);
+        var dto = mapper.Map<TDto>(await repository.GetByIdAsync(id));
+        if (dto == null)
+        {
+            throw new Exception("Dto not found");
+        }
+
+        return dto;
     }
     
-    public async Task<TDto> CreateAsync(TDto dto)
+    public async Task<List<TEntity>> GetAllAsync()
     {
-        return mapper.Map<TDto>(await repository.CreateAsync(mapper.Map<TEntity>(dto)));
+        return await repository
+            .GetAllAsync();
+    }
+    public async Task<TEntity> GetByIdAsync(long id)
+    {
+        var entity = await repository.GetByIdAsync(id);
+        
+        if (entity == null)
+        {
+            throw new Exception("Entity not found");
+        }
+
+        return entity;
+    }
+    
+    public async Task<TEntity> CreateAsync(TDto dto)
+    {
+        return await repository.CreateAsync(mapper.Map<TEntity>(dto));
     }
 
-    public async Task<TDto> UpdateAsync(TDto dto)
+    public async Task<TEntity> UpdateAsync(TDto dto, long id)
     {
-        return mapper.Map<TDto>(await repository.UpdateAsync(mapper.Map<TEntity>(dto)));
+        var entity = await repository.GetByIdAsync(id);
+        if (entity == null)
+        {
+            throw new Exception("Entity not found");
+        }
+        mapper.Map(dto, entity);
+        return await repository.UpdateAsync(entity);
     }
 
-    public async Task<TDto> DeleteAsync(long id)
+    public async Task<TEntity> DeleteAsync(long id)
     {
         var entity = repository.GetByIdAsync(id).Result;
-        return mapper.Map<TDto>(await repository.DeleteAsync(entity));
+        if (entity == null)
+        {
+            throw new Exception("Entity not found");
+        }
+        
+        return await repository.DeleteAsync(entity);
     }
 }

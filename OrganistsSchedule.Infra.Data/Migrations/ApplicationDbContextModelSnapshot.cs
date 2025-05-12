@@ -1721,6 +1721,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasIndex("OrganistId");
 
                     b.HasIndex("Date", "CongregationId", "OrganistId")
+                        .IsUnique()
                         .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
 
                     b.ToTable("HOLY_SERVICES", (string)null);
@@ -2087,10 +2088,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("CongregationId")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("CongregationId1")
+                    b.Property<long>("CongregationId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -2113,7 +2111,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CongregationId1");
+                    b.HasIndex("CongregationId");
 
                     b.HasIndex("Id")
                         .IsUnique();
@@ -2374,7 +2372,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
                         .WithMany()
-                        .HasForeignKey("CongregationId1")
+                        .HasForeignKey("CongregationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

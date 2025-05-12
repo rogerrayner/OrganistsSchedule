@@ -6,14 +6,22 @@ namespace OrganistsSchedule.Application.Services;
 
 public class ScheduleOrganistsService: IScheduleOrganistsService
 {
+    
+    protected readonly IOrganistService _organistService;
+
+    public ScheduleOrganistsService(IOrganistService organistService)
+    {
+        _organistService = organistService;
+    }
+
     public List<HolyService> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule)
     {
-        List<HolyService> holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
+        var holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
+
+        var organists = _organistService.GetByCongregation(parametersSchedule.CongregationId);
         
-        if (parametersSchedule.Congregation.Organists != null)
+        if (organists != null)
         {
-            var organists = parametersSchedule.Congregation.Organists.ToList();
-        
             //Reunião de Jovens e Menores
             ScheduleOrganists(organists
                     .FindAll(organist => (organist.Level & 
@@ -42,13 +50,13 @@ public class ScheduleOrganistsService: IScheduleOrganistsService
                     holyServices.Add(new HolyService
                     {
                         Date = date,
-                        Congregation = parametersSchedule.Congregation,
+                        CongregationId = parametersSchedule.CongregationId,
                         IsYouthMeeting = true
                     });
                     holyServices.Add(new HolyService
                     {
                         Date = date,
-                        Congregation = parametersSchedule.Congregation,
+                        CongregationId = parametersSchedule.CongregationId,
                         IsYouthMeeting = false
                     });
                 }
@@ -57,7 +65,7 @@ public class ScheduleOrganistsService: IScheduleOrganistsService
                     holyServices.Add(new HolyService
                     {
                         Date = date,
-                        Congregation = parametersSchedule.Congregation,
+                        CongregationId = parametersSchedule.CongregationId,
                         IsYouthMeeting = false
                     });
                 }
@@ -111,7 +119,7 @@ public class ScheduleOrganistsService: IScheduleOrganistsService
             if (availableOrganists.Count > 0)
             {
                 var selectedOrganist = availableOrganists.First();
-                service.Organist = selectedOrganist;
+                service.OrganistId = selectedOrganist.Id;
                 organistWeekdayCount[selectedOrganist][service.Date.DayOfWeek.ToString()]++;
                 lastOrganistToPlayOnWeekDay[selectedOrganist][service.Date.DayOfWeek.ToString()] = service.Date;
             }

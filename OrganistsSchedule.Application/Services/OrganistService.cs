@@ -10,12 +10,17 @@ public class OrganistService(IMapper mapper, IOrganistRepository repository)
     : CrudServiceBase<OrganistDto, Organist>(mapper, repository),
         IOrganistService
 {
-    public List<Organist> GetByIdsAsync(List<long> organistIds)
+    public List<Organist> GetByIds(List<long> organistIds)
     { 
         var organists = repository.GetAllAsync().Result
             .Where(x => organistIds.Contains(x.Id))
             .ToList();
 
         return organists;
+    }
+
+    public List<Organist> GetByCongregation(long congregationId)
+    { 
+        return repository.GetByCongregation(congregationId);
     }
 }

@@ -8,16 +8,36 @@ public class DomainToDtoMappingProfile : Profile
 {
     public DomainToDtoMappingProfile()
     {
-        CreateMap<Cep, CepDto>().ReverseMap();
-        CreateMap<City, CityDto>().ReverseMap();
-        CreateMap<Country, CountryDto>().ReverseMap();
-        CreateMap<Address, AddressDto>().ReverseMap();
-        CreateMap<Email, EmailDto>().ReverseMap();
-        CreateMap<Phone, PhoneDto>().ReverseMap();
-        CreateMap<Congregation, CongregationDto>().ReverseMap();
-        CreateMap<HolyService, HolyServiceDto>().ReverseMap();
-        CreateMap<Organist, OrganistDto>().ReverseMap();
-        CreateMap<ParameterSchedule, ParameterScheduleDto>().ReverseMap();
+        CreateMap<Cep, CepDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<City, CityDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Country, CountryDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Address, AddressDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Email, EmailDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Phone, PhoneDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Congregation, CongregationDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<HolyService, HolyServiceDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<Organist, OrganistDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
+        CreateMap<ParameterSchedule, ParameterScheduleDto>()
+            .ReverseMap()
+            .ForMember("Id", opt => opt.Ignore());
         
     }
 }
