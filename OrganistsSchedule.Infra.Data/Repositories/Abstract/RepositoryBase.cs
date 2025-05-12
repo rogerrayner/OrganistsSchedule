@@ -1,5 +1,6 @@
-using System.Linq.Expressions;
+using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
@@ -8,49 +9,65 @@ public abstract class RepositoryBase<TEntity>(DbContext context)
     : IRepositoryBase<TEntity>
     where TEntity : class
 {
+    
+    private readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
+    
     public async Task<List<TEntity>> GetAllAsync()
     {
-        return await context.Set<TEntity>()
-            .ToListAsync();
-    }
-    
-    public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes)
-    {
-        return await CreateQueryable(predicate, includes)
-            .ToListAsync();
+        var query = CreateFilteredQuery();
+        return await query.ToListAsync();
+
     }
 
-    private IQueryable<TEntity> CreateQueryable(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>>[] includes)
+    public virtual IQueryable<TEntity> CreateFilteredQuery()
     {
-        var query = context.Set<TEntity>().Where(predicate);
-        return includes
-            .Aggregate(query, 
-                (current, includeProperty) => current.Include(includeProperty));
+        return _dbSet.AsQueryable();
     }
 
     public async Task<TEntity?> GetByIdAsync(long id)
     {
-        return await context.Set<TEntity>().FindAsync(id);
+        return await _dbSet.FindAsync(id);
     }
 
     public async Task<TEntity> CreateAsync(TEntity entity)
     {
-        context.Set<TEntity>().Add(entity);
+        _dbSet.Add(entity);
         await context.SaveChangesAsync();
         return entity;
     }
 
     public async Task<TEntity> UpdateAsync(TEntity entity)
     {
-        context.Set<TEntity>().Update(entity);
+        _dbSet.Update(entity);
         await context.SaveChangesAsync();
         return entity;
     }
 
     public async Task<TEntity> DeleteAsync(TEntity entity)
     {
-        context.Set<TEntity>().Remove(entity);
+        _dbSet.Remove(entity);
         await context.SaveChangesAsync();
         return entity;
+    }
+
+    public async Task<ICollection<TEntity>> BulkDeleteAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkDeleteAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
+    }
+
+    public async Task<ICollection<TEntity>> BulkUpdateAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkUpdateAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
+    }
+
+    public async Task<ICollection<TEntity>> BulkCreateAsync(ICollection<TEntity> entities)
+    {
+        await context.BulkInsertAsync(entities);
+        await context.BulkSaveChangesAsync();
+        return entities;
     }
 }

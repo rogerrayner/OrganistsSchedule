@@ -5,5 +5,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface ICityService: ICrudServiceBase<CityDto, City>
 {
-    
+
 }

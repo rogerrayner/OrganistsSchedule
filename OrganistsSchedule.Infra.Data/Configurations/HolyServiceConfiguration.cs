@@ -18,7 +18,9 @@ public class HolyServiceConfiguration : IEntityTypeConfiguration<HolyService>
         builder
             .HasIndex(x => new
             {
-                x.Date
+                x.Date,
+                x.CongregationId,
+                x.OrganistId
             })
             .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
         

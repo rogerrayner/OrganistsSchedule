@@ -57,11 +57,6 @@ public class CepConfiguration: IEntityTypeConfiguration<Cep>
         #endregion
         
         #region Relationships
-        
-        builder
-            .HasMany(x => x.Addresses)
-            .WithOne(x => x.Cep)
-            .HasForeignKey(x => x.CepId);
 
         builder
             .HasOne(x => x.City);

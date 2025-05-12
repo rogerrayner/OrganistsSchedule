@@ -5,5 +5,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IEmailService: ICrudServiceBase<EmailDto, Email>
 {
-    
+
 }

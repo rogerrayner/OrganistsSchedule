@@ -2,5 +2,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface ILimitedResultRequest
 {
-    int MaxCountResult { get; set; }
+    int MaxCount { get; set; }
 }

@@ -4,9 +4,9 @@ using OrganistsSchedule.Domain.Enums;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class ScheduleOrganistsService(): IScheduleOrganistsService
+public class ScheduleOrganistsService: IScheduleOrganistsService
 {
-    public Task<List<HolyService>> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule)
+    public List<HolyService> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule)
     {
         List<HolyService> holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
         
@@ -27,7 +27,7 @@ public class ScheduleOrganistsService(): IScheduleOrganistsService
                 holyServices.FindAll(service => !service.IsYouthMeeting));
         }
 
-        return Task.FromResult(holyServices);
+        return holyServices;
     }
     private List<HolyService> GenerateHolyServicesFromParameters(ParameterSchedule parametersSchedule)
     {

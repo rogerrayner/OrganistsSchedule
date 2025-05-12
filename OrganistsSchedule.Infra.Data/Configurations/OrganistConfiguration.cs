@@ -59,12 +59,6 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
         #region Relationships
 
         builder
-            .HasOne(x => x.Address)
-            .WithOne(x => x.Organist)
-            .HasForeignKey<Address>(x => x.OrganistId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder
             .HasMany<Email>(x => x.Emails)
             .WithOne(x => x.Organist)
             .HasForeignKey(x => x.OrganistId)

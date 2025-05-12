@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.Interfaces;
+using OrganistsSchedule.Application.Services;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
@@ -9,41 +10,38 @@ public abstract class ControllerBase<TDto, TEntity>(ICrudServiceBase<TDto, TEnti
     where TDto : class
     where TEntity : class
 {
+    
     [HttpGet]
-    [Route("/api/[controller]/[action]")]
-    public async Task<ActionResult<IEnumerable<TDto>>> GetAllAsync()
+    public async Task<PagedResultDto<TDto>> GetAllAsync()
     {
-        
-        return Ok(await serviceBase.GetAllAsync());
+        return await serviceBase.GetAllAsync();
     }
 
-    [HttpGet]
-    
-    [Route("/api/[controller]/[action]")]
-    public async Task<ActionResult<TDto>> GetByIdAsync(int id)
+    [HttpGet("{id:long}")]
+    public virtual async Task<TDto> GetByIdAsync(int id)
     {
-        var dto = await serviceBase.GetByIdAsync(id);
-        return dto == null ? NotFound() : Ok(dto);
+        return await serviceBase.GetByIdAsync(id);
     }
 
     [HttpPost]
-    [Route("/api/[controller]/[action]")]
-    public async Task<ActionResult<TDto>> CreateAsync(TDto dto)
+    public virtual async Task<TDto> CreateAsync(TDto dto)
     {
-        return Ok(await serviceBase.CreateAsync(dto));
+        return await serviceBase.CreateAsync(dto);
     }
 
-    [HttpPut]
-    [Route("/api/[controller]/[action]/{id}")]
-    public async Task<ActionResult<TDto>> UpdateAsync(TDto dto)
+    [HttpPut("{id:long}")]
+    public virtual async Task<TDto> UpdateAsync(TDto dto)
     {
-        return Ok(await serviceBase.UpdateAsync(dto));
+        if (dto is null)
+        {
+            throw new ArgumentNullException(nameof(dto));
+        }
+        return await serviceBase.UpdateAsync(dto);
     }
 
-    [HttpDelete]
-    [Route("/api/[controller]/[action]/{id}")]
-    public async Task<ActionResult<TDto>> DeleteAsync(int id)
+    [HttpDelete("{id:long}")]
+    public virtual async Task<TDto> DeleteAsync(int id)
     {
-        return Ok(await serviceBase.DeleteAsync(id));
+        return await serviceBase.DeleteAsync(id);
     }
 }

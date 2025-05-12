@@ -5,5 +5,5 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IPhoneService: ICrudServiceBase<PhoneDto, Phone>
 {
-    
+
 }

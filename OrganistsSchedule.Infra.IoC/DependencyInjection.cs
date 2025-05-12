@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Mappings;
 using OrganistsSchedule.Application.Services;
+using OrganistsSchedule.Domain.Identity;
 using OrganistsSchedule.Domain.Interfaces;
 using OrganistsSchedule.Infra.Data;
+using OrganistsSchedule.Infra.Data.Identity;
 using OrganistsSchedule.Infra.Data.Repositories;
+using OrganistsSchedule.Infrastructure.Seeds.Identity;
 
 namespace OrganistsSchedule.Infra.IoC;
 
@@ -34,12 +38,25 @@ public static class DependencyInjection
         return services;
     }
 
+    public static IServiceCollection AddIdentityAuthentication(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddIdentityCore<UserIdentity>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddApiEndpoints();
+        
+        services.AddScoped<ISeedUserRoleInitial, UserRoleSeed>();
+
+        return services;
+    }
+
     public static IServiceCollection AddApplication(this IServiceCollection services, 
         IConfiguration configuration)
     {
-        services.AddScoped<IOrganistService, OrganistService>();  
         services.AddScoped<ICongregationService, CongregationService>();
+        services.AddScoped<IScheduleOrganistsService, ScheduleOrganistsService>();
         services.AddScoped<IHolyServiceService, HolyServiceService>();
+        services.AddScoped<IOrganistService, OrganistService>();  
         services.AddScoped<ICepService, CepService>();
         services.AddScoped<IAddressService, AddressService>();
         services.AddScoped<ICountryService, CountryService>();

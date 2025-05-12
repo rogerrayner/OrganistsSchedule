@@ -3,3 +3,37 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+# .NET build results
+bin/
+obj/
+out/
+
+# Rider/JetBrains
+.idea/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Mac system files
+.DS_Store
+
+# Logs
+*.log
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Test results
+TestResults/
+*.TestResults/
+
+# Docker/Postgres data
+OrganistsSchedule.Infra.Data/Docker/pgdata/

@@ -10,10 +10,12 @@ public sealed class Organist: EntityBase
     public required string ShortName { get; set; }
     public OrganistsLevelEnum Level { get; set; }
     
-    public long AddressId { get; set; }
+    public long? AddressId { get; set; }
     public Address? Address { get; set; }
+    
+    public long? CongregationId { get; set; }
+    public Congregation? Congregation { get; set; }
     public ICollection<Email>? Emails { get; set; }
-    public ICollection<Congregation>? Congregations { get; set; }
     
     public long? PhoneId { get; set; }
     public Phone? PhoneNumber { get; set; }

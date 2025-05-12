@@ -11,5 +11,5 @@ public class CityDto
     
     [Required(ErrorMessage = "Country is required")]
     public CountryDto? Country { get; set; }
-    public ICollection<CepDto>? Addresses { get; set; }
+
 }

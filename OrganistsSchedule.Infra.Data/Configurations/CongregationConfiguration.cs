@@ -33,20 +33,10 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
         #endregion
         
         #region Relationships
-
-        builder
-            .HasOne(x => x.Address)
-            .WithOne(x => x.Congregation)
-            .HasForeignKey<Address>(x => x.CongregationId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        /*
-         * TODO - após o capitulo de many to many voltar aqui e reavaliar esse relacionamento
-         */
-           
         builder
             .HasMany(x => x.Organists)
-            .WithMany(x => x.Congregations);
+            .WithOne(x => x.Congregation)
+            .OnDelete(DeleteBehavior.Cascade);
 
         #endregion
         
