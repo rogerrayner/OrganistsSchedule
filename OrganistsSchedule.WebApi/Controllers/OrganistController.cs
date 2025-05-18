@@ -8,7 +8,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/organists")]
 public class OrganistController(IOrganistService serviceBase, IMapper mapper) 
-    : ControllerBase<OrganistDto, Organist>(serviceBase, mapper)
+    : ControllerBase<Organist, OrganistDto, OrganistDto, OrganistDto>(serviceBase, mapper)
 {
     
 }

@@ -1,6 +1,6 @@
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Address: EntityBase
+public sealed class Address: AuditableEntityBase
 {
     public long CepId { get; set; }
     public Cep Cep { get; set; }

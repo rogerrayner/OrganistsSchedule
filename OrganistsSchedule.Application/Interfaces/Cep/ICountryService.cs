@@ -3,7 +3,7 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICountryService: ICrudServiceBase<CountryDto, Country>
+public interface ICountryService: ICrudServiceBase<Country, CountryResponseDto, CountryCreateUpdateRequestDto>
 {
-    
+    Task<CountryResponseDto> GetByNameAsync(string name);
 }

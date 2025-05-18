@@ -1,7 +1,7 @@
 
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Phone: EntityBase
+public sealed class Phone: AuditableEntityBase
 {
     public required long Number { get; set; }
     

@@ -7,13 +7,11 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class AddressRepository(ApplicationDbContext context)
     : RepositoryBase<Address>(context), IAddressRepository
 {
-    public override IQueryable<Address> CreateFilteredQuery()
+    protected override IQueryable<Address> IncludeChildren(IQueryable<Address> query)
     {
-        var query = context.Set<Address>()
+        return query
             .Include(x => x.Cep)
             .ThenInclude(x => x.City)
             .ThenInclude(x => x.Country);
-
-        return query;
     }
 }

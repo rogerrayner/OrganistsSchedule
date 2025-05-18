@@ -8,5 +8,5 @@ public class PhoneDto
     [Required(ErrorMessage = "Phone number is required")]
     public long Number { get; set; }
     public bool IsPrimary { get; set; }
-    public OrganistDto? Organist { get; set; }
+    public long? OrganistId { get; set; }
 }

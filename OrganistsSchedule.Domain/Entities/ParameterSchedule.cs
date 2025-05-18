@@ -1,7 +1,7 @@
 
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class ParameterSchedule: EntityBase
+public sealed class ParameterSchedule: AuditableEntityBase
 {
     public Congregation Congregation { get; set; }
     public required long CongregationId { get; set; }

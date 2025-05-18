@@ -13,4 +13,11 @@ public class CongregationRepository(ApplicationDbContext context)
             .Include(x => x.Organists)!
             .ThenInclude(x => x.Address);
     }
+
+    protected override IQueryable<Congregation> IncludeChildren(IQueryable<Congregation> query)
+    {
+        return query
+            .Include(x => x.Address)
+            .ThenInclude(x => x.Cep);
+    }
 }

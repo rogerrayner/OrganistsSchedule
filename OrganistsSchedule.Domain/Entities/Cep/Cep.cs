@@ -1,6 +1,6 @@
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Cep: EntityBase
+public sealed class Cep: AuditableEntityBase
 {
     public required string ZipCode { get; set; }
     public required string Street { get; set; }

@@ -8,7 +8,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/addresses")]
 public class AddressController(IAddressService serviceBase, IMapper mapper) 
-    : ControllerBase<AddressDto, Address>(serviceBase, mapper)
+    : ControllerBase<Address, AddressDto, AddressCreateUpdateDto, AddressCreateUpdateDto>(serviceBase, mapper)
 {
     
 }

@@ -2,7 +2,7 @@ using OrganistsSchedule.Domain.Enums;
 
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Organist: EntityBase
+public sealed class Organist: AuditableEntityBase
 {
     public required int Sequence { get; set; }
     public string? Cpf { get; set; }

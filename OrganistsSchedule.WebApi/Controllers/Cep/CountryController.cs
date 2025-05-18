@@ -9,7 +9,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/countries")]
 public class CountryController(ICountryService serviceBase, IMapper mapper) 
-    : ControllerBase<CountryDto, Country>(serviceBase, mapper)
+    : ControllerBase<Country, CountryResponseDto, CountryCreateUpdateRequestDto, CountryCreateUpdateRequestDto>(serviceBase, mapper)
 {
     
 }

@@ -1,6 +1,6 @@
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Email: EntityBase
+public sealed class Email: AuditableEntityBase
 {
     public required string EmailAddress { get; set; }
     

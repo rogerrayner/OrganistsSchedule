@@ -7,20 +7,17 @@ using System.Linq;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class CongregationService(IMapper mapper, ICongregationRepository repository, IOrganistService organistService)
-    : CrudServiceBase<CongregationDto, Congregation>(mapper, repository),
+public class CongregationService(IMapper mapper, ICongregationRepository repository, IOrganistService organistService, IUnitOfWork unitOfWork)
+    : CrudServiceBase<Congregation, CongregationDto, CongregationCreateRequestDto, CongregationUpdateRequestDto>(mapper, repository, unitOfWork),
         ICongregationService
 {
-
-    protected IOrganistService _organistService = organistService;
-    
-    public async Task<CongregationDto> SetOrganistsAsync(long congregationId, List<long> organistIds)
+    public async Task<CongregationDto> SetOrganistsAsync(long congregationId, List<long> organistIds, CancellationToken cancellationToken = default)
     {
-        var congregation = repository.GetByIdAsync(congregationId).Result;
+        var congregation = repository.GetByIdAsync(congregationId, cancellationToken).Result;
         if (congregation == null)
             throw new Exception("Congregation not found");
 
-        var organists = _organistService.GetByIds(organistIds);
+        var organists = organistService.GetByIds(organistIds);
 
         foreach (var organist in organists)
         {
@@ -29,7 +26,7 @@ public class CongregationService(IMapper mapper, ICongregationRepository reposit
         }
 
         congregation.Organists = organists;
-        repository.UpdateAsync(congregation);
+        repository.UpdateAsync(congregation, cancellationToken);
         return await Task.FromResult(mapper.Map<CongregationDto>(congregation));
     }
 }

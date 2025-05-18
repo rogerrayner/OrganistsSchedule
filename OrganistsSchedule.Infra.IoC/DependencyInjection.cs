@@ -9,8 +9,11 @@ using OrganistsSchedule.Domain.Identity;
 using OrganistsSchedule.Domain.Interfaces;
 using OrganistsSchedule.Infra.Data;
 using OrganistsSchedule.Infra.Data.Identity;
+using OrganistsSchedule.Infra.Data.Interceptors;
 using OrganistsSchedule.Infra.Data.Repositories;
 using OrganistsSchedule.Infrastructure.Seeds.Identity;
+using Scrutor;
+using ViaCep;
 
 namespace OrganistsSchedule.Infra.IoC;
 
@@ -19,21 +22,25 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options => 
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
-        );
+        services.AddSingleton<UpdateAuditedEntitiesInterceptor>();
+        services.AddDbContext<ApplicationDbContext>(
+            (sp, optionsBuilder) =>
+        {
+            var auditableInterceptor = sp.GetService<UpdateAuditedEntitiesInterceptor>()!;
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
+                .AddInterceptors(auditableInterceptor);
+        });
         
-        services.AddScoped<ICepRepository, CepRepository>();
-        services.AddScoped<ICityRepository, CityRepository>();
-        services.AddScoped<ICountryRepository, CountryRepository>();
-        services.AddScoped<IEmailRepository, EmailRepository>();
-        services.AddScoped<ICongregationRepository, CongregationRepository>();
-        services.AddScoped<IHolyServiceRepository, HolyServiceRepository>();
-        services.AddScoped<IAddressRepository, AddressRepository>();
-        services.AddScoped<IOrganistRepository, OrganistRepository>();
-        services.AddScoped<IParameterScheduleRepository, ParameterScheduleRepository>();
-        services.AddScoped<IPhoneRepository, PhoneRepository>();
+        services
+            .Scan(
+                selector => selector
+                    .FromAssemblies(
+                        OrganistsSchedule.Infra.Data.AssemblyReference.Assembly)
+                    .AddClasses(false)
+                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime());
         
         return services;
     }
@@ -53,17 +60,17 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services, 
         IConfiguration configuration)
     {
-        services.AddScoped<ICongregationService, CongregationService>();
-        services.AddScoped<IScheduleOrganistsService, ScheduleOrganistsService>();
-        services.AddScoped<IHolyServiceService, HolyServiceService>();
-        services.AddScoped<IOrganistService, OrganistService>();  
-        services.AddScoped<ICepService, CepService>();
-        services.AddScoped<IAddressService, AddressService>();
-        services.AddScoped<ICountryService, CountryService>();
-        services.AddScoped<ICityService, CityService>();
-        services.AddScoped<IParameterScheduleService, ParameterScheduleService>();
-        services.AddScoped<IPhoneService, PhoneService>();
-        services.AddScoped<IEmailService, EmailService>();
+        services
+            .Scan(
+                selector => selector
+                    .FromAssemblies(
+                        OrganistsSchedule.Application.AssemblyReference.Assembly)
+                    .AddClasses(false)
+                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime());
+        
+        services.AddHttpClient<IViaCepClient, ViaCepClient>(client => { client.BaseAddress = new Uri("https://viacep.com.br/"); });
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile));
         return services;
     }

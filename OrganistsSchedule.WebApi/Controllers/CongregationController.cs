@@ -8,7 +8,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/congregations")]
 public class CongregationController(ICongregationService serviceBase, IMapper mapper) 
-    : ControllerBase<CongregationDto, Congregation>(serviceBase, mapper)
+    : ControllerBase<Congregation, CongregationDto, CongregationCreateRequestDto, CongregationUpdateRequestDto>(serviceBase, mapper)
 {
     [HttpPost]
     [Route("{id}/organists")]

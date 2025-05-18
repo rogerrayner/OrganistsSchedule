@@ -6,8 +6,8 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class EmailService(IMapper mapper, IEmailRepository repository) 
-    : CrudServiceBase<EmailDto, Email>(mapper, repository), 
+public class EmailService(IMapper mapper, IEmailRepository repository, IUnitOfWork unitOfWork) 
+    : CrudServiceBase<Email, EmailDto, EmailCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
         IEmailService
 {
     
