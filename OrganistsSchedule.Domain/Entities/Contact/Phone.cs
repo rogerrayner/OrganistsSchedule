@@ -3,7 +3,7 @@ namespace OrganistsSchedule.Domain.Entities;
 
 public sealed class Phone: AuditableEntityBase
 {
-    public required long Number { get; set; }
+    public required string Number { get; set; }
     
     public bool IsPrimary { get; set; }
     

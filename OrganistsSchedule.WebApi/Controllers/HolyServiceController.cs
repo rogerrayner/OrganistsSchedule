@@ -19,9 +19,9 @@ public class HolyServiceController(IHolyServiceService serviceBase, IMapper mapp
     }
     
     [HttpGet("congregations/{id}/export")]
-    public IActionResult ExportToExcel(long id)
+    public async Task<IActionResult> ExportToExcel(long id)
     {
-        var holyServices = serviceBase.GetHolyServicesByCongregationId(id);
+        var holyServices = await serviceBase.GetHolyServicesByCongregationId(id);
         var fileBytes = exportService.ExportHolyServicesToExcel(holyServices);
 
         return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "HolyServices.xlsx");

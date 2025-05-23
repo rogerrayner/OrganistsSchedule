@@ -1,5 +1,7 @@
+using System.Data;
 using AutoMapper;
 using OrganistsSchedule.Application.Interfaces;
+using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
@@ -34,32 +36,32 @@ public abstract class CrudServiceBase<TEntity, TDto, TCreateDto, TUpdateDto>(IMa
     
     public async Task<TDto> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default)
     {
-        using var transaction = unitOfWork.BeginTransaction();
+        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = await repository.CreateAsync(mapper.Map<TEntity>(dto), cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            transaction.Commit();
+            await transaction.CommitAsync(cancellationToken);
             
             var response = mapper.Map<TDto>(entity);
             return response;
         }
         catch (Exception e)
         {
-            transaction.Rollback();
-            throw e;
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
         }
         
     }
 
     public async Task<TDto> UpdateAsync(TUpdateDto dto, long id, CancellationToken cancellationToken = default)
     {
-        using var transaction = unitOfWork.BeginTransaction();
+        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = await repository.GetByIdAsync(id, cancellationToken);
             if (entity == null)
-                throw new Exception("Entity not found");
+                throw new NotFoundException(Messages.Format(Messages.NotFound, nameof(entity)));
 
             var dtoType = typeof(TUpdateDto);
             var entityType = entity.GetType();
@@ -102,36 +104,35 @@ public abstract class CrudServiceBase<TEntity, TDto, TCreateDto, TUpdateDto>(IMa
 
             entity = await repository.UpdateAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            transaction.Commit();
+            await transaction.CommitAsync(cancellationToken);
             return mapper.Map<TDto>(entity);
         }
         catch (Exception e)
         {
-            transaction.Rollback();
+            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
     }
 
     public async Task<TDto> DeleteAsync(long id, CancellationToken cancellationToken = default)
     {
-        using var transaction = unitOfWork.BeginTransaction();
+        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = repository.GetByIdAsync(id, cancellationToken).Result;
             if (entity == null)
-            {
-                throw new Exception("Entity not found");
-            }
+                throw new NotFoundException(Messages.Format(Messages.NotFound, nameof(entity)));
+            
         
             entity = await repository.DeleteAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            transaction.Commit();
+            await transaction.CommitAsync(cancellationToken);
             return mapper.Map<TDto>(entity);
         }
         catch (Exception e)
         {
-            transaction.Rollback();
-            throw e;
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
         }
     }
 }

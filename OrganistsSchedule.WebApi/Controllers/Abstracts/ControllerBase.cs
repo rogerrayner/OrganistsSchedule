@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Services;
+using OrganistsSchedule.Domain.Exceptions;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
@@ -46,9 +47,8 @@ public abstract class ControllerBase<
     public virtual async Task<TDto> UpdateAsync([FromBody] TUpdateDto dto, long id)
     {
         if (dto is null)
-        {
-            throw new ArgumentNullException(nameof(dto));
-        }
+            throw new BusinessException(Messages.Format(Messages.InvalidField, nameof(dto)));
+        
         return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id));
     }
 

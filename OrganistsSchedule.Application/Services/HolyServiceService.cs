@@ -3,78 +3,79 @@ using AutoMapper;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class HolyServiceService(IMapper mapper, 
-        IHolyServiceRepository repository,
-        IScheduleOrganistsService scheduleOrganistsService,
-        IParameterScheduleRepository parameterScheduleRepository,
-        ICongregationRepository congregationRepository,
-        IUnitOfWork unitOfWork)
-        : CrudServiceBase<HolyService, HolyServiceDto>(mapper, repository, unitOfWork),
+public class HolyServiceService(
+    IMapper mapper,
+    IHolyServiceRepository repository,
+    IScheduleOrganistsService scheduleOrganistsService,
+    IParameterScheduleRepository parameterScheduleRepository,
+    ICongregationRepository congregationRepository,
+    IUnitOfWork unitOfWork)
+    : CrudServiceBase<HolyService, HolyServiceDto>(mapper, repository, unitOfWork),
         IHolyServiceService
 {
-        public async Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId, 
-                HolyServiceScheduleRequestDto dates,
-                CancellationToken cancellationToken = default)
+    public async Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId,
+        HolyServiceScheduleRequestDto dates,
+        CancellationToken cancellationToken = default)
+    {
+        await using var transaction =
+            await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+        try
         {
-                //TODO - implementar transactions
-                using var transaction = unitOfWork.BeginTransaction(IsolationLevel.ReadCommitted);
-                
-                try
-                {
-                        var congregation = await congregationRepository.GetByIdAsync(congregationId, cancellationToken);
+            var congregation = await congregationRepository.GetByIdAsync(congregationId, cancellationToken);
 
-                        if (congregation == null)
-                                throw new ArgumentException("Congregation not found");
+            if (congregation == null)
+                throw new NotFoundException(Messages.Format(Messages.NotFound, "Congregação"));
 
-                        var parameterSchedule = parameterScheduleRepository
-                                .GetByRangeDateAndCongregationIdAsync(congregationId, dates.StartDate, dates.EndDate);
+            var parameterSchedule = parameterScheduleRepository
+                .GetByRangeDateAndCongregationIdAsync(congregationId, dates.StartDate, dates.EndDate);
 
-                        if (parameterSchedule != null)
-                                throw new Exception("Parameter schedule already exists");
+            if (parameterSchedule != null)
+                throw new BusinessException(Messages.Format(Messages.AlreadyExists, "Parametros de Agendamento"));
 
-                        ParameterSchedule parameter = new ParameterSchedule()
-                        {
-                                CongregationId = congregationId,
-                                StartDate = dates.StartDate,
-                                EndDate = dates.EndDate
-                        };
+            ParameterSchedule parameter = new ParameterSchedule()
+            {
+                CongregationId = congregationId,
+                StartDate = dates.StartDate,
+                EndDate = dates.EndDate
+            };
 
-                        parameter = await parameterScheduleRepository.CreateAsync(parameter, cancellationToken);
+            parameter = await parameterScheduleRepository.CreateAsync(parameter, cancellationToken);
 
-                        var holyServices = scheduleOrganistsService.ScheduleOrganistsForHolyServices(parameter);
-                        repository.BulkDeleteAsync(
-                                repository
-                                        .GetHolyServicesByCongregationAsync(parameter.Congregation.Id)
-                                        .Result,
-                                cancellationToken);
+            var holyServices = scheduleOrganistsService.ScheduleOrganistsForHolyServices(parameter);
+            repository.BulkDeleteAsync(
+                repository
+                    .GetHolyServicesByCongregationAsync(parameter.Congregation.Id)
+                    .Result,
+                cancellationToken);
 
-                        repository.BulkCreateAsync(holyServices, cancellationToken);
+            repository.BulkCreateAsync(holyServices, cancellationToken);
 
-                        var totalCount = holyServices.Count;
+            var totalCount = holyServices.Count;
 
-                        return new PagedResultDto<HolyServiceDto>(
-                                mapper.Map<IEnumerable<HolyServiceDto>>(holyServices),
-                                totalCount);
-                }
-                catch (Exception e)
-                {
-                        transaction.Rollback();
-                }
+            await transaction.CommitAsync(cancellationToken);
 
-                return null;
+            return new PagedResultDto<HolyServiceDto>(
+                mapper.Map<IEnumerable<HolyServiceDto>>(holyServices),
+                totalCount);
         }
-
-        public List<HolyServiceDto> GetHolyServicesByCongregationId(long congregationId,
-                CancellationToken cancellationToken = default)
+        catch (Exception e)
         {
-                var holyServices = repository
-                        .GetHolyServicesByCongregationAsync(congregationId)
-                        .Result;
-
-                return mapper.Map<List<HolyServiceDto>>(holyServices);
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
         }
+    }
+
+    public async Task<List<HolyServiceDto>> GetHolyServicesByCongregationId(long congregationId,
+        CancellationToken cancellationToken = default)
+    {
+        var holyServices = await repository
+            .GetHolyServicesByCongregationAsync(congregationId);
+
+        return mapper.Map<List<HolyServiceDto>>(holyServices);
+    }
 }

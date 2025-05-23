@@ -4,6 +4,7 @@ using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Domain.Interfaces;
 using System.Linq;
+using OrganistsSchedule.Domain.Exceptions;
 
 namespace OrganistsSchedule.Application.Services;
 
@@ -15,7 +16,7 @@ public class CongregationService(IMapper mapper, ICongregationRepository reposit
     {
         var congregation = repository.GetByIdAsync(congregationId, cancellationToken).Result;
         if (congregation == null)
-            throw new Exception("Congregation not found");
+            throw new NotFoundException(Messages.Format(Messages.NotFound, "Congregação"));
 
         var organists = organistService.GetByIds(organistIds);
 

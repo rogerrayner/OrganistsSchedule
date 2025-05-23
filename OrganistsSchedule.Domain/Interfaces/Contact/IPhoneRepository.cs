@@ -4,5 +4,5 @@ namespace OrganistsSchedule.Domain.Interfaces;
 
 public interface IPhoneRepository: IRepositoryBase<Phone>
 {
-    
+    Task<Phone?> GetPhoneByNumberAsync(string number);
 }

@@ -14,4 +14,12 @@ public class AddressRepository(ApplicationDbContext context)
             .ThenInclude(x => x.City)
             .ThenInclude(x => x.Country);
     }
+
+    public async Task<Address?> GetAddressByZipCodeAsync(string zipCode, CancellationToken cancellationToken = default)
+    {
+        return await context
+            .Set<Address>()
+            .Include(x => x.Cep)
+            .FirstOrDefaultAsync(x => x.Cep.ZipCode == zipCode, cancellationToken);
+    }
 }

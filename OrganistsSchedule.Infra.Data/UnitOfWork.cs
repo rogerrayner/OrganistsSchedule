@@ -1,5 +1,6 @@
 using System.Data;
 using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using OrganistsSchedule.Domain.Interfaces;
 
@@ -16,10 +17,9 @@ internal sealed class UnitOfWork (ApplicationDbContext dbContext) : IUnitOfWork
     {
         return dbContext.BulkSaveChangesAsync();
     }
-
-    public IDbTransaction BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
-    {
-        return dbContext.Database.BeginTransaction().GetDbTransaction();
-    }
     
+    public async Task<IDbContextTransaction> BeginTransactionAsync(IsolationLevel isolationLevel, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Database.BeginTransactionAsync(isolationLevel, cancellationToken);
+    }
 }

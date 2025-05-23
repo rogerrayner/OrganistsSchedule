@@ -9,5 +9,5 @@ public interface IHolyServiceService: ICrudServiceBase<HolyService, HolyServiceD
     Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId, 
         HolyServiceScheduleRequestDto dates,
         CancellationToken cancellationToken = default);
-    List<HolyServiceDto> GetHolyServicesByCongregationId(long congregationId, CancellationToken cancellationToken = default);
+    Task<List<HolyServiceDto>> GetHolyServicesByCongregationId(long congregationId, CancellationToken cancellationToken = default);
 }

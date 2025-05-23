@@ -44,6 +44,8 @@ public class DomainToDtoMappingProfile : Profile
             .ReverseMap();
         CreateMap<Organist, OrganistDto>()
             .ReverseMap();
+        CreateMap<Organist, OrganistCreateUpdateDto>()
+            .ReverseMap();
         CreateMap<ParameterSchedule, ParameterScheduleDto>()
             .ReverseMap();
 

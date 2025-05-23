@@ -13,4 +13,12 @@ public class OrganistRepository(ApplicationDbContext context)
             .Where(x => x.CongregationId == congregationId)
             .ToList();
     }
+
+    protected override IQueryable<Organist> IncludeChildren(IQueryable<Organist> query)
+    {
+        return query
+            .Include(x => x.Address)
+            .Include(x => x.Emails)
+            .Include(x => x.PhoneNumber);
+    }
 }

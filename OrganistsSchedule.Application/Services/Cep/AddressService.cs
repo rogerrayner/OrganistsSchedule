@@ -1,7 +1,9 @@
+using System.Data;
 using AutoMapper;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
@@ -12,22 +14,37 @@ public class AddressService(IMapper mapper, IAddressRepository repository, ICepS
 {
     public async Task<AddressDto> CreateAsync(AddressCreateUpdateDto dto, CancellationToken cancellationToken = default)
     {
-        var cep = await cepService.GetCepByZipCodeAsync(dto.ZipCode, true);
-        if (cep == null)
+        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+        try
         {
-            throw new Exception("Cep not found");
+            var cep = await cepService.GetCepByZipCodeAsync(dto.ZipCode, true);
+            if (cep == null)
+                throw new NotFoundException(Messages.Format(Messages.NotFound, "Cep"));
+
+            var address = new Address()
+            {
+                CepId = cep.Id,
+                Complement = dto.Complement,
+                StreetNumber = dto.StreetNumber
+            };
+
+            await repository.CreateAsync(address, cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            
+            await transaction.CommitAsync(cancellationToken);
+            return mapper.Map<AddressDto>(address);
         }
-
-        var address = new Address()
+        catch (Exception e)
         {
-            CepId = cep.Id,
-            Complement = dto.Complement,
-            StreetNumber = dto.StreetNumber
-        };
-
-        await repository.CreateAsync(address, cancellationToken);
-        unitOfWork.SaveChangesAsync(cancellationToken);
+            await transaction.RollbackAsync(cancellationToken);
+            throw;
+        }
         
-        return mapper.Map<AddressDto>(address);
+    }
+
+    public async Task<AddressDto> GetAddressByZipCodeAsync(string cep, CancellationToken cancellationToken = default)
+    {
+        var entity = await repository.GetAddressByZipCodeAsync(cep, cancellationToken);
+        return mapper.Map<AddressDto>(entity);
     }
 }
