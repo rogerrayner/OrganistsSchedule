@@ -1,9 +1,9 @@
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class City: EntityBase
+public sealed class City: AuditableEntityBase
 {
     public required string Name { get; set; }
     
-    public long? CountryId { get; set; }
-    public required Country Country { get; set; }
+    public required long CountryId { get; set; }
+    public Country? Country { get; set; }
 }

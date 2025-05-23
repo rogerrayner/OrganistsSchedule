@@ -11,6 +11,8 @@ public class HolyServiceRepository(ApplicationDbContext context)
     { 
         return await context.Set<HolyService>()
             .Where(x => x.Congregation.Id == congregationId)
+            .Include(x => x.Organist)
+            .Include(x => x.Congregation)
             .ToListAsync();
     }
 }

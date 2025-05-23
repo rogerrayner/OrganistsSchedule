@@ -7,7 +7,10 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class ParameterScheduleRepository(ApplicationDbContext context)
     : RepositoryBase<ParameterSchedule>(context), IParameterScheduleRepository
 {
-    public ParameterSchedule GetByRangeDateAndCongregationIdAsync(long congregationId, DateTime startDate, DateTime endDate)
+    public ParameterSchedule GetByRangeDateAndCongregationIdAsync(long congregationId, 
+        DateTime startDate, 
+        DateTime endDate,
+        CancellationToken cancellationToken = default)
     {
         return context.ParametersSchedules
             .Include(p => p.Congregation)

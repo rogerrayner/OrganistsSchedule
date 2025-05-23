@@ -2,41 +2,53 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Services;
+using OrganistsSchedule.Domain.Exceptions;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [ApiController]
-public abstract class ControllerBase<TDto, TEntity>(ICrudServiceBase<TDto, TEntity> serviceBase, IMapper mapper) 
-    : Controller, IControllerBase<TDto, TEntity>
+public abstract class ControllerBase<
+    TEntity,
+    TDto,
+    TCreateDto, 
+    TUpdateDto>(ICrudServiceBase<
+                TEntity,
+                TDto, 
+                TCreateDto, 
+                TUpdateDto> serviceBase, IMapper mapper) 
+    : Controller, IControllerBase<TDto, 
+        TCreateDto, 
+        TUpdateDto>
     where TDto : class
-    where TEntity : class
+    where TCreateDto : class
+    where TUpdateDto : class
+    where TEntity: class 
 {
     
     [HttpGet]
     public async Task<PagedResultDto<TDto>> GetAllAsync()
     {
-        return await serviceBase.GetAllDtoAsync();
+        return await serviceBase.GetAllAsync();
     }
 
     [HttpGet("{id:long}")]
     public virtual async Task<TDto> GetByIdAsync(int id)
     {
-        return await serviceBase.GetDtoByIdAsync(id);
+        return await serviceBase.GetByIdAsync(id);
     }
 
     [HttpPost]
-    public virtual async Task<TDto> CreateAsync(TDto dto)
+    public virtual async Task<TDto> CreateAsync([FromBody] TCreateDto dto)
     {
         return mapper.Map<TDto>(await serviceBase.CreateAsync(dto));
     }
 
     [HttpPut("{id:long}")]
-    public virtual async Task<TDto> UpdateAsync(TDto dto, long id)
+    public virtual async Task<TDto> UpdateAsync([FromBody] TUpdateDto dto, long id)
     {
         if (dto is null)
-        {
-            throw new ArgumentNullException(nameof(dto));
-        }
+            throw new BusinessException(Messages.Format(Messages.InvalidField, nameof(dto)));
+        
         return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id));
     }
 

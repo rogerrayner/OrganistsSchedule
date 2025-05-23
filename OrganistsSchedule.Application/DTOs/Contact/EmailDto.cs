@@ -9,5 +9,5 @@ public class EmailDto
     public string? EmailAddress { get; set; }
     
     public bool IsPrimary { get; set; }
-    public OrganistDto? Organist { get; set; }
+    public long? OrganistId { get; set; }
 }

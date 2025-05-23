@@ -14,11 +14,12 @@ public class ScheduleOrganistsService: IScheduleOrganistsService
         _organistService = organistService;
     }
 
-    public List<HolyService> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule)
+    public List<HolyService> ScheduleOrganistsForHolyServices(ParameterSchedule parametersSchedule,
+        CancellationToken cancellationToken = default)
     {
         var holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
 
-        var organists = _organistService.GetByCongregation(parametersSchedule.CongregationId);
+        var organists = _organistService.GetByCongregation(parametersSchedule.CongregationId, cancellationToken);
         
         if (organists != null)
         {

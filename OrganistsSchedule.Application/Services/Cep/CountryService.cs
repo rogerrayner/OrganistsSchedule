@@ -6,9 +6,14 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class CountryService(IMapper mapper, ICountryRepository repository) 
-    : CrudServiceBase<CountryDto, Country>(mapper, repository), 
+public class CountryService(IMapper mapper, ICountryRepository repository, IUnitOfWork unitOfWork) 
+    : CrudServiceBase<Country, CountryResponseDto, CountryCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
         ICountryService
 {
-    
+    public async Task<CountryResponseDto> GetByNameAsync(string name)
+    {
+        var entity = await repository.GetByNameAsync(name);
+        return await Task
+            .FromResult(mapper.Map<CountryResponseDto>(entity));
+    }
 }

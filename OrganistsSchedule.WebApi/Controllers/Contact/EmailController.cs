@@ -9,7 +9,11 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/emails")]
 public class EmailController(IEmailService service, IMapper mapper)
-    : ControllerBase<EmailDto, Email>(service, mapper)
+    : ControllerBase<Email, EmailDto, EmailCreateUpdateRequestDto, EmailCreateUpdateRequestDto>(service, mapper)
 {
-    
+    [NonAction]
+    public override Task<EmailDto> UpdateAsync(EmailCreateUpdateRequestDto dto, long id)
+    {
+        return base.UpdateAsync(dto, id);
+    }
 }

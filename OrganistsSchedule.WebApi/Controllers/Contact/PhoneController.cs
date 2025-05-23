@@ -9,7 +9,11 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/phones")]
 public class PhoneController(IPhoneService serviceBase, IMapper mapper) 
-    : ControllerBase<PhoneDto, Phone>(serviceBase, mapper)
+    : ControllerBase<Phone, PhoneDto, PhoneCreateUpdateRequestDto, PhoneCreateUpdateRequestDto>(serviceBase, mapper)
 {
-    
+    [NonAction]
+    public override Task<PhoneDto> UpdateAsync(PhoneCreateUpdateRequestDto dto, long id)
+    {
+        return base.UpdateAsync(dto, id);
+    }
 }

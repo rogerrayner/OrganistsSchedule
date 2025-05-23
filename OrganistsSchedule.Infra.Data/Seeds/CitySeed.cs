@@ -11,8 +11,7 @@ public static class CitySeed
         {
             Id = 1,
             Name = "Joinville",
-            CountryId = 1,
-            Country = null
+            CountryId = 1
         }
     ];
     

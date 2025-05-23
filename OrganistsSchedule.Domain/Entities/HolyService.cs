@@ -1,7 +1,7 @@
 
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class HolyService: EntityBase
+public sealed class HolyService: AuditableEntityBase
 {
     public required DateTime Date { get; set; }
     public required long CongregationId { get; set; }

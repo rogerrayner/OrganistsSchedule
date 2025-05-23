@@ -9,35 +9,45 @@ public class DomainToDtoMappingProfile : Profile
     public DomainToDtoMappingProfile()
     {
         CreateMap<Cep, CepDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Cep, CepCreateUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<City, CityDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<City, CityCreateUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<Country, CountryDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Country, CountryResponseDto>()
+            .ReverseMap();
+        CreateMap<Country, CountryCreateUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<Address, AddressDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Address, AddressCreateUpdateDto>()
+            .ReverseMap();
         CreateMap<Email, EmailDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Email, EmailCreateUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<Phone, PhoneDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Phone, PhoneCreateUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<Congregation, CongregationDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Congregation, CongregationCreateRequestDto>()
+            .ReverseMap();
+        CreateMap<Congregation, CongregationUpdateRequestDto>()
+            .ReverseMap();
         CreateMap<HolyService, HolyServiceDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
         CreateMap<Organist, OrganistDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
+            .ReverseMap();
+        CreateMap<Organist, OrganistCreateUpdateDto>()
+            .ReverseMap();
         CreateMap<ParameterSchedule, ParameterScheduleDto>()
-            .ReverseMap()
-            .ForMember("Id", opt => opt.Ignore());
-        
+            .ReverseMap();
+
     }
 }

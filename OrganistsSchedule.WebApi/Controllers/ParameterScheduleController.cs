@@ -8,7 +8,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/parametersSchedule")]
 public class ParameterScheduleController(IParameterScheduleService serviceBase, IMapper mapper) 
-    : ControllerBase<ParameterScheduleDto, ParameterSchedule>(serviceBase, mapper)
+    : ControllerBase<ParameterSchedule, ParameterScheduleDto, ParameterScheduleDto, ParameterScheduleDto>(serviceBase, mapper)
 {
     
 }

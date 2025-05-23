@@ -1,7 +1,7 @@
 
 namespace OrganistsSchedule.Domain.Entities;
 
-public sealed class Congregation: EntityBase
+public sealed class Congregation: AuditableEntityBase
 {
     public required string Name { get; set; }
 

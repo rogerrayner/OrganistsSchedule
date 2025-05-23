@@ -3,8 +3,8 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICepService: ICrudServiceBase<CepDto, Cep>
+public interface ICepService: ICrudServiceBase<Cep, CepDto, CepCreateUpdateRequestDto>
 {
-    Task<CepDto> GetCepByZipCodeAsync(string cep);
-    Task<CepDto> GetCepByOnlineServiceAsync(string cep);
+    Task<CepDto> GetCepByZipCodeAsync(string cep, bool isPost, CancellationToken cancellationToken = default);
+    Task<CepDto> GetCepByOnlineServiceAsync(string cep, bool isPost, CancellationToken cancellationToken = default);
 }

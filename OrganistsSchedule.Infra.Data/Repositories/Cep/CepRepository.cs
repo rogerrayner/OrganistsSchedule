@@ -13,12 +13,14 @@ public class CepRepository(ApplicationDbContext context)
     {
         return await _repository
             .Where(x => x.ZipCode == cep)
+            .Include(x => x.City)
+            .ThenInclude(x => x.Country)
             .FirstOrDefaultAsync();
     }
 
-    public override IQueryable<Cep> CreateFilteredQuery()
+    protected override IQueryable<Cep> IncludeChildren(IQueryable<Cep> query)
     {
-        return _repository
+        return query
             .Include(x => x.City)
             .ThenInclude(x => x.Country);
     }

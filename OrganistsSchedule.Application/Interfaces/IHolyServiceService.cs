@@ -4,7 +4,10 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface IHolyServiceService: ICrudServiceBase<HolyServiceDto, HolyService>
+public interface IHolyServiceService: ICrudServiceBase<HolyService, HolyServiceDto>
 {
-    Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId, HolyServiceScheduleRequestDto dates);
+    Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId, 
+        HolyServiceScheduleRequestDto dates,
+        CancellationToken cancellationToken = default);
+    Task<List<HolyServiceDto>> GetHolyServicesByCongregationId(long congregationId, CancellationToken cancellationToken = default);
 }
