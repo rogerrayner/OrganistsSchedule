@@ -12,8 +12,8 @@ public class EmailController(IEmailService service, IMapper mapper)
     : ControllerBase<Email, EmailDto, EmailCreateUpdateRequestDto, EmailCreateUpdateRequestDto>(service, mapper)
 {
     [NonAction]
-    public override Task<EmailDto> UpdateAsync(EmailCreateUpdateRequestDto dto, long id)
+    public override Task<EmailDto> UpdateAsync(EmailCreateUpdateRequestDto dto, long id, CancellationToken cancellationToken = default)
     {
-        return base.UpdateAsync(dto, id);
+        return base.UpdateAsync(dto, id, cancellationToken);
     }
 }

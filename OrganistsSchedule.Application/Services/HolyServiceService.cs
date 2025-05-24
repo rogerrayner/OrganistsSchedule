@@ -18,7 +18,7 @@ public class HolyServiceService(
     : CrudServiceBase<HolyService, HolyServiceDto>(mapper, repository, unitOfWork),
         IHolyServiceService
 {
-    public async Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId,
+    public async Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServicesAsync(long congregationId,
         HolyServiceScheduleRequestDto dates,
         CancellationToken cancellationToken = default)
     {
@@ -46,17 +46,15 @@ public class HolyServiceService(
 
             parameter = await parameterScheduleRepository.CreateAsync(parameter, cancellationToken);
 
-            var holyServices = scheduleOrganistsService.ScheduleOrganistsForHolyServices(parameter);
-            repository.BulkDeleteAsync(
-                repository
-                    .GetHolyServicesByCongregationAsync(parameter.Congregation.Id)
-                    .Result,
+            var holyServices = await scheduleOrganistsService.ScheduleOrganistsForHolyServices(parameter, cancellationToken);
+            await repository.BulkDeleteAsync(
+                await repository
+                    .GetHolyServicesByCongregationAsync(parameter.Congregation.Id),
                 cancellationToken);
 
-            repository.BulkCreateAsync(holyServices, cancellationToken);
+            await repository.BulkCreateAsync(holyServices, cancellationToken);
 
             var totalCount = holyServices.Count;
-
             await transaction.CommitAsync(cancellationToken);
 
             return new PagedResultDto<HolyServiceDto>(
@@ -70,7 +68,7 @@ public class HolyServiceService(
         }
     }
 
-    public async Task<List<HolyServiceDto>> GetHolyServicesByCongregationId(long congregationId,
+    public async Task<List<HolyServiceDto>> GetHolyServicesByCongregationIdAsync(long congregationId,
         CancellationToken cancellationToken = default)
     {
         var holyServices = await repository

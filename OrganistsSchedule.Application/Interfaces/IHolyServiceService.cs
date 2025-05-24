@@ -6,8 +6,8 @@ namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IHolyServiceService: ICrudServiceBase<HolyService, HolyServiceDto>
 {
-    Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServices(long congregationId, 
+    Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServicesAsync(long congregationId, 
         HolyServiceScheduleRequestDto dates,
         CancellationToken cancellationToken = default);
-    Task<List<HolyServiceDto>> GetHolyServicesByCongregationId(long congregationId, CancellationToken cancellationToken = default);
+    Task<List<HolyServiceDto>> GetHolyServicesByCongregationIdAsync(long congregationId, CancellationToken cancellationToken = default);
 }

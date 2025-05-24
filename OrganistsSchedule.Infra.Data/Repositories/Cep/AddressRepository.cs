@@ -22,4 +22,16 @@ public class AddressRepository(ApplicationDbContext context)
             .Include(x => x.Cep)
             .FirstOrDefaultAsync(x => x.Cep.ZipCode == zipCode, cancellationToken);
     }
+
+    public async Task<Address?> AddressAlreadyExistsAsync(string zipCode, long streetNumber, string complement,
+        CancellationToken cancellationToken = default)
+    {
+        return await context
+            .Set<Address>()
+            .Include(x => x.Cep)
+            .FirstOrDefaultAsync(x => 
+                x.Cep.ZipCode == zipCode
+                && x.StreetNumber == streetNumber
+                && x.Complement == complement, cancellationToken);
+    }
 }

@@ -29,7 +29,8 @@ public abstract class RepositoryBase<TEntity>(DbContext _context)
 
     public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        var query = IncludeChildren(_dbSet.AsQueryable());
+        var query = _dbSet.AsQueryable();
+        query = IncludeChildren(query);
         return await query.FirstOrDefaultAsync(e => EF.Property<long>(e, "Id") == id);
     }
 

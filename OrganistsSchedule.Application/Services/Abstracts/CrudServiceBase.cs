@@ -36,19 +36,15 @@ public abstract class CrudServiceBase<TEntity, TDto, TCreateDto, TUpdateDto>(IMa
     
     public async Task<TDto> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default)
     {
-        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = await repository.CreateAsync(mapper.Map<TEntity>(dto), cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-            
             var response = mapper.Map<TDto>(entity);
             return response;
         }
         catch (Exception e)
         {
-            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
         
@@ -56,67 +52,25 @@ public abstract class CrudServiceBase<TEntity, TDto, TCreateDto, TUpdateDto>(IMa
 
     public async Task<TDto> UpdateAsync(TUpdateDto dto, long id, CancellationToken cancellationToken = default)
     {
-        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = await repository.GetByIdAsync(id, cancellationToken);
             if (entity == null)
                 throw new NotFoundException(Messages.Format(Messages.NotFound, nameof(entity)));
-
-            var dtoType = typeof(TUpdateDto);
-            var entityType = entity.GetType();
-
-            foreach (var prop in dtoType.GetProperties())
-            {
-                var value = prop.GetValue(dto);
-
-                // Se for lista, só atualiza se não for nulo e tiver itens
-                if (typeof(System.Collections.IEnumerable).IsAssignableFrom(prop.PropertyType) 
-                    && prop.PropertyType != typeof(string))
-                {
-                    if (value is System.Collections.IEnumerable enumerable && value != null)
-                    {
-                        var enumerator = enumerable.GetEnumerator();
-                        if (!enumerator.MoveNext())
-                            continue; // Lista vazia, não atualiza
-                    }
-                    else
-                    {
-                        continue; // Nulo, não atualiza
-                    }
-                }
-                else
-                {
-                    if (value == null)
-                        continue;
-
-                    if (prop.PropertyType.IsValueType &&
-                        Equals(value, Activator.CreateInstance(prop.PropertyType)))
-                        continue;
-                }
-
-                var entityProp = entityType.GetProperty(prop.Name);
-                if (entityProp != null && entityProp.CanWrite)
-                {
-                    entityProp.SetValue(entity, value);
-                }
-            }
-
+            
+            mapper.Map(dto, entity);
             entity = await repository.UpdateAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
             return mapper.Map<TDto>(entity);
         }
         catch (Exception e)
         {
-            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
     }
 
     public async Task<TDto> DeleteAsync(long id, CancellationToken cancellationToken = default)
     {
-        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var entity = repository.GetByIdAsync(id, cancellationToken).Result;
@@ -126,12 +80,10 @@ public abstract class CrudServiceBase<TEntity, TDto, TCreateDto, TUpdateDto>(IMa
         
             entity = await repository.DeleteAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
             return mapper.Map<TDto>(entity);
         }
         catch (Exception e)
         {
-            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
     }

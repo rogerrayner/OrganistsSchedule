@@ -8,19 +8,19 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class AddressService(IMapper mapper, IAddressRepository repository, ICepService cepService, IUnitOfWork unitOfWork) 
+public class AddressService(IMapper mapper, 
+    IAddressRepository repository, 
+    ICepService cepService, 
+    IUnitOfWork unitOfWork) 
     : CrudServiceBase<Address, AddressDto, AddressCreateUpdateDto>(mapper, repository, unitOfWork), 
         IAddressService
 {
     public async Task<AddressDto> CreateAsync(AddressCreateUpdateDto dto, CancellationToken cancellationToken = default)
     {
-        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var cep = await cepService.GetCepByZipCodeAsync(dto.ZipCode, true);
-            if (cep == null)
-                throw new NotFoundException(Messages.Format(Messages.NotFound, "Cep"));
-
+            
             var address = new Address()
             {
                 CepId = cep.Id,
@@ -30,13 +30,10 @@ public class AddressService(IMapper mapper, IAddressRepository repository, ICepS
 
             await repository.CreateAsync(address, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            
-            await transaction.CommitAsync(cancellationToken);
             return mapper.Map<AddressDto>(address);
         }
         catch (Exception e)
         {
-            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
         
@@ -47,4 +44,5 @@ public class AddressService(IMapper mapper, IAddressRepository repository, ICepS
         var entity = await repository.GetAddressByZipCodeAsync(cep, cancellationToken);
         return mapper.Map<AddressDto>(entity);
     }
+
 }
