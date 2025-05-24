@@ -26,35 +26,35 @@ public abstract class ControllerBase<
 {
     
     [HttpGet]
-    public async Task<PagedResultDto<TDto>> GetAllAsync()
+    public virtual async Task<PagedResultDto<TDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await serviceBase.GetAllAsync();
+        return await serviceBase.GetAllAsync(cancellationToken);
     }
 
     [HttpGet("{id:long}")]
-    public virtual async Task<TDto> GetByIdAsync(int id)
+    public virtual async Task<TDto> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await serviceBase.GetByIdAsync(id);
+        return await serviceBase.GetByIdAsync(id, cancellationToken);
     }
 
     [HttpPost]
-    public virtual async Task<TDto> CreateAsync([FromBody] TCreateDto dto)
+    public virtual async Task<TDto> CreateAsync([FromBody] TCreateDto dto, CancellationToken cancellationToken = default)
     {
-        return mapper.Map<TDto>(await serviceBase.CreateAsync(dto));
+        return mapper.Map<TDto>(await serviceBase.CreateAsync(dto, cancellationToken));
     }
 
     [HttpPut("{id:long}")]
-    public virtual async Task<TDto> UpdateAsync([FromBody] TUpdateDto dto, long id)
+    public virtual async Task<TDto> UpdateAsync([FromBody] TUpdateDto dto, long id, CancellationToken cancellationToken = default)
     {
         if (dto is null)
             throw new BusinessException(Messages.Format(Messages.InvalidField, nameof(dto)));
         
-        return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id));
+        return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id, cancellationToken));
     }
 
     [HttpDelete("{id:long}")]
-    public virtual async Task<TDto> DeleteAsync(int id)
+    public virtual async Task<TDto> DeleteAsync(int id, CancellationToken cancellationToken = default)
     {
-        return mapper.Map<TDto>(await serviceBase.DeleteAsync(id));
+        return mapper.Map<TDto>(await serviceBase.DeleteAsync(id, cancellationToken));
     }
 }

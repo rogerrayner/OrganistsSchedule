@@ -3,7 +3,7 @@ using OrganistsSchedule.Domain.Enums;
 
 namespace OrganistsSchedule.Application.DTOs;
 
-public class OrganistCreateUpdateDto
+public class OrganistCreateDto
 {
     
     public string? Cpf { get; set; }
@@ -17,6 +17,8 @@ public class OrganistCreateUpdateDto
     public AddressCreateUpdateDto Address { get; set; }
     
     public string? PhoneNumber { get; set; }
+    
+    public string? Email { get; set; }
     
     [Required(ErrorMessage = "Days of Service is required")]
     public required DayOfWeek[] ServicesDaysOfWeek { get; set; }

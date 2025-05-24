@@ -7,7 +7,7 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class PhoneRepository(ApplicationDbContext context) 
     : RepositoryBase<Phone>(context), IPhoneRepository
 {
-    public Task<Phone?> GetPhoneByNumberAsync(string number)
+    public Task<Phone?> GetPhoneByNumberAsync(string number, CancellationToken cancellationToken = default)
     {
         return context.Phones
             .AsNoTracking()

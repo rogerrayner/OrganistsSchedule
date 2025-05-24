@@ -44,10 +44,13 @@ public class DomainToDtoMappingProfile : Profile
             .ReverseMap();
         CreateMap<Organist, OrganistDto>()
             .ReverseMap();
-        CreateMap<Organist, OrganistCreateUpdateDto>()
+        CreateMap<Organist, OrganistCreateDto>()
+            .ReverseMap();
+        CreateMap<Organist, OrganistUpdateDto>()
             .ReverseMap();
         CreateMap<ParameterSchedule, ParameterScheduleDto>()
             .ReverseMap();
-
+        CreateMap<ParameterSchedule, ParameterScheduleCreateUpdateDto>()
+            .ReverseMap();
     }
 }

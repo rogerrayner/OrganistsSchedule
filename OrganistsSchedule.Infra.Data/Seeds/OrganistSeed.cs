@@ -7,224 +7,204 @@ public static class OrganistSeed
 {
     private static ICollection<Organist> _organists =
     [
-        new Organist
+        new Organist("77781670000")
         {
             Id = 1,
-            FullName = "Alzenir",
+            FullName = "Alzenir da Silva Souza",
             ShortName = "Alzenir",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 1,
-            Cpf = "12345678909"
+            Sequence = 1
         },
 
-        new Organist
+        new Organist("65110149089")
         {
             Id = 2,
-            FullName = "Jemima",
+            FullName = "Jemima Oliveira Costa",
             ShortName = "Jemima",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 2,
-            Cpf = "98765432100"
+            Sequence = 2
         },
 
-        new Organist
+        new Organist("45555585020")
         {
             Id = 3,
-            FullName = "Valdete",
+            FullName = "Valdete Pereira Lima",
             ShortName = "Valdete",
             ServicesDaysOfWeek = [DayOfWeek.Tuesday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 3,
-            Cpf = "45678912365"
+            Sequence = 3
         },
 
-        new Organist
+        new Organist("73552078061")
         {
             Id = 4,
-            FullName = "Joana",
+            FullName = "Joana Martins Souza",
             ShortName = "Joana",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 4,
-            Cpf = "65432198734"
+            Sequence = 4
         },
 
-        new Organist
+        new Organist("49709279017")
         {
             Id = 5,
-            FullName = "Rosemari",
+            FullName = "Rosemari Alves Pinto",
             ShortName = "Rosemari",
             ServicesDaysOfWeek = [DayOfWeek.Tuesday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 5,
-            Cpf = "32165498729"
+            Sequence = 5
         },
 
-        new Organist
+        new Organist("02016533030")
         {
             Id = 6,
-            FullName = "Camila",
+            FullName = "Camila Souza Lima",
             ShortName = "Camila",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 6,
-            Cpf = "98732165473"
+            Sequence = 6
         },
 
-        new Organist
+        new Organist("33913742093")
         {
             Id = 7,
-            FullName = "Priscila",
+            FullName = "Priscila Andrade Melo",
             ShortName = "Priscila",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 7,
-            Cpf = "12378945601"
+            Sequence = 7
         },
 
-        new Organist
+        new Organist("47085758074")
         {
             Id = 8,
-            FullName = "Joanita",
+            FullName = "Joanita Silva Costa",
             ShortName = "Joanita",
             ServicesDaysOfWeek = [DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 8,
-            Cpf = "65498732185"
+            Sequence = 8
         },
 
-        new Organist
+        new Organist("23333775000")
         {
             Id = 9,
-            FullName = "Vanderleia",
+            FullName = "Vanderleia Souza Lima",
             ShortName = "Vanderleia",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 9,
-            Cpf = "78945612322"
+            Sequence = 9
         },
 
-        new Organist
+        new Organist("91112746030")
         {
             Id = 10,
-            FullName = "Ana Paula",
+            FullName = "Ana Paula Fernandes",
             ShortName = "Ana Paula",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService | OrganistsLevelEnum.YouthMeeting,
             Sequence = 10,
-            Cpf = "32198765498"
         },
 
-        new Organist
+        new Organist("43417000068")
         {
             Id = 11,
-            FullName = "Amanda",
+            FullName = "Amanda Ribeiro Costa",
             ShortName = "Amanda",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 11,
-            Cpf = "65412398756"
+            Sequence = 11
         },
 
-        new Organist
+        new Organist("87388819002")
         {
             Id = 12,
-            FullName = "Hallen",
+            FullName = "Hallen Martins Souza",
             ShortName = "Hallen",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 12,
-            Cpf = "45698712344"
+            Sequence = 12
         },
 
-        new Organist
+        new Organist("84081083010")
         {
             Id = 13,
-            FullName = "Solange",
+            FullName = "Solange Pereira Lima",
             ShortName = "Solange",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 13,
-            Cpf = "78912345655"
+            Sequence = 13
         },
 
-        new Organist
+        new Organist("87771172040")
         {
             Id = 14,
-            FullName = "Dinorá",
+            FullName = "Dinorá Souza Pinto",
             ShortName = "Dinorá",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 14,
-            Cpf = "12345698766"
+            Sequence = 14
         },
 
-        new Organist
+        new Organist("26516790035")
         {
             Id = 15,
-            FullName = "Rosangela",
+            FullName = "Rosangela Lima Costa",
             ShortName = "Rosangela",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 15,
-            Cpf = "98712345632"
+            Sequence = 15
         },
 
-        new Organist
+        new Organist("77218566049")
         {
             Id = 16,
-            FullName = "Sarah",
+            FullName = "Sarah Martins Souza",
             ShortName = "Sarah",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 16,
-            Cpf = "65478912310"
+            Sequence = 16
         },
 
-        new Organist
+        new Organist("65914758009")
         {
             Id = 17,
-            FullName = "Luciana",
+            FullName = "Luciana Pereira Lima",
             ShortName = "Luciana",
             ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService,
-            Sequence = 17,
-            Cpf = "45612398721"
+            Sequence = 17
         },
 
-        new Organist
+        new Organist("39464202068")
         {
             Id = 18,
-            FullName = "Manoela",
+            FullName = "Manoela Souza Pinto",
             ShortName = "Manoela",
             ServicesDaysOfWeek = [DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 18,
-            Cpf = "78932145688"
+            Sequence = 18
         },
 
-        new Organist
+        new Organist("56503344040")
         {
             Id = 19,
-            FullName = "Kauany",
+            FullName = "Kauany Martins Souza",
             ShortName = "Kauany",
             ServicesDaysOfWeek = [DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 19,
-            Cpf = "12365478966"
+            Sequence = 19
         },
 
-        new Organist
+        new Organist("16894804087")
         {
             Id = 20,
-            FullName = "Mônica",
+            FullName = "Mônica Pereira Lima",
             ShortName = "Mônica",
             ServicesDaysOfWeek = [DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 20,
-            Cpf = "98765412333"
+            Sequence = 20
         }
     ];
 

@@ -12,8 +12,8 @@ public class PhoneController(IPhoneService serviceBase, IMapper mapper)
     : ControllerBase<Phone, PhoneDto, PhoneCreateUpdateRequestDto, PhoneCreateUpdateRequestDto>(serviceBase, mapper)
 {
     [NonAction]
-    public override Task<PhoneDto> UpdateAsync(PhoneCreateUpdateRequestDto dto, long id)
+    public override Task<PhoneDto> UpdateAsync(PhoneCreateUpdateRequestDto dto, long id, CancellationToken cancellationToken = default)
     {
-        return base.UpdateAsync(dto, id);
+        return base.UpdateAsync(dto, id, cancellationToken);
     }
 }

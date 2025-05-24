@@ -12,8 +12,8 @@ public class CityController(ICityService serviceBase, IMapper mapper)
     : ControllerBase<City, CityDto, CityCreateUpdateRequestDto, CityCreateUpdateRequestDto>(serviceBase, mapper)
 {
     [NonAction]
-    public override Task<CityDto> UpdateAsync(CityCreateUpdateRequestDto dto, long id)
+    public override Task<CityDto> UpdateAsync(CityCreateUpdateRequestDto dto, long id, CancellationToken cancellationToken = default)
     {
-        return base.UpdateAsync(dto, id);
+        return base.UpdateAsync(dto, id, cancellationToken);
     }
 }

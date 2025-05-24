@@ -24,7 +24,6 @@ public class CepService(ICepRepository repository,
         bool isPost = false,
         CancellationToken cancellationToken = default)
     {
-        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try 
         {
             var entity =
@@ -42,12 +41,14 @@ public class CepService(ICepRepository repository,
                     throw new BusinessException(Messages.Format(Messages.IntegrationError, "Via Cep"));
                 }
             }
-            await transaction.CommitAsync(cancellationToken);
+            
+            if (entity == null)
+                throw new NotFoundException(Messages.Format(Messages.NotFound, "Cep"));
+            
             return entity;
         }
         catch (Exception e)
         {
-            await transaction.RollbackAsync(cancellationToken);
             throw;
         }
     }

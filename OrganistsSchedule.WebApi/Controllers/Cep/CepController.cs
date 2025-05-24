@@ -26,14 +26,14 @@ public class CepController(ICepService service, IMapper mapper)
     }
 
     [NonAction]
-    public override Task<CepDto> CreateAsync(CepCreateUpdateRequestDto dto)
+    public override Task<CepDto> CreateAsync(CepCreateUpdateRequestDto dto, CancellationToken cancellationToken = default)
     {
-        return base.CreateAsync(dto);
+        return base.CreateAsync(dto, cancellationToken);
     }
 
     [NonAction]
-    public override Task<CepDto> UpdateAsync(CepCreateUpdateRequestDto dto, long id)
+    public override Task<CepDto> UpdateAsync(CepCreateUpdateRequestDto dto, long id, CancellationToken cancellationToken = default)
     {
-        return base.UpdateAsync(dto, id);
+        return base.UpdateAsync(dto, id, cancellationToken);
     }
 }

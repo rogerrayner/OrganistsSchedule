@@ -3,8 +3,8 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface IOrganistService: ICrudServiceBase<Organist, OrganistDto, OrganistCreateUpdateDto>
+public interface IOrganistService: ICrudServiceBase<Organist, OrganistDto, OrganistCreateDto, OrganistUpdateDto>
 {
-    List<Organist> GetByIds(List<long> organistIds, CancellationToken cancellationToken = default);
-    List<Organist> GetByCongregation(long congregationId, CancellationToken cancellationToken = default);
+    Task<List<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default);
+    Task<List<Organist>> GetByCongregationAsync(long congregationId, CancellationToken cancellationToken = default);
 }

@@ -22,4 +22,18 @@ internal sealed class UnitOfWork (ApplicationDbContext dbContext) : IUnitOfWork
     {
         return await dbContext.Database.BeginTransactionAsync(isolationLevel, cancellationToken);
     }
+    
+    private void SetUtcDateTimes()
+    {
+        foreach (var entry in dbContext.ChangeTracker.Entries())
+        {
+            foreach (var property in entry.Properties)
+            {
+                if (property.CurrentValue is DateTime dt && dt.Kind == DateTimeKind.Unspecified)
+                {
+                    property.CurrentValue = DateTime.SpecifyKind(dt, DateTimeKind.Utc);
+                }
+            }
+        }
+    }
 }
