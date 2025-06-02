@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Domain.Interfaces;
 

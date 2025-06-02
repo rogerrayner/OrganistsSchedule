@@ -7,13 +7,6 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class CityRepository(ApplicationDbContext context)
     : RepositoryBase<City>(context), ICityRepository
 {
-    public override IQueryable<City> CreateFilteredQuery()
-    {
-        var query = context.Set<City>()
-            .Include(x => x.Country);
-        return query;
-    }
-    
     public async Task<City?> GetByNameAsync(string name)
     {
         return await context.Set<City>()

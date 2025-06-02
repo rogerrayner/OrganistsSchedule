@@ -14,7 +14,11 @@ public class CongregationService(IMapper mapper,
     IOrganistRepository organistRepository, 
     IUnitOfWork unitOfWork,
     IAddressService addressService)
-    : CrudServiceBase<Congregation, CongregationDto, CongregationCreateRequestDto, CongregationUpdateRequestDto>(mapper, repository, unitOfWork),
+    : CrudServiceBase<Congregation, 
+            CongregationDto, 
+            CongregationPagedAndSortedRequest,
+            CongregationCreateRequestDto, 
+            CongregationUpdateRequestDto>(mapper, repository, unitOfWork),
         ICongregationService
 {
     public async Task<CongregationDto> SetOrganistsAsync(long congregationId, List<long> organistIds, CancellationToken cancellationToken = default)

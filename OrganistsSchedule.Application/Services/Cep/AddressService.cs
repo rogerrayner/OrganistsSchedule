@@ -12,7 +12,10 @@ public class AddressService(IMapper mapper,
     IAddressRepository repository, 
     ICepService cepService, 
     IUnitOfWork unitOfWork) 
-    : CrudServiceBase<Address, AddressDto, AddressCreateUpdateDto>(mapper, repository, unitOfWork), 
+    : CrudServiceBase<Address, 
+            AddressDto,
+            AddressPagedAndSortedRequest,
+            AddressCreateUpdateDto>(mapper, repository, unitOfWork), 
         IAddressService
 {
     public async Task<AddressDto> CreateAsync(AddressCreateUpdateDto dto, CancellationToken cancellationToken = default)

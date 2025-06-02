@@ -5,6 +5,7 @@ using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 using System.Text.RegularExpressions;
+using OrganistsSchedule.Application.Specifications;
 using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
 using ViaCep;
@@ -17,9 +18,25 @@ public class CepService(ICepRepository repository,
     ICityRepository cityRepository, 
     ICountryRepository countryRepository,
     IUnitOfWork unitOfWork)
-    : CrudServiceBase<Cep, CepDto, CepCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
+    : CrudServiceBase<Cep, 
+            CepDto, 
+            CepPagedAndSortedRequest,
+            CepCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
         ICepService
 {
+    public override Task<PagedResultDto<CepDto>> GetAllAsync(CepPagedAndSortedRequest request, 
+        CancellationToken cancellationToken,
+        ISpecification<Cep>? specification = null)
+    {
+        if (request != null
+            && !string.IsNullOrEmpty(request.ZipCode))
+        {
+            specification = new CepSpecification(request.ZipCode);
+        }
+        
+        return base.GetAllAsync(request, cancellationToken, specification);
+    }
+
     public async Task<CepDto> GetCepByZipCodeAsync(string zipCode,
         bool isPost = false,
         CancellationToken cancellationToken = default)

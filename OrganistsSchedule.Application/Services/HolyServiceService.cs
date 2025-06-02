@@ -15,7 +15,9 @@ public class HolyServiceService(
     IParameterScheduleRepository parameterScheduleRepository,
     ICongregationRepository congregationRepository,
     IUnitOfWork unitOfWork)
-    : CrudServiceBase<HolyService, HolyServiceDto>(mapper, repository, unitOfWork),
+    : CrudServiceBase<HolyService, 
+            HolyServiceDto,
+            HolyServicePagedAndSortedRequest>(mapper, repository, unitOfWork),
         IHolyServiceService
 {
     public async Task<PagedResultDto<HolyServiceDto>> ScheduleOrganistsForHolyServicesAsync(long congregationId,
@@ -27,17 +29,16 @@ public class HolyServiceService(
         try
         {
             var congregation = await congregationRepository.GetByIdAsync(congregationId, cancellationToken);
-
             if (congregation == null)
                 throw new NotFoundException(Messages.Format(Messages.NotFound, "Congregação"));
 
-            var parameterSchedule = parameterScheduleRepository
-                .GetByRangeDateAndCongregationIdAsync(congregationId, dates.StartDate, dates.EndDate);
+            var parameterSchedule = await parameterScheduleRepository
+                .GetByRangeDateAndCongregationIdAsync(congregationId, dates.StartDate, dates.EndDate, cancellationToken);
 
             if (parameterSchedule != null)
                 throw new BusinessException(Messages.Format(Messages.AlreadyExists, "Parametros de Agendamento"));
 
-            ParameterSchedule parameter = new ParameterSchedule()
+            var parameter = new ParameterSchedule
             {
                 CongregationId = congregationId,
                 StartDate = dates.StartDate,
@@ -47,18 +48,17 @@ public class HolyServiceService(
             parameter = await parameterScheduleRepository.CreateAsync(parameter, cancellationToken);
 
             var holyServices = await scheduleOrganistsService.ScheduleOrganistsForHolyServices(parameter, cancellationToken);
-            await repository.BulkDeleteAsync(
-                await repository
-                    .GetHolyServicesByCongregationAsync(parameter.Congregation.Id),
-                cancellationToken);
 
-            await repository.BulkCreateAsync(holyServices, cancellationToken);
+            var existingHolyServices = await repository.GetHolyServicesByCongregationAsync(parameter.Congregation.Id, cancellationToken);
+            await repository.BulkDeleteAsync(existingHolyServices, cancellationToken);
 
-            var totalCount = holyServices.Count;
+            var createdHolyServices = await repository.BulkCreateAsync(holyServices, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
+            
+            var totalCount = createdHolyServices.ToList().Count;
 
             return new PagedResultDto<HolyServiceDto>(
-                mapper.Map<IEnumerable<HolyServiceDto>>(holyServices),
+                mapper.Map<IEnumerable<HolyServiceDto>>(createdHolyServices),
                 totalCount);
         }
         catch (Exception e)
@@ -72,7 +72,7 @@ public class HolyServiceService(
         CancellationToken cancellationToken = default)
     {
         var holyServices = await repository
-            .GetHolyServicesByCongregationAsync(congregationId);
+            .GetHolyServicesByCongregationAsync(congregationId, cancellationToken);
 
         return mapper.Map<List<HolyServiceDto>>(holyServices);
     }
