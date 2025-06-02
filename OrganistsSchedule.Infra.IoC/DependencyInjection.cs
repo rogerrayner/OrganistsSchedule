@@ -1,17 +1,13 @@
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Mappings;
 using OrganistsSchedule.Application.Services;
-using OrganistsSchedule.Domain.Identity;
-using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Application.Specifications;
+using OrganistsSchedule.Domain;
 using OrganistsSchedule.Infra.Data;
-using OrganistsSchedule.Infra.Data.Identity;
 using OrganistsSchedule.Infra.Data.Interceptors;
-using OrganistsSchedule.Infra.Data.Repositories;
-using OrganistsSchedule.Infrastructure.Seeds.Identity;
 using Scrutor;
 using ViaCep;
 
@@ -44,16 +40,19 @@ public static class DependencyInjection
         
         return services;
     }
-
-    public static IServiceCollection AddIdentityAuthentication(this IServiceCollection services,
-        IConfiguration configuration)
+    
+    public static IServiceCollection AddAuthorization(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddIdentityCore<UserIdentity>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddApiEndpoints();
-        
-        services.AddScoped<ISeedUserRoleInitial, UserRoleSeed>();
+        services.AddAuthorization(options =>
+        {
+            foreach (var permission in Permissions.Policies)
+            {
+                options.AddPolicy(permission, policy =>
+                    policy.Requirements.Add(new HasPermissionRequirement(permission)));
+            }
+        });
 
+        services.AddSingleton<IAuthorizationHandler, HasPermissionHandler>();
         return services;
     }
 
@@ -65,10 +64,12 @@ public static class DependencyInjection
                 selector => selector
                     .FromAssemblies(
                         OrganistsSchedule.Application.AssemblyReference.Assembly)
-                    .AddClasses(false)
+                    .AddClasses(classes => classes.Where(type => 
+                        !type.IsDefined(typeof(DoNotRegisterAttribute), false)))
                     .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                     .AsImplementedInterfaces()
-                    .WithScopedLifetime());
+                    .WithScopedLifetime())
+            ;
         
         services.AddHttpClient<IViaCepClient, ViaCepClient>(client => { client.BaseAddress = new Uri("https://viacep.com.br/"); });
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile));

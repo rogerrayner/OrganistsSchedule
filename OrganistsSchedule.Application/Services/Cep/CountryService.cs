@@ -7,7 +7,10 @@ using OrganistsSchedule.Domain.Interfaces;
 namespace OrganistsSchedule.Application.Services;
 
 public class CountryService(IMapper mapper, ICountryRepository repository, IUnitOfWork unitOfWork) 
-    : CrudServiceBase<Country, CountryResponseDto, CountryCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
+    : CrudServiceBase<Country, 
+            CountryResponseDto, 
+            CountryPagedAndSortedRequest,
+            CountryCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
         ICountryService
 {
     public async Task<CountryResponseDto> GetByNameAsync(string name)

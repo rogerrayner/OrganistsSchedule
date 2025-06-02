@@ -7,15 +7,15 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class ParameterScheduleRepository(ApplicationDbContext context)
     : RepositoryBase<ParameterSchedule>(context), IParameterScheduleRepository
 {
-    public ParameterSchedule GetByRangeDateAndCongregationIdAsync(long congregationId, 
+    public async Task<ParameterSchedule> GetByRangeDateAndCongregationIdAsync(long congregationId, 
         DateTime startDate, 
         DateTime endDate,
         CancellationToken cancellationToken = default)
     {
-        return context.ParametersSchedules
+        return (await context.ParametersSchedules
             .Include(p => p.Congregation)
-            .FirstOrDefault(p => p.CongregationId == congregationId && 
-                                 p.StartDate.Date == startDate.Date && 
-                                 p.EndDate.Date == endDate.Date);
+            .FirstOrDefaultAsync(p => p.CongregationId == congregationId && 
+                                      p.StartDate.Date == startDate.Date && 
+                                      p.EndDate.Date == endDate.Date, cancellationToken))!;
     }
 }

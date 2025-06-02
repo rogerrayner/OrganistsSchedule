@@ -15,7 +15,11 @@ public class OrganistService(IMapper mapper,
     IAddressService addressService,
     IPhoneRepository phoneRepository,
     IEmailRepository emailRepository) 
-    : CrudServiceBase<Organist, OrganistDto, OrganistCreateDto, OrganistUpdateDto>(mapper, repository, unitOfWork),
+    : CrudServiceBase<Organist, 
+            OrganistDto, 
+            OrganistPagedAndSortedRequest,
+            OrganistCreateDto, 
+            OrganistUpdateDto>(mapper, repository, unitOfWork),
         IOrganistService
 {
     public async Task<List<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default)

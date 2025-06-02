@@ -1,7 +1,7 @@
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface IPagedResultRequest: 
-    ILimitedResultRequest
+public interface IPagedRequest: 
+    ILimitedRequest
 {
     int SkipCount { get; set; }
 }

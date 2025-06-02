@@ -1,6 +1,6 @@
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ISortedResultRequest
+public interface ISortedRequest
 { 
     string? Sorting { get; set; }
 }

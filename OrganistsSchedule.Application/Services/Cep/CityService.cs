@@ -7,7 +7,10 @@ using OrganistsSchedule.Domain.Interfaces;
 namespace OrganistsSchedule.Application.Services;
 
 public class CityService(IMapper mapper, ICityRepository repository, IUnitOfWork unitOfWork) 
-    : CrudServiceBase<City, CityDto, CityCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
+    : CrudServiceBase<City, 
+            CityDto,
+            CityPagedAndSortedRequest,
+            CityCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
         ICityService
 {
     public async Task<CityDto> GetByNameAsync(string name)
