@@ -60,7 +60,7 @@ public abstract class ControllerBase<
     }
 
     [HttpGet("{id:long}")]
-    public virtual async Task<ActionResult<TDto>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public virtual async Task<ActionResult<TDto>> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var authorized = await IsAuthorized(ReadPolicy, cancellationToken);
         if (!authorized)
@@ -85,7 +85,7 @@ public abstract class ControllerBase<
     }
 
     [HttpPut("{id:long}")]
-    public virtual async Task<ActionResult<TDto>> UpdateAsync([FromBody] TUpdateDto dto, [FromQuery] long id, CancellationToken cancellationToken = default)
+    public virtual async Task<ActionResult<TDto>> UpdateAsync([FromBody] TUpdateDto dto, long id, CancellationToken cancellationToken = default)
     {
         var authorized = await IsAuthorized(UpdatePolicy, cancellationToken);
         if (!authorized)

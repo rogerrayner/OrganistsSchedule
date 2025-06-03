@@ -27,13 +27,8 @@ public class CepService(ICepRepository repository,
     public override Task<PagedResultDto<CepDto>> GetAllAsync(CepPagedAndSortedRequest request, 
         CancellationToken cancellationToken,
         ISpecification<Cep>? specification = null)
-    {
-        if (request != null
-            && !string.IsNullOrEmpty(request.ZipCode))
-        {
-            specification = new CepSpecification(request.ZipCode);
-        }
-        
+    { 
+        specification = new CepSpecification(request);
         return base.GetAllAsync(request, cancellationToken, specification);
     }
 

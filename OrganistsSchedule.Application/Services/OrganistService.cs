@@ -2,6 +2,7 @@ using System.Data;
 using AutoMapper;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
+using OrganistsSchedule.Application.Specifications;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
@@ -22,15 +23,17 @@ public class OrganistService(IMapper mapper,
             OrganistUpdateDto>(mapper, repository, unitOfWork),
         IOrganistService
 {
-    public async Task<List<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default)
+    public override Task<PagedResultDto<OrganistDto>> GetAllAsync(OrganistPagedAndSortedRequest request, CancellationToken cancellationToken,
+        ISpecification<Organist>? specification = null)
+    {
+        specification = new OrganistSpecification(request);
+        return base.GetAllAsync(request, cancellationToken, specification);
+    }
+
+    public async Task<IEnumerable<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default)
     {
         var organists = await repository.GetByIdsAsync(organistIds, cancellationToken);
         return organists.ToList();
-    }
-
-    public async Task<List<Organist>> GetByCongregationAsync(long congregationId, CancellationToken cancellationToken = default)
-    { 
-        return await repository.GetByCongregationAsync(congregationId, cancellationToken);
     }
 
     public async Task<OrganistDto> CreateAsync(OrganistCreateDto dto, CancellationToken cancellationToken = default)
@@ -96,8 +99,6 @@ public class OrganistService(IMapper mapper,
                 ShortName = dto.ShortName,
                 AddressId = address?.Id,
                 Level = dto.Level,
-                ServicesDaysOfWeek = dto.ServicesDaysOfWeek,
-                Sequence = 1, //TODO: avaliar como será implementado o sequence das organistas,
                 PhoneId = phone?.Id
             };
             

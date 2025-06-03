@@ -8,7 +8,7 @@ namespace OrganistsSchedule.WebApi.Controllers;
 public interface IControllerBase<TDto, TRequestDto, TCreateDto, TUpdateDto>
 {
     Task<ActionResult<PagedResultDto<TDto>>> GetAllAsync(TRequestDto request, CancellationToken cancellationToken = default);
-    Task<ActionResult<TDto>> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TDto>> GetByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<ActionResult<TDto>> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default);
     Task<ActionResult<TDto>> UpdateAsync(TUpdateDto dto, long id, CancellationToken cancellationToken = default);
     Task<ActionResult<TDto>> DeleteAsync(int id, CancellationToken cancellationToken = default);

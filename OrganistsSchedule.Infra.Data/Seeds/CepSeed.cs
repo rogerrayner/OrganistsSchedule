@@ -29,7 +29,7 @@ public static class CepSeed
         new Cep { Id = 20, CityId = 1, District = "Jardim Paraíso", ZipCode = "89226618", Street = "Rua Canis Major" },
         new Cep { Id = 21, CityId = 1, District = "Jardim Sofia", ZipCode = "89223620", Street = "Rua Professor Eunaldo Verdi" },
         new Cep { Id = 22, CityId = 1, District = "Jativoca", ZipCode = "89214720", Street = "Rua Santa Marta" },
-        new Cep { Id = 23, CityId = 1, District = "Loteamento São Francisco II", ZipCode = "89226686", Street = "Rua Nerides" },
+        new Cep { Id = 23, CityId = 1, District = "Loteamento São Francisco II", ZipCode = "89226666", Street = "Rua Delphinus" },
         new Cep { Id = 24, CityId = 1, District = "Loteamento Tahiti", ZipCode = "89233780", Street = "Rua Adele Hille" },
         new Cep { Id = 25, CityId = 1, District = "Morro do Meio", ZipCode = "89215200", Street = "Estrada Lagoinha" },
         new Cep { Id = 26, CityId = 1, District = "Nova Brasília", ZipCode = "89213300", Street = "Rua Minas Gerais" },
@@ -42,7 +42,9 @@ public static class CepSeed
         new Cep { Id = 33, CityId = 1, District = "Santa Barbara", ZipCode = "89225884", Street = "Rua Dezoito de Janeiro" },
         new Cep { Id = 34, CityId = 1, District = "Ulysses Guimarães", ZipCode = "89230650", Street = "Rua Professor Avelino Marcante" },
         new Cep { Id = 35, CityId = 1, District = "Vila Nova", ZipCode = "89237110", Street = "Rua Joaquim Girardi" },
-        new Cep { Id = 36, CityId = 1, District = "Vila Paraná", ZipCode = "89228250", Street = "Rua Carmem Miranda" }
+        new Cep { Id = 36, CityId = 1, District = "Vila Paraná", ZipCode = "89228250", Street = "Rua Carmem Miranda" },
+        new Cep { Id = 37, CityId = 1, District = "Zona Industrial Norte", ZipCode = "89219655", Street = "Rua Ricardo Alberto Mebs" }
+
     };
 
     

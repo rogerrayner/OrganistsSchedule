@@ -39,7 +39,7 @@ public class HolyServiceController(IHolyServiceService serviceBase, IMapper mapp
     }
 
     [NonAction]
-    public override Task<ActionResult<HolyServiceDto>> GetByIdAsync(int id, 
+    public override Task<ActionResult<HolyServiceDto>> GetByIdAsync(long id, 
         CancellationToken cancellationToken = default)
     {
         return base.GetByIdAsync(id,cancellationToken);

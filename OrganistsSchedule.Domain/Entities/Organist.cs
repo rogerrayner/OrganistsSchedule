@@ -6,7 +6,6 @@ namespace OrganistsSchedule.Domain.Entities;
 
 public sealed class Organist: AuditableEntityBase
 {
-    public required int Sequence { get; set; }
     private string? _cpf;
     public string? Cpf
     {
@@ -24,7 +23,7 @@ public sealed class Organist: AuditableEntityBase
         get => _fullName;
         set
         {
-            if (string.IsNullOrWhiteSpace(value) || value.Length < 15)
+            if (string.IsNullOrWhiteSpace(value) || value.Length < 10)
                 throw new BusinessException(Messages.FullNameError);
             _fullName = value;
         }
@@ -40,35 +39,17 @@ public sealed class Organist: AuditableEntityBase
             _shortName = value;
         }
     }
+    public ICollection<CongregationOrganist> CongregationOrganists { get; set; } = new List<CongregationOrganist>();
     public OrganistsLevelEnum Level { get; set; }
-    
     public long? AddressId { get; set; }
     public Address? Address { get; set; }
-    
-    public long? CongregationId { get; set; }
-    public Congregation? Congregation { get; set; }
     public ICollection<Email>? Emails { get; set; }
-    
     public long? PhoneId { get; set; }
     public Phone? PhoneNumber { get; set; }
-    
-    private DayOfWeek[] _servicesDaysOfWeek = null!;
-    public required DayOfWeek[] ServicesDaysOfWeek
-    {
-        get => _servicesDaysOfWeek;
-        set
-        {
-            if (value == null || value.Length == 0)
-                throw new BusinessException(Messages.Format(Messages.ListNullOrBlank, "Dia de Culto"));
-            _servicesDaysOfWeek = value;
-        }
-    }
-    
     public Organist(string? cpf)
     {
         Cpf = cpf;
     }
-    
     public Organist() {}
     
 }

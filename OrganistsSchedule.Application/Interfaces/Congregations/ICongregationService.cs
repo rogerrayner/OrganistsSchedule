@@ -9,5 +9,11 @@ public interface ICongregationService : ICrudServiceBase<Congregation,
     CongregationCreateRequestDto, 
     CongregationUpdateRequestDto>
 {
-    Task<CongregationDto> SetOrganistsAsync(long congregationId, List<long> organistIds, CancellationToken cancellationToken = default);
+    Task<CongregationDto> SetOrganistsAsync(
+        long congregationId,
+        List<OrganistDaysDto> organistsDays,
+        CancellationToken cancellationToken = default);
+
+    Task<List<CongregationOrganistsDto>> GetCongregationOrganistsAsync(long congregationId,
+        CancellationToken cancellationToken = default);
 }

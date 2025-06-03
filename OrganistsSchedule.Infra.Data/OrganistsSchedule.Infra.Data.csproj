@@ -28,6 +28,5 @@
 
     <ItemGroup>
       <Folder Include="Migrations\" />
-      <Folder Include="Seeds\Identity\" />
     </ItemGroup>
 </Project>

@@ -30,8 +30,6 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
         
         builder
             .HasKey(x => x.Id);
-        builder
-            .HasAlternateKey(x => x.Cpf);
         
         #endregion
         
@@ -57,7 +55,7 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
         #endregion
         
         #region Relationships
-
+        
         builder
             .HasMany<Email>(x => x.Emails)
             .WithOne(x => x.Organist)

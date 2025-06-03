@@ -11,6 +11,8 @@ public class CongregationRepository(ApplicationDbContext context)
     {
         return query
             .Include(x => x.Address)
-            .ThenInclude(x => x.Cep);
+            .ThenInclude(x => x.Cep)
+            .ThenInclude(x => x.City)
+            .ThenInclude(x => x.Country);
     }
 }

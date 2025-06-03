@@ -9,6 +9,5 @@ public interface IOrganistService: ICrudServiceBase<Organist,
     OrganistCreateDto, 
     OrganistUpdateDto>
 {
-    Task<List<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default);
-    Task<List<Organist>> GetByCongregationAsync(long congregationId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default);
 }

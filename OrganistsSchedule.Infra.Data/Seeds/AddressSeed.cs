@@ -28,7 +28,7 @@ public static class AddressSeed
         new Address { Id = 20, CepId = 20, StreetNumber = 70 },
         new Address { Id = 21, CepId = 21, StreetNumber = 337 },
         new Address { Id = 22, CepId = 22, StreetNumber = 140 },
-        new Address { Id = 23, CepId = 23, StreetNumber = 129 },
+        new Address { Id = 23, CepId = 23, StreetNumber = 1188 },
         new Address { Id = 24, CepId = 24, StreetNumber = 228 },
         new Address { Id = 25, CepId = 25, StreetNumber = 1445 },
         new Address { Id = 26, CepId = 26, StreetNumber = 1415 },
@@ -41,7 +41,8 @@ public static class AddressSeed
         new Address { Id = 33, CepId = 33, StreetNumber = 55 },
         new Address { Id = 34, CepId = 34, StreetNumber = 42 },
         new Address { Id = 35, CepId = 35, StreetNumber = 415 },
-        new Address { Id = 36, CepId = 36, StreetNumber = 599 }
+        new Address { Id = 36, CepId = 36, StreetNumber = 599 },
+        new Address { Id = 37, CepId = 37, StreetNumber = 74 }
     };
     
     public static ICollection<Address> IndividualAddresses => _individualAddresses;

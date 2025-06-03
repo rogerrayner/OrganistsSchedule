@@ -25,8 +25,8 @@ public class CongregationController(ICongregationService serviceBase, IMapper ma
     [HttpPost]
     [Route("{id}/organists")]
     [Authorize(Policy = "process:set-organist-congregation")]
-    public virtual async Task<CongregationDto> SetOrganistsAsync(long id, List<long> organistIds)
+    public virtual async Task<CongregationDto> SetOrganistsAsync(long id, List<OrganistDaysDto> organistsDays)
     {
-        return await serviceBase.SetOrganistsAsync(id, organistIds);
+        return await serviceBase.SetOrganistsAsync(id, organistsDays);
     }
 }

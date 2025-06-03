@@ -7,13 +7,6 @@ namespace OrganistsSchedule.Infra.Data.Repositories;
 public class OrganistRepository(ApplicationDbContext context)
     : RepositoryBase<Organist>(context), IOrganistRepository
 {
-    public async Task<List<Organist>> GetByCongregationAsync(long congregationId, CancellationToken cancellationToken = default)
-    {
-        return await context.Organists
-            .Where(x => x.CongregationId == congregationId)
-            .ToListAsync(cancellationToken);
-    }
-
     protected override IQueryable<Organist> IncludeChildren(IQueryable<Organist> query)
     {
         return query

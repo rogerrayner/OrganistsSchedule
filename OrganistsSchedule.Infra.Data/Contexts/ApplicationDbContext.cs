@@ -12,6 +12,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public virtual DbSet<Organist> Organists { get; set; }
     public virtual DbSet<Congregation> Congregations { get; set; }
+    public virtual DbSet<CongregationOrganist> CongregationOrganists { get; set; }
     public virtual DbSet<HolyService> HolyServices { get; set; }
     public virtual DbSet<ParameterSchedule> ParametersSchedules { get; set; }
     public virtual DbSet<Cep> Ceps { get; set; }

@@ -12,9 +12,7 @@ public static class OrganistSeed
             Id = 1,
             FullName = "Alzenir da Silva Souza",
             ShortName = "Alzenir",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 1
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("65110149089")
@@ -22,9 +20,7 @@ public static class OrganistSeed
             Id = 2,
             FullName = "Jemima Oliveira Costa",
             ShortName = "Jemima",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 2
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("45555585020")
@@ -32,9 +28,7 @@ public static class OrganistSeed
             Id = 3,
             FullName = "Valdete Pereira Lima",
             ShortName = "Valdete",
-            ServicesDaysOfWeek = [DayOfWeek.Tuesday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 3
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("73552078061")
@@ -42,9 +36,7 @@ public static class OrganistSeed
             Id = 4,
             FullName = "Joana Martins Souza",
             ShortName = "Joana",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 4
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("49709279017")
@@ -52,9 +44,7 @@ public static class OrganistSeed
             Id = 5,
             FullName = "Rosemari Alves Pinto",
             ShortName = "Rosemari",
-            ServicesDaysOfWeek = [DayOfWeek.Tuesday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 5
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("02016533030")
@@ -62,9 +52,7 @@ public static class OrganistSeed
             Id = 6,
             FullName = "Camila Souza Lima",
             ShortName = "Camila",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 6
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("33913742093")
@@ -72,9 +60,7 @@ public static class OrganistSeed
             Id = 7,
             FullName = "Priscila Andrade Melo",
             ShortName = "Priscila",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 7
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("47085758074")
@@ -82,9 +68,7 @@ public static class OrganistSeed
             Id = 8,
             FullName = "Joanita Silva Costa",
             ShortName = "Joanita",
-            ServicesDaysOfWeek = [DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 8
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("23333775000")
@@ -92,9 +76,7 @@ public static class OrganistSeed
             Id = 9,
             FullName = "Vanderleia Souza Lima",
             ShortName = "Vanderleia",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 9
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("91112746030")
@@ -102,9 +84,7 @@ public static class OrganistSeed
             Id = 10,
             FullName = "Ana Paula Fernandes",
             ShortName = "Ana Paula",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
             Level = OrganistsLevelEnum.HolyService | OrganistsLevelEnum.YouthMeeting,
-            Sequence = 10,
         },
 
         new Organist("43417000068")
@@ -112,9 +92,7 @@ public static class OrganistSeed
             Id = 11,
             FullName = "Amanda Ribeiro Costa",
             ShortName = "Amanda",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 11
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("87388819002")
@@ -122,9 +100,7 @@ public static class OrganistSeed
             Id = 12,
             FullName = "Hallen Martins Souza",
             ShortName = "Hallen",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 12
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("84081083010")
@@ -132,9 +108,7 @@ public static class OrganistSeed
             Id = 13,
             FullName = "Solange Pereira Lima",
             ShortName = "Solange",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 13
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("87771172040")
@@ -142,9 +116,7 @@ public static class OrganistSeed
             Id = 14,
             FullName = "Dinorá Souza Pinto",
             ShortName = "Dinorá",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 14
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("26516790035")
@@ -152,9 +124,7 @@ public static class OrganistSeed
             Id = 15,
             FullName = "Rosangela Lima Costa",
             ShortName = "Rosangela",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 15
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("77218566049")
@@ -162,9 +132,7 @@ public static class OrganistSeed
             Id = 16,
             FullName = "Sarah Martins Souza",
             ShortName = "Sarah",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 16
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("65914758009")
@@ -172,9 +140,7 @@ public static class OrganistSeed
             Id = 17,
             FullName = "Luciana Pereira Lima",
             ShortName = "Luciana",
-            ServicesDaysOfWeek = [DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.HolyService,
-            Sequence = 17
+            Level = OrganistsLevelEnum.HolyService
         },
 
         new Organist("39464202068")
@@ -182,9 +148,7 @@ public static class OrganistSeed
             Id = 18,
             FullName = "Manoela Souza Pinto",
             ShortName = "Manoela",
-            ServicesDaysOfWeek = [DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 18
+            Level = OrganistsLevelEnum.YouthMeeting
         },
 
         new Organist("56503344040")
@@ -192,9 +156,7 @@ public static class OrganistSeed
             Id = 19,
             FullName = "Kauany Martins Souza",
             ShortName = "Kauany",
-            ServicesDaysOfWeek = [DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 19
+            Level = OrganistsLevelEnum.YouthMeeting
         },
 
         new Organist("16894804087")
@@ -202,9 +164,7 @@ public static class OrganistSeed
             Id = 20,
             FullName = "Mônica Pereira Lima",
             ShortName = "Mônica",
-            ServicesDaysOfWeek = [DayOfWeek.Sunday],
-            Level = OrganistsLevelEnum.YouthMeeting,
-            Sequence = 20
+            Level = OrganistsLevelEnum.YouthMeeting
         }
     ];
 

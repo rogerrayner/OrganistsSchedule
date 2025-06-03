@@ -5,7 +5,7 @@ public static class Messages
     public const string InvalidField = "O campo {0} é inválido!";
     public const string IntegrationError = "Erro na integração com {0}";
     public const string InvalidCpf = "O CPF informado é inválido!";
-    public const string FullNameError = "O nome completo deve ter pelo menos 15 caracteres!";
+    public const string FullNameError = "O nome completo deve ter pelo menos 10 caracteres!";
     public const string FieldRequiredMale = "O {0} é obrigatório!";
     public const string FieldRequiredFemale = "A {0} é obrigatória!";
     public const string ListNullOrBlank = "É necessário informar ao menos um(a) {0}!";

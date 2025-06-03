@@ -5,13 +5,15 @@ using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Domain.Interfaces;
 using System.Linq;
+using OrganistsSchedule.Application.Specifications;
 using OrganistsSchedule.Domain.Exceptions;
 
 namespace OrganistsSchedule.Application.Services;
 
 public class CongregationService(IMapper mapper, 
     ICongregationRepository repository, 
-    IOrganistRepository organistRepository, 
+    IOrganistRepository organistRepository,
+    ICongregationOrganistRepository congregationOrganistRepository,
     IUnitOfWork unitOfWork,
     IAddressService addressService)
     : CrudServiceBase<Congregation, 
@@ -21,39 +23,81 @@ public class CongregationService(IMapper mapper,
             CongregationUpdateRequestDto>(mapper, repository, unitOfWork),
         ICongregationService
 {
-    public async Task<CongregationDto> SetOrganistsAsync(long congregationId, List<long> organistIds, CancellationToken cancellationToken = default)
+    public override Task<PagedResultDto<CongregationDto>> GetAllAsync(CongregationPagedAndSortedRequest request, CancellationToken cancellationToken,
+        ISpecification<Congregation>? specification = null)
     {
-        await using var transaction = 
-            await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
+        specification = new CongregationSpecification(request);
+        return base.GetAllAsync(request, cancellationToken, specification);
+    }
+
+    public async Task<CongregationDto> SetOrganistsAsync(
+        long congregationId,
+        List<OrganistDaysDto> organistsDays,
+        CancellationToken cancellationToken = default)
+    {
+        await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
             var congregation = await repository.GetByIdAsync(congregationId, cancellationToken);
             if (congregation == null)
                 throw new NotFoundException(Messages.Format(Messages.NotFound, "Congregação"));
 
+            var organistIds = organistsDays.Select(x => x.OrganistId).ToList();
             var organists = await organistRepository.GetByIdsAsync(organistIds, cancellationToken);
 
-            foreach (var organist in organists)
+            foreach (var organistDays in organistsDays)
             {
-                organist.CongregationId = congregation.Id;
-                organist.Congregation = congregation;
-                await organistRepository.UpdateAsync(organist, cancellationToken);
+                // Se não vier dias, usa os dias da congregation
+                var days = (organistDays.DaysOfService == null || !organistDays.DaysOfService.Any())
+                    ? congregation.DaysOfService.ToArray()
+                    : organistDays.DaysOfService;
+
+                var existing = congregation.CongregationOrganists
+                    .FirstOrDefault(co => co.OrganistId == organistDays.OrganistId);
+
+                if (existing != null)
+                {
+                    existing.OrganistServiceDaysOfWeek = days;
+                }
+                else
+                {
+                    var organist = organists.First(o => o.Id == organistDays.OrganistId);
+                    congregation.CongregationOrganists.Add(new CongregationOrganist
+                    {
+                        CongregationId = congregation.Id,
+                        OrganistId = organist.Id,
+                        Organist = organist,
+                        Congregation = congregation,
+                        OrganistServiceDaysOfWeek = days
+                    });
+                }
             }
 
-            congregation.Organists = mapper.Map<ICollection<Organist>?>(organists);
-            
             await repository.UpdateAsync(congregation, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            
             await transaction.CommitAsync(cancellationToken);
-            
-            return await Task.FromResult(mapper.Map<CongregationDto>(congregation));
+            return mapper.Map<CongregationDto>(congregation);
         }
-        catch (Exception e)
+        catch
         {
             await transaction.RollbackAsync(cancellationToken);
             throw;
         }
+    }
+    
+    public async Task<List<CongregationOrganistsDto>> GetCongregationOrganistsAsync(long congregationId,
+        CancellationToken cancellationToken = default)
+    {
+        var congregationOrganists = await congregationOrganistRepository.GetByCongregationAsync(congregationId, cancellationToken);
+
+        return congregationOrganists.Select(o => new CongregationOrganistsDto
+        {
+            OrganistId = o.Organist.Id,
+            CongregationId = o.Congregation.Id,
+            Level = o.Organist.Level,
+            Sequence = o.Sequence,
+            OrganistServiceDaysOfWeek = o.OrganistServiceDaysOfWeek
+        }).ToList();
     }
 
     public async Task<CongregationDto> CreateAsync(CongregationCreateRequestDto dto, CancellationToken cancellationToken = default)
@@ -78,6 +122,7 @@ public class CongregationService(IMapper mapper,
             var congregation = new Congregation()
             {
                 AddressId = address?.Id,
+                RelatorioBrasCode = dto.RelatorioBrasCode,
                 Name = dto.Name,
                 DaysOfService = dto.DaysOfService,
                 HasYouthMeetings = dto.HasYouthMeetings
