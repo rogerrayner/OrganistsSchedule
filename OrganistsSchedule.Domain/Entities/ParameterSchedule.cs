@@ -7,4 +7,5 @@ public sealed class ParameterSchedule: AuditableEntityBase
     public required long CongregationId { get; set; }
     public required DateTime StartDate { get; set; }
     public required DateTime EndDate { get; set; }
+
 }

@@ -16,6 +16,11 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
         builder
             .HasIndex(x => x.Id)
             .IsUnique();
+
+        builder
+            .HasIndex(x => x.RelatorioBrasCode)
+            .IsUnique();
+        
         builder
             .HasIndex(x => new
             {
@@ -30,14 +35,6 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
         builder
             .HasKey(x => x.Id);
         
-        #endregion
-        
-        #region Relationships
-        builder
-            .HasMany(x => x.Organists)
-            .WithOne(x => x.Congregation)
-            .OnDelete(DeleteBehavior.Cascade);
-
         #endregion
         
         #region Properties

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Infra.Data.Identity;
 
@@ -11,6 +12,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public virtual DbSet<Organist> Organists { get; set; }
     public virtual DbSet<Congregation> Congregations { get; set; }
+    public virtual DbSet<CongregationOrganist> CongregationOrganists { get; set; }
     public virtual DbSet<HolyService> HolyServices { get; set; }
     public virtual DbSet<ParameterSchedule> ParametersSchedules { get; set; }
     public virtual DbSet<Cep> Ceps { get; set; }
@@ -22,6 +24,18 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+            v => v.Kind == DateTimeKind.Unspecified ? DateTime.SpecifyKind(v, DateTimeKind.Utc) : v.ToUniversalTime(),
+            v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+        );
+
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            foreach (var property in entityType.GetProperties().Where(p => p.ClrType == typeof(DateTime)))
+            {
+                property.SetValueConverter(dateTimeConverter);
+            }
+        }
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         

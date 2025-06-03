@@ -12,7 +12,7 @@ using OrganistsSchedule.Infra.Data;
 namespace OrganistsSchedule.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250517235647_InitMigrations")]
+    [Migration("20250603030938_InitMigrations")]
     partial class InitMigrations
     {
         /// <inheritdoc />
@@ -20,10 +20,32 @@ namespace OrganistsSchedule.Infra.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("CongregationOrganist", b =>
+                {
+                    b.Property<long>("CongregationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OrganistId")
+                        .HasColumnType("bigint");
+
+                    b.PrimitiveCollection<int[]>("OrganistServiceDaysOfWeek")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CongregationId", "OrganistId");
+
+                    b.HasIndex("OrganistId");
+
+                    b.ToTable("CONGREGATION_ORGANISTS", (string)null);
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
                 {
@@ -201,360 +223,370 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 1L,
                             CepId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 284L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 2L,
                             CepId = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 583L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 3L,
                             CepId = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 400L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 4L,
                             CepId = 4L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 1549L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 5L,
                             CepId = 5L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 44L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 6L,
                             CepId = 6L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 76L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 7L,
                             CepId = 7L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 340L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 8L,
                             CepId = 8L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 97L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 9L,
                             CepId = 9L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 75L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 10L,
                             CepId = 10L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 13491L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 11L,
                             CepId = 11L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 52L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 12L,
                             CepId = 12L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 1123L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 13L,
                             CepId = 13L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 10L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 14L,
                             CepId = 14L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 678L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 15L,
                             CepId = 15L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 112L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 16L,
                             CepId = 16L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 806L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 17L,
                             CepId = 17L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 352L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 18L,
                             CepId = 18L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 201L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 19L,
                             CepId = 19L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 452L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 20L,
                             CepId = 20L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 70L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 21L,
                             CepId = 21L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 337L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 22L,
                             CepId = 22L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 140L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 23L,
                             CepId = 23L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            StreetNumber = 129L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            StreetNumber = 1188L,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 24L,
                             CepId = 24L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 228L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 25L,
                             CepId = 25L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 1445L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 26L,
                             CepId = 26L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 1415L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 27L,
                             CepId = 27L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 235L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 28L,
                             CepId = 28L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 699L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 29L,
                             CepId = 29L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 252L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 30L,
                             CepId = 30L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 63L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 31L,
                             CepId = 31L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 690L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 32L,
                             CepId = 32L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 177L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 33L,
                             CepId = 33L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 55L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 34L,
                             CepId = 34L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 42L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 35L,
                             CepId = 35L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 415L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 36L,
                             CepId = 36L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             StreetNumber = 599L,
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = 0L
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            CepId = 37L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 0L,
+                            StreetNumber = 74L,
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         });
                 });
@@ -617,11 +649,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 1L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Adhemar Garcia",
                             Street = "Rua Barra Santa Salete",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89230792"
                         },
@@ -629,11 +661,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 2L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Fátima",
                             Street = "Rua Anêmonas",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89229040"
                         },
@@ -641,11 +673,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 3L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Boa Vista",
                             Street = "Rua Erhard Wetzel",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89205306"
                         },
@@ -653,11 +685,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 4L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Bom Retiro",
                             Street = "Rua Piratuba",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89222365"
                         },
@@ -665,11 +697,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 5L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Canto do Rio",
                             Street = "Rua Volans",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89226730"
                         },
@@ -677,11 +709,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 6L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Comasa",
                             Street = "Servidão São Jerônimo Emiliane",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89224405"
                         },
@@ -689,11 +721,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 7L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Costa e Silva",
                             Street = "Rua Helena Degelmann",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89218580"
                         },
@@ -701,11 +733,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 8L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Cubatão",
                             Street = "Rua Nossa Senhora dos Anjos",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89226820"
                         },
@@ -713,11 +745,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 9L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Canela",
                             Street = "Rua Emílio Hardt",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89239560"
                         },
@@ -725,11 +757,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 10L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Centro",
                             Street = "Rua Joinville",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89239220"
                         },
@@ -737,11 +769,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 11L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Rio Bonito",
                             Street = "Rua Theodoro Brietzig",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89239740"
                         },
@@ -749,11 +781,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 12L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Escolinha",
                             Street = "Rua Boehmerwald",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89232485"
                         },
@@ -761,11 +793,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 13L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Espinheiros",
                             Street = "Rua Bertoldo Berkembrock",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89228760"
                         },
@@ -773,11 +805,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 14L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Fátima",
                             Street = "Rua Fátima",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89210681"
                         },
@@ -785,11 +817,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 15L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Floresta",
                             Street = "Rua São Lourenço do Oeste",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89212115"
                         },
@@ -797,11 +829,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 16L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Iririú",
                             Street = "Rua Deputado Lauro Carneiro de Loyola",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89227250"
                         },
@@ -809,11 +841,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 17L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim das Oliveiras",
                             Street = "Rua Paula Mayerle Wulf",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89209268"
                         },
@@ -821,11 +853,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 18L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Edilene",
                             Street = "Avenida Aulo Abrahão Francisco",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89234173"
                         },
@@ -833,11 +865,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 19L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Iririú",
                             Street = "Avenida Odilon Rocha Ferreira",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89224424"
                         },
@@ -845,11 +877,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 20L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Paraíso",
                             Street = "Rua Canis Major",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89226618"
                         },
@@ -857,11 +889,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 21L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Sofia",
                             Street = "Rua Professor Eunaldo Verdi",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89223620"
                         },
@@ -869,11 +901,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 22L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jativoca",
                             Street = "Rua Santa Marta",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89214720"
                         },
@@ -881,23 +913,23 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 23L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Loteamento São Francisco II",
-                            Street = "Rua Nerides",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Street = "Rua Delphinus",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
-                            ZipCode = "89226686"
+                            ZipCode = "89226666"
                         },
                         new
                         {
                             Id = 24L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Loteamento Tahiti",
                             Street = "Rua Adele Hille",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89233780"
                         },
@@ -905,11 +937,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 25L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Morro do Meio",
                             Street = "Estrada Lagoinha",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89215200"
                         },
@@ -917,11 +949,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 26L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Nova Brasília",
                             Street = "Rua Minas Gerais",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89213300"
                         },
@@ -929,11 +961,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 27L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Paranaguamirim",
                             Street = "Rua Esmirna",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89231740"
                         },
@@ -941,11 +973,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 28L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Parque Joinville",
                             Street = "Avenida Miguel Alves Castanha",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89225795"
                         },
@@ -953,11 +985,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 29L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Petrópolis",
                             Street = "Rua Bauru",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89208870"
                         },
@@ -965,11 +997,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 30L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Pinotti",
                             Street = "Rua Paranaguamirim",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89234100"
                         },
@@ -977,11 +1009,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 31L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Pitaguaras",
                             Street = "Rua do Campo",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89215110"
                         },
@@ -989,11 +1021,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 32L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Profipo",
                             Street = "Rua Cidade de Sumidouro",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89233240"
                         },
@@ -1001,11 +1033,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 33L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Santa Barbara",
                             Street = "Rua Dezoito de Janeiro",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89225884"
                         },
@@ -1013,11 +1045,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 34L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Ulysses Guimarães",
                             Street = "Rua Professor Avelino Marcante",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89230650"
                         },
@@ -1025,11 +1057,11 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 35L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Vila Nova",
                             Street = "Rua Joaquim Girardi",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89237110"
                         },
@@ -1037,13 +1069,25 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 36L,
                             CityId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Vila Paraná",
                             Street = "Rua Carmem Miranda",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
                             ZipCode = "89228250"
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            CityId = 1L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 0L,
+                            District = "Zona Industrial Norte",
+                            Street = "Rua Ricardo Alberto Mebs",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = 0L,
+                            ZipCode = "89219655"
                         });
                 });
 
@@ -1095,10 +1139,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         {
                             Id = 1L,
                             CountryId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             Name = "Joinville",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         });
                 });
@@ -1134,6 +1178,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("RelatorioBrasCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -1150,439 +1198,491 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasIndex("Name")
                         .HasDatabaseName("IX_CONGREGATION_NAME");
 
+                    b.HasIndex("RelatorioBrasCode")
+                        .IsUnique();
+
                     b.ToTable("CONGREGATIONS", (string)null);
 
                     b.HasData(
                         new
                         {
+                            Id = 3L,
+                            AddressId = 3L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 0L,
+                            DaysOfService = new[] { 0, 3, 2, 6 },
+                            HasYouthMeetings = true,
+                            Name = "Central - Boa Vista",
+                            RelatorioBrasCode = "BR200029",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = 0L
+                        },
+                        new
+                        {
                             Id = 1L,
                             AddressId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Adhemar Garcia",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200577",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 2L,
                             AddressId = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 2 },
                             HasYouthMeetings = true,
                             Name = "Areião do Fátima",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedBy = 0L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            AddressId = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatedBy = 0L,
-                            DaysOfService = new[] { 0, 3, 2, 6 },
-                            HasYouthMeetings = true,
-                            Name = "Central - Boa Vista",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200553",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 4L,
                             AddressId = 4L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Bom Retiro",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200384",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 5L,
                             AddressId = 5L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Canto do Rio",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200613",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 6L,
                             AddressId = 6L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 2, 6 },
                             HasYouthMeetings = true,
                             Name = "Comasa",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200669",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 7L,
                             AddressId = 7L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Costa e Silva",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200070",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 8L,
                             AddressId = 8L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Cubatão",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200219",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 9L,
                             AddressId = 9L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Distrito Pirabeiraba - Canela",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200149",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 10L,
                             AddressId = 10L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 4 },
                             HasYouthMeetings = true,
                             Name = "Distrito Pirabeiraba - Centro",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200535",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 11L,
                             AddressId = 11L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Distrito Pirabeiraba - Rio Bonito",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200583",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 12L,
                             AddressId = 12L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Escolinha",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200109",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 13L,
                             AddressId = 13L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Espinheiros",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200274",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 14L,
                             AddressId = 14L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Fátima",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200073",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 15L,
                             AddressId = 15L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Floresta",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200343",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 16L,
                             AddressId = 16L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Iririú",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200058",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 17L,
                             AddressId = 17L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Jardim das Oliveiras",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200546",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 18L,
                             AddressId = 18L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 2, 6 },
                             HasYouthMeetings = true,
                             Name = "Jardim Edilene",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200547",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 19L,
                             AddressId = 19L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Jardim Iririú",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200554",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 20L,
                             AddressId = 20L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Jardim Paraíso",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200137",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 21L,
                             AddressId = 21L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 4 },
                             HasYouthMeetings = true,
                             Name = "Jardim Sofia",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200582",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 22L,
                             AddressId = 22L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 4 },
                             HasYouthMeetings = true,
                             Name = "Jativoca",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200242",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 23L,
                             AddressId = 23L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Loteamento São Francisco II",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200587",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 24L,
                             AddressId = 24L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 2 },
                             HasYouthMeetings = true,
                             Name = "Loteamento Tahiti",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200575",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 25L,
                             AddressId = 25L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Morro do Meio",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200110",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 26L,
                             AddressId = 26L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 1, 2, 6 },
                             HasYouthMeetings = true,
                             Name = "Nova Brasília",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200195",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 27L,
                             AddressId = 27L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3, 5 },
                             HasYouthMeetings = true,
                             Name = "Paranaguamirim",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200184",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 28L,
                             AddressId = 28L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Parque Joinville",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200220",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 29L,
                             AddressId = 29L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Petrópolis",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200555",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 30L,
                             AddressId = 30L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 4 },
                             HasYouthMeetings = true,
                             Name = "Pinotti",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200584",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 31L,
                             AddressId = 31L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Pitaguaras",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200610",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 32L,
                             AddressId = 32L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 4 },
                             HasYouthMeetings = true,
                             Name = "Profipo",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200221",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 33L,
                             AddressId = 33L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 2, 6 },
                             HasYouthMeetings = true,
                             Name = "Santa Barbara",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200590",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 34L,
                             AddressId = 34L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 3 },
                             HasYouthMeetings = true,
                             Name = "Ulysses Guimarães",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200544",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 35L,
                             AddressId = 35L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 3, 6 },
                             HasYouthMeetings = true,
                             Name = "Vila Nova",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200222",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 36L,
                             AddressId = 36L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             DaysOfService = new[] { 0, 5 },
                             HasYouthMeetings = true,
                             Name = "Vila Paraná",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RelatorioBrasCode = "BR200306",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            UpdatedBy = 0L
+                        },
+                        new
+                        {
+                            Id = 37L,
+                            AddressId = 37L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 0L,
+                            DaysOfService = new[] { 0, 5 },
+                            HasYouthMeetings = false,
+                            Name = "Anaburgo",
+                            RelatorioBrasCode = "BR200687",
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         });
                 });
@@ -1627,10 +1727,10 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             Name = "Brasil",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         });
                 });
@@ -1741,11 +1841,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<long?>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("CongregationId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Cpf")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("character varying(11)");
 
@@ -1766,13 +1862,6 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<long?>("PhoneId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Sequence")
-                        .HasColumnType("integer");
-
-                    b.PrimitiveCollection<int[]>("ServicesDaysOfWeek")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
-
                     b.Property<string>("ShortName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -1786,11 +1875,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Cpf");
-
                     b.HasIndex("AddressId");
-
-                    b.HasIndex("CongregationId");
 
                     b.HasIndex("Id")
                         .IsUnique();
@@ -1804,281 +1889,241 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            Cpf = "12345678909",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "77781670000",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Alzenir",
+                            FullName = "Alzenir da Silva Souza",
                             Level = 2,
-                            Sequence = 1,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Alzenir",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 2L,
-                            Cpf = "98765432100",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "65110149089",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Jemima",
+                            FullName = "Jemima Oliveira Costa",
                             Level = 2,
-                            Sequence = 2,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Jemima",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 3L,
-                            Cpf = "45678912365",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "45555585020",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Valdete",
+                            FullName = "Valdete Pereira Lima",
                             Level = 2,
-                            Sequence = 3,
-                            ServicesDaysOfWeek = new[] { 2 },
                             ShortName = "Valdete",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 4L,
-                            Cpf = "65432198734",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "73552078061",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Joana",
+                            FullName = "Joana Martins Souza",
                             Level = 2,
-                            Sequence = 4,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Joana",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 5L,
-                            Cpf = "32165498729",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "49709279017",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Rosemari",
+                            FullName = "Rosemari Alves Pinto",
                             Level = 2,
-                            Sequence = 5,
-                            ServicesDaysOfWeek = new[] { 2 },
                             ShortName = "Rosemari",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 6L,
-                            Cpf = "98732165473",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "02016533030",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Camila",
+                            FullName = "Camila Souza Lima",
                             Level = 2,
-                            Sequence = 6,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Camila",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 7L,
-                            Cpf = "12378945601",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "33913742093",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Priscila",
+                            FullName = "Priscila Andrade Melo",
                             Level = 2,
-                            Sequence = 7,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Priscila",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 8L,
-                            Cpf = "65498732185",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "47085758074",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Joanita",
+                            FullName = "Joanita Silva Costa",
                             Level = 2,
-                            Sequence = 8,
-                            ServicesDaysOfWeek = new[] { 6, 0 },
                             ShortName = "Joanita",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 9L,
-                            Cpf = "78945612322",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "23333775000",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Vanderleia",
+                            FullName = "Vanderleia Souza Lima",
                             Level = 2,
-                            Sequence = 9,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Vanderleia",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 10L,
-                            Cpf = "32198765498",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "91112746030",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Ana Paula",
+                            FullName = "Ana Paula Fernandes",
                             Level = 3,
-                            Sequence = 10,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Ana Paula",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 11L,
-                            Cpf = "65412398756",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "43417000068",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Amanda",
+                            FullName = "Amanda Ribeiro Costa",
                             Level = 2,
-                            Sequence = 11,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Amanda",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 12L,
-                            Cpf = "45698712344",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "87388819002",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Hallen",
+                            FullName = "Hallen Martins Souza",
                             Level = 2,
-                            Sequence = 12,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Hallen",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 13L,
-                            Cpf = "78912345655",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "84081083010",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Solange",
+                            FullName = "Solange Pereira Lima",
                             Level = 2,
-                            Sequence = 13,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Solange",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 14L,
-                            Cpf = "12345698766",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "87771172040",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Dinorá",
+                            FullName = "Dinorá Souza Pinto",
                             Level = 2,
-                            Sequence = 14,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Dinorá",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 15L,
-                            Cpf = "98712345632",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "26516790035",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Rosangela",
+                            FullName = "Rosangela Lima Costa",
                             Level = 2,
-                            Sequence = 15,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Rosangela",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 16L,
-                            Cpf = "65478912310",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "77218566049",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Sarah",
+                            FullName = "Sarah Martins Souza",
                             Level = 2,
-                            Sequence = 16,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Sarah",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 17L,
-                            Cpf = "45612398721",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "65914758009",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Luciana",
+                            FullName = "Luciana Pereira Lima",
                             Level = 2,
-                            Sequence = 17,
-                            ServicesDaysOfWeek = new[] { 3, 6, 0 },
                             ShortName = "Luciana",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 18L,
-                            Cpf = "78932145688",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "39464202068",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Manoela",
+                            FullName = "Manoela Souza Pinto",
                             Level = 1,
-                            Sequence = 18,
-                            ServicesDaysOfWeek = new[] { 0 },
                             ShortName = "Manoela",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 19L,
-                            Cpf = "12365478966",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "56503344040",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Kauany",
+                            FullName = "Kauany Martins Souza",
                             Level = 1,
-                            Sequence = 19,
-                            ServicesDaysOfWeek = new[] { 0 },
                             ShortName = "Kauany",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         },
                         new
                         {
                             Id = 20L,
-                            Cpf = "98765412333",
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Cpf = "16894804087",
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
-                            FullName = "Mônica",
+                            FullName = "Mônica Pereira Lima",
                             Level = 1,
-                            Sequence = 20,
-                            ServicesDaysOfWeek = new[] { 0 },
                             ShortName = "Mônica",
-                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L
                         });
                 });
@@ -2142,8 +2187,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<bool>("IsPrimary")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("Number")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<long?>("OrganistId")
                         .HasColumnType("bigint");
@@ -2236,6 +2282,25 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("CongregationOrganist", b =>
+                {
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
+                        .WithMany("CongregationOrganists")
+                        .HasForeignKey("CongregationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Organist", "Organist")
+                        .WithMany("CongregationOrganists")
+                        .HasForeignKey("OrganistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Congregation");
+
+                    b.Navigation("Organist");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
@@ -2366,14 +2431,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AddressId");
 
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Congregation", "Congregation")
-                        .WithMany("Organists")
-                        .HasForeignKey("CongregationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.Navigation("Address");
-
-                    b.Navigation("Congregation");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
@@ -2399,11 +2457,13 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Congregation", b =>
                 {
-                    b.Navigation("Organists");
+                    b.Navigation("CongregationOrganists");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Organist", b =>
                 {
+                    b.Navigation("CongregationOrganists");
+
                     b.Navigation("Emails");
 
                     b.Navigation("PhoneNumber");

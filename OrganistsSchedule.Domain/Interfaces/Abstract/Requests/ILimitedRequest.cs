@@ -1,6 +1,6 @@
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ILimitedResultRequest
+public interface ILimitedRequest
 {
     int MaxCount { get; set; }
 }

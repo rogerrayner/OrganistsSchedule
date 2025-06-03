@@ -17,8 +17,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\Request\" />
-      <Folder Include="DTOs\Response\" />
+      <Reference Include="Microsoft.AspNetCore.Authorization">
+        <HintPath>..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.5\Microsoft.AspNetCore.Authorization.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+        <HintPath>..\..\..\.dotnet\packs\Microsoft.AspNetCore.App.Ref\9.0.0-rc.1.24452.1\ref\net9.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+        <HintPath>..\..\..\.dotnet\packs\Microsoft.AspNetCore.App.Ref\9.0.0-rc.1.24452.1\ref\net9.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

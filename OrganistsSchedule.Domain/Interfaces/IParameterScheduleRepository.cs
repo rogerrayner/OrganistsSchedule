@@ -4,7 +4,7 @@ namespace OrganistsSchedule.Domain.Interfaces;
 
 public interface IParameterScheduleRepository: IRepositoryBase<ParameterSchedule>
 {
-    ParameterSchedule GetByRangeDateAndCongregationIdAsync(long congregationId, 
+    Task<ParameterSchedule> GetByRangeDateAndCongregationIdAsync(long congregationId, 
         DateTime startDate, 
         DateTime endDate,
         CancellationToken cancellationToken = default);

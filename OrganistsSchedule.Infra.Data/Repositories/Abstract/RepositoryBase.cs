@@ -1,5 +1,6 @@
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
+using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
@@ -10,26 +11,53 @@ public abstract class RepositoryBase<TEntity>(DbContext _context)
 {
     private readonly DbSet<TEntity> _dbSet = _context.Set<TEntity>();
     
-    public virtual async Task<List<TEntity>> GetAllAsync(CancellationToken cancellationToken)
+    private IQueryable<TEntity> CreateFilteredQuery(ISpecification<TEntity>? specification = null)
     {
-        var query = CreateFilteredQuery();
-        query = IncludeChildren(query);
-        return await query.ToListAsync();
-    }
+        var query = _dbSet.AsQueryable();
+        
+        if (specification != null)
+            query = specification.Apply(query);
 
-    public virtual IQueryable<TEntity> CreateFilteredQuery()
-    {
-        return _dbSet.AsQueryable();
+        return query;
     }
     
     protected virtual IQueryable<TEntity> IncludeChildren(IQueryable<TEntity> query)
     {
         return query;
     }
+    
+    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IPagedAndSortedRequest request,
+        CancellationToken cancellationToken,
+        ISpecification<TEntity>? specification = null)
+    {
+        var query = CreateFilteredQuery(specification);
+        
+        query = IncludeChildren(query);
+
+        if (request.SkipCount > 0)
+            query = query.Skip(request.SkipCount);
+
+        if (request.MaxCount > 0)
+            query = query.Take(Math.Min(request.PageSize, request.MaxCount));
+        else
+            query = query.Take(request.PageSize);
+
+        return await query.ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<int> CountAsync(IPagedAndSortedRequest request, 
+        CancellationToken cancellationToken = default,
+        ISpecification<TEntity>? specification = null)
+    {
+        var query = CreateFilteredQuery(specification);
+        query = IncludeChildren(query);
+        return await query.CountAsync(cancellationToken);
+    }
 
     public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
-        var query = IncludeChildren(_dbSet.AsQueryable());
+        var query = _dbSet.AsQueryable();
+        query = IncludeChildren(query);
         return await query.FirstOrDefaultAsync(e => EF.Property<long>(e, "Id") == id);
     }
 
@@ -51,19 +79,19 @@ public abstract class RepositoryBase<TEntity>(DbContext _context)
         return entity;
     }
 
-    public virtual async Task<ICollection<TEntity>> BulkDeleteAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual async Task<IEnumerable<TEntity>> BulkDeleteAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
     {
         await _context.BulkDeleteAsync(entities);
         return entities;
     }
 
-    public virtual async Task<ICollection<TEntity>> BulkUpdateAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual async Task<IEnumerable<TEntity>> BulkUpdateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
     {
         await _context.BulkUpdateAsync(entities);
         return entities;
     }
 
-    public virtual async Task<ICollection<TEntity>> BulkCreateAsync(ICollection<TEntity> entities, CancellationToken cancellationToken)
+    public virtual async Task<IEnumerable<TEntity>> BulkCreateAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
     {
         await _context.BulkInsertAsync(entities);
         return entities;

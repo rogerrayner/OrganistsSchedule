@@ -7,7 +7,10 @@ using OrganistsSchedule.Domain.Interfaces;
 namespace OrganistsSchedule.Application.Services;
 
 public class PhoneService(IMapper mapper, IPhoneRepository repository, IUnitOfWork unitOfWork) 
-    : CrudServiceBase<Phone, PhoneDto, PhoneCreateUpdateRequestDto>(mapper, repository, unitOfWork),
+    : CrudServiceBase<Phone, 
+            PhoneDto, 
+            PhonePagedAndSortedRequest,
+            PhoneCreateUpdateRequestDto>(mapper, repository, unitOfWork),
         IPhoneService
 {
 
