@@ -12,11 +12,7 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
         builder.ToTable("CONGREGATIONS");
 
         #region Index
-
-        builder
-            .HasIndex(x => x.Id)
-            .IsUnique();
-
+        
         builder
             .HasIndex(x => x.RelatorioBrasCode)
             .IsUnique();
@@ -37,6 +33,16 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
         
         #endregion
         
+        #region Relationships
+        
+        builder
+            .HasOne(x => x.Address)
+            .WithOne()
+            .HasForeignKey<Congregation>(x => x.AddressId)
+            .OnDelete(DeleteBehavior.Cascade); 
+        
+        #endregion
+        
         #region Properties
         builder
             .Property(x => x.Id)
@@ -44,8 +50,12 @@ public class CongregationConfiguration : IEntityTypeConfiguration<Congregation>
             .ValueGeneratedOnAdd();
 
         builder
+            .Property(x => x.RelatorioBrasCode)
+            .IsRequired();
+
+        builder
             .Property(x => x.Name)
-            .HasMaxLength(200);
+            .HasMaxLength(70);
 
         builder
             .Property(x => x.HasYouthMeetings)

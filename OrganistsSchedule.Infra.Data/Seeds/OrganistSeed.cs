@@ -7,7 +7,7 @@ public static class OrganistSeed
 {
     private static ICollection<Organist> _organists =
     [
-        new Organist("77781670000")
+        new Organist()
         {
             Id = 1,
             FullName = "Alzenir da Silva Souza",
@@ -15,7 +15,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("65110149089")
+        new Organist()
         {
             Id = 2,
             FullName = "Jemima Oliveira Costa",
@@ -23,7 +23,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("45555585020")
+        new Organist()
         {
             Id = 3,
             FullName = "Valdete Pereira Lima",
@@ -31,7 +31,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("73552078061")
+        new Organist()
         {
             Id = 4,
             FullName = "Joana Martins Souza",
@@ -39,7 +39,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("49709279017")
+        new Organist()
         {
             Id = 5,
             FullName = "Rosemari Alves Pinto",
@@ -47,7 +47,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("02016533030")
+        new Organist()
         {
             Id = 6,
             FullName = "Camila Souza Lima",
@@ -55,7 +55,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("33913742093")
+        new Organist()
         {
             Id = 7,
             FullName = "Priscila Andrade Melo",
@@ -63,7 +63,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("47085758074")
+        new Organist()
         {
             Id = 8,
             FullName = "Joanita Silva Costa",
@@ -71,7 +71,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("23333775000")
+        new Organist()
         {
             Id = 9,
             FullName = "Vanderleia Souza Lima",
@@ -79,7 +79,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("91112746030")
+        new Organist()
         {
             Id = 10,
             FullName = "Ana Paula Fernandes",
@@ -87,7 +87,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService | OrganistsLevelEnum.YouthMeeting,
         },
 
-        new Organist("43417000068")
+        new Organist()
         {
             Id = 11,
             FullName = "Amanda Ribeiro Costa",
@@ -95,7 +95,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("87388819002")
+        new Organist()
         {
             Id = 12,
             FullName = "Hallen Martins Souza",
@@ -103,7 +103,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("84081083010")
+        new Organist()
         {
             Id = 13,
             FullName = "Solange Pereira Lima",
@@ -111,7 +111,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("87771172040")
+        new Organist()
         {
             Id = 14,
             FullName = "Dinorá Souza Pinto",
@@ -119,7 +119,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("26516790035")
+        new Organist()
         {
             Id = 15,
             FullName = "Rosangela Lima Costa",
@@ -127,7 +127,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("77218566049")
+        new Organist()
         {
             Id = 16,
             FullName = "Sarah Martins Souza",
@@ -135,7 +135,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("65914758009")
+        new Organist()
         {
             Id = 17,
             FullName = "Luciana Pereira Lima",
@@ -143,7 +143,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.HolyService
         },
 
-        new Organist("39464202068")
+        new Organist()
         {
             Id = 18,
             FullName = "Manoela Souza Pinto",
@@ -151,7 +151,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.YouthMeeting
         },
 
-        new Organist("56503344040")
+        new Organist()
         {
             Id = 19,
             FullName = "Kauany Martins Souza",
@@ -159,7 +159,7 @@ public static class OrganistSeed
             Level = OrganistsLevelEnum.YouthMeeting
         },
 
-        new Organist("16894804087")
+        new Organist()
         {
             Id = 20,
             FullName = "Mônica Pereira Lima",

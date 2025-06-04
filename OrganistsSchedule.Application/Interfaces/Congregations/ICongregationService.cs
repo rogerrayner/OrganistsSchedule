@@ -7,7 +7,7 @@ public interface ICongregationService : ICrudServiceBase<Congregation,
     CongregationDto, 
     CongregationPagedAndSortedRequest, 
     CongregationCreateRequestDto, 
-    CongregationUpdateRequestDto>
+    CongregationCreateRequestDto>
 {
     Task<CongregationDto> SetOrganistsAsync(
         long congregationId,

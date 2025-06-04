@@ -15,12 +15,6 @@ public class OrganistRepository(ApplicationDbContext context)
             .Include(x => x.Emails)
             .Include(x => x.PhoneNumber);
     }
-    
-    public async Task<Organist?> GetByCpfAsync(string cpf, CancellationToken cancellationToken = default)
-    {
-        return await context.Organists
-            .FirstOrDefaultAsync(x => x.Cpf == cpf, cancellationToken);
-    }
 
     public async Task<IEnumerable<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default)
     {

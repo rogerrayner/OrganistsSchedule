@@ -39,7 +39,7 @@ public class CountryConfiguration: IEntityTypeConfiguration<Country>
 
         builder
             .Property(x => x.Name)
-            .HasMaxLength(100)
+            .HasMaxLength(60)
             .IsRequired();
         
         #endregion

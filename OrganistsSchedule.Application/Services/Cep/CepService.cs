@@ -79,6 +79,7 @@ public class CepService(ICepRepository repository,
             cep = new Cep
             {
                 ZipCode = Regex.Replace(viaCepResult.ZipCode ?? string.Empty, @"\D", ""),
+                State = viaCepResult.StateInitials,
                 Street = viaCepResult.Street,
                 District = viaCepResult.Neighborhood
             };

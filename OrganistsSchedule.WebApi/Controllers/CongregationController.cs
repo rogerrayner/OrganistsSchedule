@@ -14,7 +14,7 @@ public class CongregationController(ICongregationService serviceBase, IMapper ma
         CongregationDto, 
         CongregationPagedAndSortedRequest,
         CongregationCreateRequestDto, 
-        CongregationUpdateRequestDto>(serviceBase, mapper, authService)
+        CongregationCreateRequestDto>(serviceBase, mapper, authService)
 {
     
     protected override string ReadPolicy => "read:congregation";

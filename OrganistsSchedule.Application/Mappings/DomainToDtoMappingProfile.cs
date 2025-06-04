@@ -38,8 +38,6 @@ public class DomainToDtoMappingProfile : Profile
             .ReverseMap();
         CreateMap<Congregation, CongregationCreateRequestDto>()
             .ReverseMap();
-        CreateMap<Congregation, CongregationUpdateRequestDto>()
-            .ReverseMap();
         CreateMap<HolyService, HolyServiceDto>()
             .ReverseMap();
         CreateMap<Organist, OrganistDto>()

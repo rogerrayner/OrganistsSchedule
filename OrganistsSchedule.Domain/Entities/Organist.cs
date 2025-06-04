@@ -6,17 +6,6 @@ namespace OrganistsSchedule.Domain.Entities;
 
 public sealed class Organist: AuditableEntityBase
 {
-    private string? _cpf;
-    public string? Cpf
-    {
-        get => _cpf;
-        private set
-        {
-            if (!string.IsNullOrEmpty(value) && !CpfUtil.IsCpfValid(value))
-                throw new BusinessException(Messages.InvalidCpf);
-            _cpf = value;
-        }
-    }
     private string _fullName = null!;
     public required string FullName
     {
@@ -46,10 +35,6 @@ public sealed class Organist: AuditableEntityBase
     public ICollection<Email>? Emails { get; set; }
     public long? PhoneId { get; set; }
     public Phone? PhoneNumber { get; set; }
-    public Organist(string? cpf)
-    {
-        Cpf = cpf;
-    }
     public Organist() {}
     
 }

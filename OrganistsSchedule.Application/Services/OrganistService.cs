@@ -93,7 +93,7 @@ public class OrganistService(IMapper mapper,
                 
             }
 
-            var organist = new Organist(dto.Cpf)
+            var organist = new Organist()
             {
                 FullName = dto.FullName,
                 ShortName = dto.ShortName,
@@ -102,8 +102,7 @@ public class OrganistService(IMapper mapper,
                 PhoneId = phone?.Id
             };
             
-            if (await repository.GetByCpfAsync(dto.Cpf) != null)
-                throw new BusinessException(Messages.Format(Messages.CpfAlreadyExists, "Organista"));
+            //TODO: Implement validação com full + short name
             
             organist = await repository.CreateAsync(organist, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);

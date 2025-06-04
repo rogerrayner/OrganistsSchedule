@@ -41,7 +41,7 @@ public class CityConfiguration: IEntityTypeConfiguration<City>
 
         builder
             .Property(x => x.Name)
-            .HasMaxLength(150)
+            .HasMaxLength(90)
             .IsRequired();
         
         #endregion

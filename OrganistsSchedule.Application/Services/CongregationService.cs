@@ -20,7 +20,7 @@ public class CongregationService(IMapper mapper,
             CongregationDto, 
             CongregationPagedAndSortedRequest,
             CongregationCreateRequestDto, 
-            CongregationUpdateRequestDto>(mapper, repository, unitOfWork),
+            CongregationCreateRequestDto>(mapper, repository, unitOfWork),
         ICongregationService
 {
     public override Task<PagedResultDto<CongregationDto>> GetAllAsync(CongregationPagedAndSortedRequest request, CancellationToken cancellationToken,

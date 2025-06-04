@@ -38,10 +38,19 @@ public class AddressConfiguration: IEntityTypeConfiguration<Address>
 
         builder
             .Property(x => x.Complement)
-            .HasMaxLength(200);
+            .HasMaxLength(100);
         
         #endregion
         
+        #region Relationships
+        
+        builder
+            .HasOne(a => a.Cep)
+            .WithMany()
+            .HasForeignKey(a => a.CepId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        #endregion
         #region Seeds
         
         builder.HasData(
