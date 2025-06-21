@@ -1,10 +1,14 @@
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICepService: ICrudServiceBase<Cep, CepDto, CepPagedAndSortedRequest, CepCreateUpdateRequestDto>
+public interface ICepService: ICrudServiceBase<Cep, CepPagedAndSortedRequest>
 {
-    Task<CepDto> GetCepByZipCodeAsync(string cep, bool isPost, CancellationToken cancellationToken = default);
-    Task<CepDto> GetCepByOnlineServiceAsync(string cep, bool isPost, CancellationToken cancellationToken = default);
+    Task<Cep> GetCepByZipCodeAsync(string zipCode, bool searchOnline = true, CancellationToken cancellationToken = default);
+    Task<Cep> GetCepByOnlineServiceAsync(string zipCode, CancellationToken cancellationToken = default);
+    Task<List<string>> GetDistrictsByCityIdAsync(
+        long cityId,
+        CancellationToken cancellationToken = default);
 }

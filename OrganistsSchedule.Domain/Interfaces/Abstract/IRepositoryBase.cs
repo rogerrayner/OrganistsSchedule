@@ -1,12 +1,12 @@
-using System.Linq.Expressions;
-using Microsoft.VisualBasic;
-using OrganistsSchedule.Application.Interfaces;
+
+using OrganistsSchedule.Domain.Interfaces.Results;
 
 namespace OrganistsSchedule.Domain.Interfaces;
 
-public interface IRepositoryBase<TEntity>
+public interface IRepositoryBase<TEntity, TRequest>
+    where TEntity : class
 {
-    Task<IEnumerable<TEntity>> GetAllAsync(IPagedAndSortedRequest request,
+    Task<IPagedResult<TEntity>> GetAllAsync(TRequest request,
         CancellationToken cancellationToken = default,
         ISpecification<TEntity>? specification = null);
 
@@ -30,8 +30,4 @@ public interface IRepositoryBase<TEntity>
 
     Task<IEnumerable<TEntity>> BulkCreateAsync(IEnumerable<TEntity> entities,
         CancellationToken cancellationToken);
-
-    Task<int> CountAsync(IPagedAndSortedRequest request,
-        CancellationToken cancellationToken = default,
-        ISpecification<TEntity>? specification = null);
 }

@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class HolyServiceRepository(ApplicationDbContext context)
-    : RepositoryBase<HolyService>(context), IHolyServiceRepository
+public class HolyServiceRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<HolyService, TRequest>(context), IHolyServiceRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     public async Task<IEnumerable<HolyService>> GetHolyServicesByCongregationAsync(long congregationId, CancellationToken cancellationToken)
     {

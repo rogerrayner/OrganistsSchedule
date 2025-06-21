@@ -1,9 +1,10 @@
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICityService: ICrudServiceBase<City, CityDto, CityPagedAndSortedRequest, CityCreateUpdateRequestDto>
+public interface ICityService: ICrudServiceBase<City, CityPagedAndSortedRequest>
 {
-    Task<CityDto> GetByNameAsync(string name);
+    Task<City?> GetByNameAsync(string name);
 }

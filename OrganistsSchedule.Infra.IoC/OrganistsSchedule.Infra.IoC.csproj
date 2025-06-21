@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OrganistsSchedule.Application\OrganistsSchedule.Application.csproj" />
+      <ProjectReference Include="..\OrganistsSchedule.Bff\OrganistsSchedule.Bff.csproj" />
       <ProjectReference Include="..\OrganistsSchedule.Domain\OrganistsSchedule.Domain.csproj" />
       <ProjectReference Include="..\OrganistsSchedule.Infra.Data\OrganistsSchedule.Infra.Data.csproj" />
     </ItemGroup>

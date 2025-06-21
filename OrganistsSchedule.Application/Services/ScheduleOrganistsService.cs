@@ -1,7 +1,8 @@
-using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 using OrganistsSchedule.Domain.Enums;
+using OrganistsSchedule.Domain.Exceptions;
+using OrganistsSchedule.Domain.Utils;
 
 namespace OrganistsSchedule.Application.Services;
 
@@ -14,23 +15,53 @@ public class ScheduleOrganistsService(IOrganistService organistService,
     {
         var holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
         var congregation = parametersSchedule.Congregation;
-        var organists = await congregationService.GetCongregationOrganistsAsync(congregation.Id);
+        var result = await congregationService
+            .GetOrganistsByCongregationAsync(congregation.Id, cancellationToken);
 
-        if (organists != null)
+        var organists = result.Items;
+
+        if (ListValidation.IsNullOrEmpty(organists))
         {
-            //Reunião de Jovens e Menores
-            ScheduleOrganists(organists
-                    .FindAll(organist => (organist.Level & 
-                                          OrganistsLevelEnum.YouthMeeting) == OrganistsLevelEnum.YouthMeeting), 
-                holyServices.FindAll(service => service.IsYouthMeeting),
-                parametersSchedule);
+            ErrorHandler.ThrowBusinessException(Messages.GenerationSchedule1013);
+        }
+
+        var youthMeetingOrganists = organists
+            .Where(o => o.Organist.Level == OrganistsLevelEnum.YouthMeeting ||
+                        o.Organist.Level == OrganistsLevelEnum.YouthMeetingAndHolyService)
+            .ToList();
         
-            //Cultos oficiais
-            ScheduleOrganists(organists
-                    .FindAll(organist => (organist.Level & 
-                                          OrganistsLevelEnum.HolyService) == OrganistsLevelEnum.HolyService), 
-                holyServices.FindAll(service => !service.IsYouthMeeting),
+        var youthMeetingServices = holyServices
+            .FindAll(service => service.IsYouthMeeting);
+
+        if (!ListValidation.IsNullOrEmpty(youthMeetingServices)
+            && !ListValidation.IsNullOrEmpty(youthMeetingOrganists))
+        {
+            ScheduleOrganists(
+                youthMeetingOrganists,
+                youthMeetingServices,
+                parametersSchedule
+            );
+        }
+        
+        var holyServiceOrganists = organists
+            .Where(o => (o.Organist.Level & OrganistsLevelEnum.HolyService) 
+                        == OrganistsLevelEnum.HolyService)
+            .ToList();
+        
+        var holyServiceServices = holyServices
+            .FindAll(service => !service.IsYouthMeeting);
+
+        if (!ListValidation.IsNullOrEmpty(holyServiceServices)
+            && !ListValidation.IsNullOrEmpty(holyServiceOrganists))
+        {
+            ScheduleOrganists(holyServiceOrganists,
+                holyServiceServices,
                 parametersSchedule);
+        }
+
+        if (holyServices.Any(hs => hs.Organist == null))
+        {
+            ErrorHandler.ThrowBusinessException(Messages.GenerationSchedule1014);
         }
         
         return holyServices;
@@ -49,13 +80,15 @@ public class ScheduleOrganistsService(IOrganistService organistService,
                     {
                         Date = date,
                         CongregationId = parametersSchedule.CongregationId,
-                        IsYouthMeeting = true
+                        IsYouthMeeting = true,
+                        ParameterScheduleId = parametersSchedule.Id
                     });
                     holyServices.Add(new HolyService
                     {
                         Date = date,
                         CongregationId = parametersSchedule.CongregationId,
-                        IsYouthMeeting = false
+                        IsYouthMeeting = false,
+                        ParameterScheduleId = parametersSchedule.Id
                     });
                 }
                 else
@@ -64,20 +97,34 @@ public class ScheduleOrganistsService(IOrganistService organistService,
                     {
                         Date = date,
                         CongregationId = parametersSchedule.CongregationId,
-                        IsYouthMeeting = false
+                        IsYouthMeeting = false,
+                        ParameterScheduleId = parametersSchedule.Id
                     });
                 }
+            } else if (date.DayOfWeek == DayOfWeek.Sunday && parametersSchedule.Congregation.HasYouthMeetings)
+            {
+                holyServices.Add(new HolyService
+                {
+                    Date = date,
+                    CongregationId = parametersSchedule.CongregationId,
+                    IsYouthMeeting = true,
+                    ParameterScheduleId = parametersSchedule.Id
+                });
             }
         }
 
         return holyServices;
     }
     
-    private async void ScheduleOrganists(List<CongregationOrganistsDto> organists, List<HolyService> holyServices, ParameterSchedule parametersSchedule)
+    private async void ScheduleOrganists(List<CongregationOrganist> organists, 
+        List<HolyService> holyServices, 
+        ParameterSchedule parametersSchedule)
     {
         try
         {
-            var sortedOrganistsBySequence = organists.OrderBy(o => o.Sequence).ToList();
+            var sortedOrganistsBySequence = organists
+                .OrderBy(o => o.Sequence)
+                .ToList();
         
             var lastOrganistToPlayOnWeekDay = 
                 organists.ToDictionary(o => o.OrganistId, o => new Dictionary<string, DateTime?>());
@@ -108,8 +155,8 @@ public class ScheduleOrganistsService(IOrganistService organistService,
                     .Where(o =>
                         o.OrganistServiceDaysOfWeek.Contains(service.Date.DayOfWeek) &&
                         (service.IsYouthMeeting 
-                            ? (o.Level & OrganistsLevelEnum.YouthMeeting) == OrganistsLevelEnum.YouthMeeting
-                            : (o.Level & OrganistsLevelEnum.HolyService) == OrganistsLevelEnum.HolyService))
+                            ? (o.Organist.Level & OrganistsLevelEnum.YouthMeeting) == OrganistsLevelEnum.YouthMeeting
+                            : (o.Organist.Level & OrganistsLevelEnum.HolyService) == OrganistsLevelEnum.HolyService))
                     .OrderBy(o => organistWeekdayCount[o].Values.Sum())
                     .ThenBy(o => 
                         GetLeastRecentlyPlayedWeekday(o.OrganistId, service.Date, service.Date.DayOfWeek, lastOrganistToPlayOnWeekDay))
@@ -120,6 +167,7 @@ public class ScheduleOrganistsService(IOrganistService organistService,
                 {
                     var selectedOrganist = availableOrganists.First();
                     service.OrganistId = selectedOrganist.OrganistId;
+                    service.Organist = selectedOrganist.Organist;
                     organistWeekdayCount[selectedOrganist][service.Date.DayOfWeek.ToString()]++;
                     lastOrganistToPlayOnWeekDay[selectedOrganist.OrganistId][service.Date.DayOfWeek.ToString()] = service.Date;
                 }
@@ -127,13 +175,18 @@ public class ScheduleOrganistsService(IOrganistService organistService,
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             throw; 
         }
     }
     
-    private DateTime? GetLeastRecentlyPlayedWeekday(long organistId, DateTime currentDate, DayOfWeek currentDay, Dictionary<long, Dictionary<string, DateTime?>> organistLastPlayedWeekday)
+    private DateTime? GetLeastRecentlyPlayedWeekday(long organistId, 
+        DateTime currentDate, 
+        DayOfWeek currentDay, 
+        Dictionary<long, Dictionary<string, DateTime?>> organistLastPlayedWeekday)
     {
-        return organistLastPlayedWeekday[organistId].ContainsKey(currentDay.ToString()) ? organistLastPlayedWeekday[organistId][currentDay.ToString()] : null;
+        return organistLastPlayedWeekday[organistId]
+            .ContainsKey(currentDay.ToString()) ? organistLastPlayedWeekday[organistId][currentDay.ToString()] : null;
     }
     
     private static IEnumerable<DateTime> GetDays(DateTime start, DateTime end) {

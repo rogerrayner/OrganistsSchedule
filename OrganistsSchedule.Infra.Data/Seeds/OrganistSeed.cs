@@ -12,7 +12,8 @@ public static class OrganistSeed
             Id = 1,
             FullName = "Alzenir da Silva Souza",
             ShortName = "Alzenir",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -20,7 +21,8 @@ public static class OrganistSeed
             Id = 2,
             FullName = "Jemima Oliveira Costa",
             ShortName = "Jemima",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -28,7 +30,8 @@ public static class OrganistSeed
             Id = 3,
             FullName = "Valdete Pereira Lima",
             ShortName = "Valdete",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -36,7 +39,8 @@ public static class OrganistSeed
             Id = 4,
             FullName = "Joana Martins Souza",
             ShortName = "Joana",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -44,7 +48,8 @@ public static class OrganistSeed
             Id = 5,
             FullName = "Rosemari Alves Pinto",
             ShortName = "Rosemari",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -52,7 +57,8 @@ public static class OrganistSeed
             Id = 6,
             FullName = "Camila Souza Lima",
             ShortName = "Camila",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -60,7 +66,8 @@ public static class OrganistSeed
             Id = 7,
             FullName = "Priscila Andrade Melo",
             ShortName = "Priscila",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -68,7 +75,8 @@ public static class OrganistSeed
             Id = 8,
             FullName = "Joanita Silva Costa",
             ShortName = "Joanita",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -76,7 +84,8 @@ public static class OrganistSeed
             Id = 9,
             FullName = "Vanderleia Souza Lima",
             ShortName = "Vanderleia",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -85,6 +94,7 @@ public static class OrganistSeed
             FullName = "Ana Paula Fernandes",
             ShortName = "Ana Paula",
             Level = OrganistsLevelEnum.HolyService | OrganistsLevelEnum.YouthMeeting,
+            CepId = 3
         },
 
         new Organist()
@@ -92,7 +102,8 @@ public static class OrganistSeed
             Id = 11,
             FullName = "Amanda Ribeiro Costa",
             ShortName = "Amanda",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -100,7 +111,8 @@ public static class OrganistSeed
             Id = 12,
             FullName = "Hallen Martins Souza",
             ShortName = "Hallen",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -108,7 +120,8 @@ public static class OrganistSeed
             Id = 13,
             FullName = "Solange Pereira Lima",
             ShortName = "Solange",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -116,7 +129,8 @@ public static class OrganistSeed
             Id = 14,
             FullName = "Dinorá Souza Pinto",
             ShortName = "Dinorá",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -124,7 +138,8 @@ public static class OrganistSeed
             Id = 15,
             FullName = "Rosangela Lima Costa",
             ShortName = "Rosangela",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -132,7 +147,8 @@ public static class OrganistSeed
             Id = 16,
             FullName = "Sarah Martins Souza",
             ShortName = "Sarah",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -140,7 +156,8 @@ public static class OrganistSeed
             Id = 17,
             FullName = "Luciana Pereira Lima",
             ShortName = "Luciana",
-            Level = OrganistsLevelEnum.HolyService
+            Level = OrganistsLevelEnum.HolyService,
+            CepId = 3
         },
 
         new Organist()
@@ -148,7 +165,8 @@ public static class OrganistSeed
             Id = 18,
             FullName = "Manoela Souza Pinto",
             ShortName = "Manoela",
-            Level = OrganistsLevelEnum.YouthMeeting
+            Level = OrganistsLevelEnum.YouthMeeting,
+            CepId = 3
         },
 
         new Organist()
@@ -156,7 +174,8 @@ public static class OrganistSeed
             Id = 19,
             FullName = "Kauany Martins Souza",
             ShortName = "Kauany",
-            Level = OrganistsLevelEnum.YouthMeeting
+            Level = OrganistsLevelEnum.YouthMeeting,
+            CepId = 3
         },
 
         new Organist()
@@ -164,7 +183,8 @@ public static class OrganistSeed
             Id = 20,
             FullName = "Mônica Pereira Lima",
             ShortName = "Mônica",
-            Level = OrganistsLevelEnum.YouthMeeting
+            Level = OrganistsLevelEnum.YouthMeeting,
+            CepId = 3
         }
     ];
 

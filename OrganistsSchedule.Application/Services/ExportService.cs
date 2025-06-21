@@ -3,14 +3,14 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using System.Globalization;
-using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
+using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Services;
 
 public class ExportService(IMapper mapper) : IExportService
 {
-    public byte[] ExportHolyServicesToExcel(IEnumerable<HolyServiceDto> holyServices)
+    public byte[] ExportHolyServicesToExcel(IEnumerable<HolyService> holyServices)
     {
         if (holyServices == null)
             throw new ArgumentNullException(nameof(holyServices));

@@ -64,7 +64,11 @@ public class CepConfiguration: IEntityTypeConfiguration<Cep>
         #region Relationships
 
         builder
-            .HasOne(x => x.City);
+            .HasOne(x => x.City)
+            .WithMany()
+            .HasForeignKey(x => x.CityId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
         

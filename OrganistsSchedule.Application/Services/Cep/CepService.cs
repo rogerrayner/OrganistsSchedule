@@ -1,30 +1,25 @@
-using System.Data;
-using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
-using System.Text.RegularExpressions;
 using OrganistsSchedule.Application.Specifications;
-using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Domain.Interfaces.Results;
+using OrganistsSchedule.Domain.Utils;
 using ViaCep;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class CepService(ICepRepository repository, 
-    IMapper mapper, 
+public class CepService(
+    ICepRepository<CepPagedAndSortedRequest> repository, 
     IServiceProvider container, 
-    ICityRepository cityRepository, 
-    ICountryRepository countryRepository,
+    ICityRepository<CityPagedAndSortedRequest> cityRepository, 
+    ICountryRepository<CountryPagedAndSortedRequest> countryRepository,
     IUnitOfWork unitOfWork)
-    : CrudServiceBase<Cep, 
-            CepDto, 
-            CepPagedAndSortedRequest,
-            CepCreateUpdateRequestDto>(mapper, repository, unitOfWork), 
-        ICepService
+    : CrudServiceBase<Cep, CepPagedAndSortedRequest>(repository,
+            unitOfWork), ICepService
 {
-    public override Task<PagedResultDto<CepDto>> GetAllAsync(CepPagedAndSortedRequest request, 
+    public override Task<IPagedResult<Cep>> GetAllAsync(CepPagedAndSortedRequest request, 
         CancellationToken cancellationToken,
         ISpecification<Cep>? specification = null)
     { 
@@ -32,80 +27,101 @@ public class CepService(ICepRepository repository,
         return base.GetAllAsync(request, cancellationToken, specification);
     }
 
-    public async Task<CepDto> GetCepByZipCodeAsync(string zipCode,
-        bool isPost = false,
+    public override async Task<Cep> CreateAsync(Cep entity, 
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var cep = await GetCepByZipCodeAsync(entity.ZipCode, false, cancellationToken);
+
+            if (cep != null)
+                ErrorHandler.ThrowBusinessException(Messages.AlreadyExists, "Cep");
+            
+            var cepByOnlineService = await GetCepByOnlineServiceAsync(entity.ZipCode, cancellationToken);
+            
+            if (cepByOnlineService == null)
+                ErrorHandler.ThrowBusinessException(Messages.CepCreateNotFound);
+            
+            cep = new Cep
+            {
+                ZipCode = cepByOnlineService.ZipCode ?? "",
+                Street = cepByOnlineService.Street,
+                District = cepByOnlineService.District,
+                State = cepByOnlineService.State,
+                City = cepByOnlineService.City
+            };
+
+            await repository.CreateAsync(cep, cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
+            return cep;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<Cep> GetCepByZipCodeAsync(string zipCode,
+        bool searchOnline = true,
         CancellationToken cancellationToken = default)
     {
         try 
         {
             var entity =
-                mapper.Map<CepDto>(await repository
-                    .GetCepByZipCodeAsync(zipCode));
+                await repository
+                    .GetCepByZipCodeAsync(zipCode, cancellationToken);
 
-            if (entity == null)
+            if (entity == null
+                && searchOnline)
             {
-                try
-                {
-                    entity = await GetCepByOnlineServiceAsync(zipCode, isPost);
-                }
-                catch (Exception e)
-                {
-                    throw new BusinessException(Messages.Format(Messages.IntegrationError, "Via Cep"));
-                }
+                entity = await GetCepByOnlineServiceAsync(zipCode, cancellationToken);
+                if (entity == null)
+                    ErrorHandler.ThrowBusinessException(Messages.CepCreateNotFound);
             }
-            
-            if (entity == null)
-                throw new NotFoundException(Messages.Format(Messages.NotFound, "Cep"));
             
             return entity;
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
-
-    public async Task<CepDto> GetCepByOnlineServiceAsync(string zipCode, 
-        bool isPost = false, 
+    
+    public async Task<Cep> GetCepByOnlineServiceAsync(string zipCode, 
         CancellationToken cancellationToken = default)
     {
         Cep? cep = null;
-        ViaCepResult? viaCepResult = null;
         var viaCepClient = container.GetService<IViaCepClient>();
-        viaCepResult = await viaCepClient.SearchAsync(zipCode, cancellationToken);
-        if (viaCepResult != null
-            && !string.IsNullOrEmpty(viaCepResult.ZipCode))
+        var viaCepResult = await viaCepClient.SearchAsync(zipCode, cancellationToken);
+        
+        if (viaCepResult != null)
         {
+            var country = await countryRepository.GetByNameAsync("Brasil")
+                          ?? new Country { Name = "Brasil" };
+
+            var city = await cityRepository.GetByNameAsync(viaCepResult.City)
+                       ?? new City { Name = viaCepResult.City, Country = country };
+            
             cep = new Cep
             {
-                ZipCode = Regex.Replace(viaCepResult.ZipCode ?? string.Empty, @"\D", ""),
-                State = viaCepResult.StateInitials,
+                ZipCode = viaCepResult.ZipCode,
                 Street = viaCepResult.Street,
-                District = viaCepResult.Neighborhood
+                District = viaCepResult.Neighborhood,
+                State = viaCepResult.StateInitials,
+                City = city
             };
+        } else ErrorHandler.ThrowBusinessException(Messages.IntegrationError, "Via Cep");
 
-            var country = await countryRepository.GetByNameAsync("Brasil");
-            var city = await cityRepository.GetByNameAsync(viaCepResult.City);
-            if (city == null)
-            {
-                City cityCreate = new City()
-                {
-                    Name = viaCepResult.City,
-                    CountryId = country.Id
-                };
-                city = await cityRepository.CreateAsync(cityCreate, cancellationToken);
-                await unitOfWork.SaveChangesAsync(cancellationToken);
-            }
-            
-            if (isPost)
-            {
-                cep.CityId = city.Id;
-                await repository.CreateAsync(cep, cancellationToken);
-                await unitOfWork.SaveChangesAsync(cancellationToken);
-            }
-            cep.City = city;
-        }
+        return cep;
+    }
 
-        return mapper.Map<CepDto>(cep);
+    public Task<List<string>> GetDistrictsByCityIdAsync(
+        long cityId,
+        CancellationToken cancellationToken = default
+        )
+    {
+        return repository.GetDistrictsByCityIdAsync(cityId, cancellationToken);
     }
 }

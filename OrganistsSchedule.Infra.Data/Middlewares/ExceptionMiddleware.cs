@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using OrganistsSchedule.Domain.Exceptions;
+using System.Net;
 
 public class ExceptionMiddleware
 {
@@ -15,18 +16,36 @@ public class ExceptionMiddleware
         }
         catch (BusinessException ex)
         {
-            context.Response.StatusCode = 400;
-            await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            var response = new ResponseError(
+                ex.Message,
+                ex.ErrorCode,
+                ex.Details,
+                ex.StackTraceInfo ?? ex.StackTrace
+            );
+            await context.Response.WriteAsJsonAsync(response);
         }
         catch (NotFoundException ex)
         {
-            context.Response.StatusCode = 404;
-            await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+            var response = new ResponseError(
+                ex.Message,
+                null,
+                null,
+                ex.StackTrace
+            );
+            await context.Response.WriteAsJsonAsync(response);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            context.Response.StatusCode = 500;
-            await context.Response.WriteAsJsonAsync(new { error = "Erro interno do servidor" });
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var response = new ResponseError(
+                "Erro interno do servidor",
+                null,
+                ex.Message,
+                ex.StackTrace
+            );
+            await context.Response.WriteAsJsonAsync(response);
         }
     }
 }

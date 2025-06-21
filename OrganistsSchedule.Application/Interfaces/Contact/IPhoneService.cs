@@ -3,7 +3,7 @@ using OrganistsSchedule.Domain.Entities;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface IPhoneService: ICrudServiceBase<Phone, PhoneDto, PhonePagedAndSortedRequest, PhoneCreateUpdateRequestDto>
+public interface IPhoneService: ICrudServiceBase<Phone, PhonePagedAndSortedRequest>
 {
 
 }

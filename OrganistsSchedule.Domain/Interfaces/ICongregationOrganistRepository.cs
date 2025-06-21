@@ -1,7 +1,10 @@
+using OrganistsSchedule.Domain.Interfaces.Results;
+
 namespace OrganistsSchedule.Domain.Interfaces;
 
-public interface ICongregationOrganistRepository: IRepositoryBase<CongregationOrganist>
+public interface ICongregationOrganistRepository<TRequest>: IRepositoryBase<CongregationOrganist, TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
-    Task<IEnumerable<CongregationOrganist>> GetByCongregationAsync(long congregationId,
+    Task<IPagedResult<CongregationOrganist>> GetByCongregationAsync(long congregationId,
         CancellationToken cancellationToken = default);
 }

@@ -1845,6 +1845,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<long>("OrganistId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ParameterScheduleId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -1860,7 +1863,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasIndex("OrganistId");
 
-                    b.HasIndex("Date", "CongregationId", "OrganistId")
+                    b.HasIndex("ParameterScheduleId");
+
+                    b.HasIndex("Date", "CongregationId", "OrganistId", "IsYouthMeeting")
                         .IsUnique()
                         .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
 
@@ -1875,7 +1880,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("AddressId")
+                    b.Property<long>("CepId")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1908,7 +1913,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("CepId");
 
                     b.HasIndex("Id")
                         .IsUnique();
@@ -1923,6 +1928,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 1L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Alzenir da Silva Souza",
@@ -1934,6 +1940,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 2L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Jemima Oliveira Costa",
@@ -1945,6 +1952,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 3L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Valdete Pereira Lima",
@@ -1956,6 +1964,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 4L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Joana Martins Souza",
@@ -1967,6 +1976,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 5L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Rosemari Alves Pinto",
@@ -1978,6 +1988,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 6L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Camila Souza Lima",
@@ -1989,6 +2000,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 7L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Priscila Andrade Melo",
@@ -2000,6 +2012,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 8L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Joanita Silva Costa",
@@ -2011,6 +2024,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 9L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Vanderleia Souza Lima",
@@ -2022,6 +2036,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 10L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Ana Paula Fernandes",
@@ -2033,6 +2048,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 11L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Amanda Ribeiro Costa",
@@ -2044,6 +2060,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 12L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Hallen Martins Souza",
@@ -2055,6 +2072,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 13L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Solange Pereira Lima",
@@ -2066,6 +2084,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 14L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Dinorá Souza Pinto",
@@ -2077,6 +2096,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 15L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Rosangela Lima Costa",
@@ -2088,6 +2108,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 16L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Sarah Martins Souza",
@@ -2099,6 +2120,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 17L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Luciana Pereira Lima",
@@ -2110,6 +2132,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 18L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Manoela Souza Pinto",
@@ -2121,6 +2144,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 19L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Kauany Martins Souza",
@@ -2132,6 +2156,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 20L,
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Mônica Pereira Lima",
@@ -2384,7 +2409,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -2395,7 +2420,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Country");
@@ -2406,7 +2431,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
                         .WithOne()
                         .HasForeignKey("OrganistsSchedule.Domain.Entities.Congregation", "AddressId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Address");
                 });
@@ -2435,18 +2460,28 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OrganistsSchedule.Domain.Entities.ParameterSchedule", "ParameterSchedule")
+                        .WithMany("HolyServices")
+                        .HasForeignKey("ParameterScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Congregation");
 
                     b.Navigation("Organist");
+
+                    b.Navigation("ParameterSchedule");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Organist", b =>
                 {
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Cep", "Cep")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("CepId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("Cep");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
@@ -2463,7 +2498,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Phone", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Organist", "Organist")
-                        .WithOne("PhoneNumber")
+                        .WithOne("Phone")
                         .HasForeignKey("OrganistsSchedule.Domain.Entities.Phone", "OrganistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -2481,7 +2516,12 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Navigation("Emails");
 
-                    b.Navigation("PhoneNumber");
+                    b.Navigation("Phone");
+                });
+
+            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
+                {
+                    b.Navigation("HolyServices");
                 });
 #pragma warning restore 612, 618
         }

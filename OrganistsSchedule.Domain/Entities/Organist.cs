@@ -13,7 +13,7 @@ public sealed class Organist: AuditableEntityBase
         set
         {
             if (string.IsNullOrWhiteSpace(value) || value.Length < 10)
-                throw new BusinessException(Messages.FullNameError);
+                ErrorHandler.ThrowBusinessException(Messages.FullNameError);
             _fullName = value;
         }
     }
@@ -24,17 +24,17 @@ public sealed class Organist: AuditableEntityBase
         set
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new BusinessException(Messages.Format(Messages.FieldRequiredMale, "Nome Abreviado"));
+                ErrorHandler.ThrowBusinessException(Messages.FieldRequiredMale, "Nome Abreviado");
             _shortName = value;
         }
     }
     public ICollection<CongregationOrganist> CongregationOrganists { get; set; } = new List<CongregationOrganist>();
     public OrganistsLevelEnum Level { get; set; }
-    public long? AddressId { get; set; }
-    public Address? Address { get; set; }
+    public long? CepId { get; set; }
+    public Cep? Cep { get; set; }
     public ICollection<Email>? Emails { get; set; }
     public long? PhoneId { get; set; }
-    public Phone? PhoneNumber { get; set; }
+    public Phone? Phone { get; set; }
     public Organist() {}
     
 }

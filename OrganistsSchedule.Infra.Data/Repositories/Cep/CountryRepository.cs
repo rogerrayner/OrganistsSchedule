@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class CountryRepository(ApplicationDbContext context) 
-    : RepositoryBase<Country>(context), ICountryRepository
+public class CountryRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<Country, TRequest>(context), ICountryRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     public async Task<Country?> GetByNameAsync(string name)
     {

@@ -20,7 +20,8 @@ public class HolyServiceConfiguration : IEntityTypeConfiguration<HolyService>
             {
                 x.Date,
                 x.CongregationId,
-                x.OrganistId
+                x.OrganistId,
+                x.IsYouthMeeting
             })
             .IsUnique()
             .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
@@ -51,6 +52,12 @@ public class HolyServiceConfiguration : IEntityTypeConfiguration<HolyService>
             .HasOne(x => x.Organist)
             .WithMany()
             .HasForeignKey(x => x.OrganistId);
+        
+        builder
+            .HasOne(x => x.ParameterSchedule)
+            .WithMany(x => x.HolyServices)
+            .HasForeignKey(x => x.ParameterScheduleId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
     }

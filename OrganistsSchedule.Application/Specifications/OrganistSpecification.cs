@@ -1,12 +1,13 @@
 using OrganistsSchedule.Application.DTOs;
-using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Specifications;
 
 [DoNotRegister]
-public class OrganistSpecification(IOrganistPagedAndSortedRequest? request) : ISpecification<Organist>
+public class OrganistSpecification(OrganistPagedAndSortedRequest? request) :
+    ISpecification<Organist>
 {
     public IQueryable<Organist> Apply(IQueryable<Organist> query)
     {
@@ -18,9 +19,18 @@ public class OrganistSpecification(IOrganistPagedAndSortedRequest? request) : IS
 
         if (!string.IsNullOrWhiteSpace(request.ShortName))
             query = query.Where(x => x.ShortName.ToLower().Contains(request.ShortName.ToLower()));
-
-        return query
-            .OrderBy(x => x.FullName)
-            .ThenBy(x => x.ShortName);
+        
+        if (request.CityId.HasValue)
+        {
+            query = query.Where(x => x.Cep != null && x.Cep.CityId == request.CityId.Value);
+        }
+        
+        if (!string.IsNullOrWhiteSpace(request.District))
+        {
+            var district = request.District.ToLower();
+            query = query.Where(x => x.Cep != null && x.Cep.District.ToLower() == district);
+        }        
+        
+        return query;
     }
 }
