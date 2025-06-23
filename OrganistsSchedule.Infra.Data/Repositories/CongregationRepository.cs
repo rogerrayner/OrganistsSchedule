@@ -32,6 +32,9 @@ public class CongregationRepository<TRequest>(ApplicationDbContext context)
         if (specification != null)
             baseQuery = specification.Apply(baseQuery);
 
+        baseQuery = baseQuery
+            .OrderBy(x => x.Name);
+
         var totalCount = await GetTotalCountAsync(baseQuery, cancellationToken);
 
         var idsQuery = baseQuery
@@ -43,7 +46,7 @@ public class CongregationRepository<TRequest>(ApplicationDbContext context)
 
         if (!ids.Any())
             return new PagedResult<ICongregationWithHolyServiceFlag>(
-                new List<ICongregationWithHolyServiceFlag>(), 
+                new List<ICongregationWithHolyServiceFlag>(),
                 0);
 
         var query = context
@@ -67,6 +70,10 @@ public class CongregationRepository<TRequest>(ApplicationDbContext context)
             })
             .ToListAsync(cancellationToken);
         
+        results = results
+            .OrderBy(r => ids.IndexOf(r.Id))
+            .ToList();
+
         return new PagedResult<ICongregationWithHolyServiceFlag>(results, totalCount);
     }
 }

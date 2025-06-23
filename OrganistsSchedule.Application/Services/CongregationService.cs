@@ -58,12 +58,12 @@ public class CongregationService(
         }
     }
     
-    public async Task<IPagedResult<CongregationOrganist>> GetOrganistsByCongregationAsync(
+    public async Task<IPagedResult<CongregationOrganist>> GetOrganistsByCongregationPagedAndSortedAsync(
         long congregationId,
         CancellationToken cancellationToken = default)
     {
         var result = 
-            await congregationOrganistRepository.GetByCongregationAsync(
+            await congregationOrganistRepository.GetByCongregationPagedAndSortedAsync(
                 congregationId, 
                 cancellationToken);
         
@@ -85,6 +85,15 @@ public class CongregationService(
         var totalCount = result.TotalCount;
         
         return new PagedResult<CongregationOrganist>(congregations, totalCount);
+    }
+    
+    public async Task<IEnumerable<CongregationOrganist>> GetOrganistsByCongregationAsync(
+        long congregationId,
+        CancellationToken cancellationToken = default)
+    {
+        return await congregationOrganistRepository.GetByCongregationAsync(
+                congregationId, 
+                cancellationToken);
     }
 
     public async Task<IPagedResult<CongregationDto>> GetAllWithHolyServiceFlagAsync(CongregationPagedAndSortedRequest request, 
@@ -155,7 +164,9 @@ public class CongregationService(
         }
     }
 
-    public override async Task<Congregation> CreateAsync(Congregation entity, CancellationToken cancellationToken = default)
+    public override async Task<Congregation> CreateAsync(
+        Congregation entity, 
+        CancellationToken cancellationToken = default)
     {
         try
         {

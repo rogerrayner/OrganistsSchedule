@@ -12,11 +12,16 @@ public interface ICongregationService : ICrudServiceBase<Congregation,
         List<CongregationOrganist> congregationOrganists,
         CancellationToken cancellationToken = default);
 
-    Task<IPagedResult<CongregationOrganist>> GetOrganistsByCongregationAsync(
+    Task<IPagedResult<CongregationOrganist>> GetOrganistsByCongregationPagedAndSortedAsync(
         long congregationId,
         CancellationToken cancellationToken = default);
     
     Task<IPagedResult<CongregationDto>> GetAllWithHolyServiceFlagAsync(
         CongregationPagedAndSortedRequest request, 
         CancellationToken cancellationToken = default);
+    
+    Task<IEnumerable<CongregationOrganist>> GetOrganistsByCongregationAsync(
+        long congregationId,
+        CancellationToken cancellationToken = default);
+    
 }

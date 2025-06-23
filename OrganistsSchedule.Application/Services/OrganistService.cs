@@ -42,22 +42,10 @@ public class OrganistService(
         ISpecification<Organist>? specification = null)
     {
         specification = new OrganistSpecification(request);
-        var resultAvailableOrganists = await repository.GetAvailableOrganistsAsync(
+        return await repository.GetAvailableOrganistsAsync(
             request,
             cancellationToken,
             specification);
-        
-        var resultOrganistsByCongregation = await congregationRepository
-            .GetByCongregationAsync(congregationId, cancellationToken);
-        
-        var availableOrganists = resultAvailableOrganists
-            .Items
-            .Where(x => !resultOrganistsByCongregation.Items
-                .Any(co => co.OrganistId == x.Id))
-            .ToList();
-
-        return new PagedResult<Organist>(availableOrganists, resultAvailableOrganists.TotalCount);
-
     }
     
     public override async Task<Organist> CreateAsync(Organist entity, CancellationToken cancellationToken = default)

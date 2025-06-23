@@ -25,12 +25,34 @@ public class OrganistSpecification(OrganistPagedAndSortedRequest? request) :
             query = query.Where(x => x.Cep != null && x.Cep.CityId == request.CityId.Value);
         }
         
-        if (!string.IsNullOrWhiteSpace(request.District))
+        if (!string.IsNullOrWhiteSpace(request.Districts))
         {
-            var district = request.District.ToLower();
-            query = query.Where(x => x.Cep != null && x.Cep.District.ToLower() == district);
-        }        
-        
+            var districts = request.Districts
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(d => d.Trim().ToLower())
+                .Where(d => !string.IsNullOrWhiteSpace(d))
+                .ToList();
+
+            if (districts.Any())
+            {
+                query = query.Where(x => x.Cep != null && districts.Contains(x.Cep.District.ToLower()));
+            }
+        }
+
+        if (request.ExcludeIds != null && request.ExcludeIds.Any())
+        {
+            var excludeIdsList = request.ExcludeIds
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(long.Parse)
+                .ToList();
+
+            if (excludeIdsList.Any())
+            {
+                query = query
+                    .Where(o => !excludeIdsList.Contains(o.Id));
+            }
+        }
+
         return query;
     }
 }

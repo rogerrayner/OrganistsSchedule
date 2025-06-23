@@ -5,6 +5,11 @@ namespace OrganistsSchedule.Domain.Interfaces;
 public interface ICongregationOrganistRepository<TRequest>: IRepositoryBase<CongregationOrganist, TRequest>
     where TRequest : class, IPagedAndSortedRequest
 {
-    Task<IPagedResult<CongregationOrganist>> GetByCongregationAsync(long congregationId,
+    Task<IEnumerable<CongregationOrganist>> GetByCongregationAsync(long congregationId,
         CancellationToken cancellationToken = default);
+    
+    Task<IPagedResult<CongregationOrganist>> GetByCongregationPagedAndSortedAsync(long congregationId,
+        CancellationToken cancellationToken = default);   
+    
+    
 }

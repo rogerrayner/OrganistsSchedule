@@ -15,10 +15,9 @@ public class ScheduleOrganistsService(IOrganistService organistService,
     {
         var holyServices = GenerateHolyServicesFromParameters(parametersSchedule);
         var congregation = parametersSchedule.Congregation;
-        var result = await congregationService
-            .GetOrganistsByCongregationAsync(congregation.Id, cancellationToken);
-
-        var organists = result.Items;
+        var organists =  (await congregationService
+            .GetOrganistsByCongregationAsync(congregation.Id, cancellationToken))
+            .ToList();
 
         if (ListValidation.IsNullOrEmpty(organists))
         {
@@ -26,9 +25,8 @@ public class ScheduleOrganistsService(IOrganistService organistService,
         }
 
         var youthMeetingOrganists = organists
-            .Where(o => o.Organist.Level == OrganistsLevelEnum.YouthMeeting ||
-                        o.Organist.Level == OrganistsLevelEnum.YouthMeetingAndHolyService)
-            .ToList();
+            .FindAll(o => o.Organist.Level == OrganistsLevelEnum.YouthMeeting ||
+                          o.Organist.Level == OrganistsLevelEnum.YouthMeetingAndHolyService);
         
         var youthMeetingServices = holyServices
             .FindAll(service => service.IsYouthMeeting);
@@ -44,9 +42,8 @@ public class ScheduleOrganistsService(IOrganistService organistService,
         }
         
         var holyServiceOrganists = organists
-            .Where(o => (o.Organist.Level & OrganistsLevelEnum.HolyService) 
-                        == OrganistsLevelEnum.HolyService)
-            .ToList();
+            .FindAll(o => (o.Organist.Level & OrganistsLevelEnum.HolyService) 
+                          == OrganistsLevelEnum.HolyService);
         
         var holyServiceServices = holyServices
             .FindAll(service => !service.IsYouthMeeting);

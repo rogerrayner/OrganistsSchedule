@@ -8,8 +8,9 @@ public class OrganistPagedAndSortedRequest: PagedAndSortedRequestDto, IPagedAndS
     public string? ShortName { get; set; }
     
     public string? Name { get; set; }
-    public string? District { get; set; }
+    public string? Districts { get; set; }
     public long? CityId { get; set; }
     public string? State { get; set; }
     public long CongregationId { get; set; }
+    public string? ExcludeIds { get; set; }
 }

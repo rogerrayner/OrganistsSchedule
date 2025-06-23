@@ -69,10 +69,15 @@ public class CongregationBffService(IMapper mapper,
         long congregationId,
         CancellationToken cancellationToken = default)
     {
-        var result = await service.GetOrganistsByCongregationAsync(congregationId, cancellationToken);
+        var result = await service
+            .GetOrganistsByCongregationPagedAndSortedAsync(
+                congregationId, 
+                cancellationToken);
         
         if (result.Items == null)
-            return new PagedResultDto<CongregationOrganistsDto>(new List<CongregationOrganistsDto>(), 0);
+            return new PagedResultDto<CongregationOrganistsDto>(
+                new List<CongregationOrganistsDto>(), 
+                0);
         
         var congregationOrganists = result.Items;
         var totalCount = result.TotalCount;
