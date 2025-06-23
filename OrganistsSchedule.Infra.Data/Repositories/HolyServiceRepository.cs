@@ -12,6 +12,7 @@ public class HolyServiceRepository<TRequest>(ApplicationDbContext context)
     {
         return await context.Set<HolyService>()
             .Where(x => x.Congregation.Id == congregationId)
+            .OrderBy(x => x.Date)
             .Include(x => x.Organist)
             .Include(x => x.Congregation)
             .ToListAsync(cancellationToken);
