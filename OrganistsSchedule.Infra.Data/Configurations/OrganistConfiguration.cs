@@ -22,6 +22,7 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
                 x.ShortName,
                 x.FullName
             })
+            .IsUnique()
             .HasDatabaseName("IX_ORGANISTS_NAMES");
 
         #endregion
@@ -40,10 +41,6 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.Cpf)
-            .HasMaxLength(11);
-
-        builder
             .Property(x => x.FullName)
             .HasMaxLength(200);
 
@@ -57,13 +54,20 @@ public class OrganistConfiguration: IEntityTypeConfiguration<Organist>
         #region Relationships
         
         builder
-            .HasMany<Email>(x => x.Emails)
+            .HasOne(x => x.Cep)
+            .WithMany()
+            .HasForeignKey(x => x.CepId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict); 
+        
+        builder
+            .HasMany(x => x.Emails)
             .WithOne(x => x.Organist)
             .HasForeignKey(x => x.OrganistId)
             .OnDelete(DeleteBehavior.Cascade);
         
         builder
-            .HasOne(x => x.PhoneNumber)
+            .HasOne(x => x.Phone)
             .WithOne(x => x.Organist)
             .HasForeignKey<Phone>(x => x.OrganistId)
             .OnDelete(DeleteBehavior.Cascade);

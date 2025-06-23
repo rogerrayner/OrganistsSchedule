@@ -46,20 +46,29 @@ public class CepConfiguration: IEntityTypeConfiguration<Cep>
 
         builder
             .Property(x => x.Street)
-            .HasMaxLength(200)
+            .HasMaxLength(70)
             .IsRequired();
 
         builder
             .Property(x => x.District)
             .IsRequired()
-            .HasMaxLength(150);
+            .HasMaxLength(70);
+        
+        builder
+            .Property(x => x.State)
+            .IsRequired()
+            .HasMaxLength(40);
         
         #endregion
         
         #region Relationships
 
         builder
-            .HasOne(x => x.City);
+            .HasOne(x => x.City)
+            .WithMany()
+            .HasForeignKey(x => x.CityId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
         

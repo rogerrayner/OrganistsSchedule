@@ -1,19 +1,27 @@
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Interfaces.Results;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
 public interface ICongregationService : ICrudServiceBase<Congregation, 
-    CongregationDto, 
-    CongregationPagedAndSortedRequest, 
-    CongregationCreateRequestDto, 
-    CongregationUpdateRequestDto>
+    CongregationPagedAndSortedRequest>
 {
-    Task<CongregationDto> SetOrganistsAsync(
+    Task<Congregation> SetOrganistsAsync(
         long congregationId,
-        List<OrganistDaysDto> organistsDays,
+        List<CongregationOrganist> congregationOrganists,
         CancellationToken cancellationToken = default);
 
-    Task<List<CongregationOrganistsDto>> GetCongregationOrganistsAsync(long congregationId,
+    Task<IPagedResult<CongregationOrganist>> GetOrganistsByCongregationPagedAndSortedAsync(
+        long congregationId,
         CancellationToken cancellationToken = default);
+    
+    Task<IPagedResult<CongregationDto>> GetAllWithHolyServiceFlagAsync(
+        CongregationPagedAndSortedRequest request, 
+        CancellationToken cancellationToken = default);
+    
+    Task<IEnumerable<CongregationOrganist>> GetOrganistsByCongregationAsync(
+        long congregationId,
+        CancellationToken cancellationToken = default);
+    
 }

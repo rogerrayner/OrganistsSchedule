@@ -1,13 +1,15 @@
 using EFCore.BulkExtensions;
 using Microsoft.EntityFrameworkCore;
-using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Domain.Interfaces.Results;
+using OrganistsSchedule.Domain.Results;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public abstract class RepositoryBase<TEntity>(DbContext _context) 
-    : IRepositoryBase<TEntity>
+public abstract class RepositoryBase<TEntity, TRequest>(DbContext _context) 
+    : IRepositoryBase<TEntity, TRequest>
     where TEntity : class
+    where TRequest : class, IPagedAndSortedRequest
 {
     private readonly DbSet<TEntity> _dbSet = _context.Set<TEntity>();
     
@@ -25,15 +27,44 @@ public abstract class RepositoryBase<TEntity>(DbContext _context)
     {
         return query;
     }
+
+    public async Task<int> GetTotalCountAsync(IQueryable<TEntity> query, CancellationToken cancellationToken = default)
+    {
+        return await query.CountAsync(cancellationToken);
+    }
     
-    public virtual async Task<IEnumerable<TEntity>> GetAllAsync(IPagedAndSortedRequest request,
-        CancellationToken cancellationToken,
+    public virtual async Task<IPagedResult<TEntity>> GetAllAsync(
+        TRequest request, 
+        CancellationToken cancellationToken, 
         ISpecification<TEntity>? specification = null)
     {
-        var query = CreateFilteredQuery(specification);
+        var baseQuery = CreateFilteredQuery(specification);
+        var totalCount = await GetTotalCountAsync(baseQuery, cancellationToken);
         
+        baseQuery = PagedAndSortedQuery(baseQuery, request);
+        
+        var idsQuery = baseQuery
+            .Select(e => EF.Property<long>(e, "Id"));
+
+        var ids = await idsQuery.ToListAsync(cancellationToken);
+
+        if (!ids.Any())
+            return new PagedResult<TEntity>(new List<TEntity>(), 0);
+
+        var query = _dbSet
+            .Where(e => ids.Contains(EF.Property<long>(e, "Id")));
         query = IncludeChildren(query);
 
+        var results = await query.ToListAsync(cancellationToken);
+        
+        return new PagedResult<TEntity>(results, totalCount);
+    }
+    
+    public virtual IQueryable<TEntity> PagedAndSortedQuery(
+        IQueryable<TEntity> query,
+        TRequest request, 
+        ISpecification<TEntity>? specification = null)
+    {
         if (request.SkipCount > 0)
             query = query.Skip(request.SkipCount);
 
@@ -42,23 +73,30 @@ public abstract class RepositoryBase<TEntity>(DbContext _context)
         else
             query = query.Take(request.PageSize);
 
-        return await query.ToListAsync(cancellationToken);
+        return query;
     }
-
-    public virtual async Task<int> CountAsync(IPagedAndSortedRequest request, 
-        CancellationToken cancellationToken = default,
-        ISpecification<TEntity>? specification = null)
+    
+    /*public virtual IQueryable<TEntity> PagedAndSortedSpecificationQuery(
+        IQueryable<TEntity> query,
+        IPagedAndSortedSpecification request)
     {
-        var query = CreateFilteredQuery(specification);
-        query = IncludeChildren(query);
-        return await query.CountAsync(cancellationToken);
-    }
+        if (request.SkipCount > 0)
+            query = query.Skip(request.SkipCount);
+
+        if (request.MaxCount > 0)
+            query = query.Take(Math.Min(request.PageSize, request.MaxCount));
+        else
+            query = query.Take(request.PageSize);
+
+        return query;
+    }*/
 
     public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken)
     {
         var query = _dbSet.AsQueryable();
+        query = query.Where(e => EF.Property<long>(e, "Id") == id);
         query = IncludeChildren(query);
-        return await query.FirstOrDefaultAsync(e => EF.Property<long>(e, "Id") == id);
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
     public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken)

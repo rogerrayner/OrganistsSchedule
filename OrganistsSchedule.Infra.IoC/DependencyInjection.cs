@@ -2,9 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OrganistsSchedule.Application.Mappings;
 using OrganistsSchedule.Application.Services;
-using OrganistsSchedule.Application.Specifications;
+using OrganistsSchedule.Bff.Mappings;
 using OrganistsSchedule.Domain;
 using OrganistsSchedule.Infra.Data;
 using OrganistsSchedule.Infra.Data.Interceptors;
@@ -72,7 +71,28 @@ public static class DependencyInjection
             ;
         
         services.AddHttpClient<IViaCepClient, ViaCepClient>(client => { client.BaseAddress = new Uri("https://viacep.com.br/"); });
+        
+        return services;
+    }
+    
+    public static IServiceCollection AddBackendForFrontend(this IServiceCollection services, 
+        IConfiguration configuration)
+    {
+        services
+            .Scan(
+                selector => selector
+                    .FromAssemblies(
+                        OrganistsSchedule.Bff.AssemblyReference.Assembly)
+                    .AddClasses(classes => classes.Where(type => 
+                        !type.IsDefined(typeof(DoNotRegisterAttribute), false)))
+                    .UsingRegistrationStrategy(RegistrationStrategy.Skip)
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime())
+            ;
+
         services.AddAutoMapper(typeof(DomainToDtoMappingProfile));
         return services;
     }
+    
+    
 }

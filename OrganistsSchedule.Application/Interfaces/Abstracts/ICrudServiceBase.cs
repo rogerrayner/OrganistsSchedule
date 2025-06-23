@@ -1,23 +1,16 @@
-using OrganistsSchedule.Application.Services;
-using OrganistsSchedule.Application.Services.Requests;
+using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Domain.Interfaces.Results;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto, TUpdateDto>
+public interface ICrudServiceBase<TEntity, TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
-    Task<PagedResultDto<TDto>> GetAllAsync(TRequestDto request, CancellationToken cancellationToken = default, ISpecification<TEntity>? spec = null);
-    Task<TDto?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
-    Task<TDto> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default);
-    Task<TDto> UpdateAsync(TUpdateDto dto, long id, CancellationToken cancellationToken = default);
-    Task<TDto> DeleteAsync(long id, CancellationToken cancellationToken = default);
-}
-
-public interface ICrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto>
-    : ICrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto, TCreateDto>
-{
-}
-
-public interface ICrudServiceBase<TEntity,TDto, TRequestDto>
-    : ICrudServiceBase<TEntity, TDto, TRequestDto, TDto, TDto>
-{
+    Task<IPagedResult<TEntity>> GetAllAsync(TRequest request, 
+        CancellationToken cancellationToken = default, 
+        ISpecification<TEntity>? spec = null);
+    Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task<TEntity> UpdateAsync(TEntity entity, long id, CancellationToken cancellationToken = default);
+    Task<TEntity> DeleteAsync(long id, CancellationToken cancellationToken = default);
 }

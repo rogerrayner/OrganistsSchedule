@@ -1,4 +1,4 @@
-namespace OrganistsSchedule.Application.Interfaces;
+namespace OrganistsSchedule.Domain.Interfaces;
 
 public interface IPagedAndSortedRequest: IPagedRequest, ISortedRequest
 {

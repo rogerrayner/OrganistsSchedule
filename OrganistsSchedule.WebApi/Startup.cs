@@ -45,6 +45,7 @@ public class Startup
         services.AddControllers();
         services.AddInfrastructure(Configuration);
         services.AddApplication(Configuration);
+        services.AddBackendForFrontend(Configuration);
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         

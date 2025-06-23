@@ -1,118 +1,109 @@
 using System.Data;
-using AutoMapper;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Application.Specifications;
 using OrganistsSchedule.Domain.Entities;
-using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Domain.Interfaces.Results;
+using OrganistsSchedule.Domain.Results;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class OrganistService(IMapper mapper, 
-    IOrganistRepository repository, 
+public class OrganistService(
+    IOrganistRepository<OrganistPagedAndSortedRequest> repository, 
     IUnitOfWork unitOfWork,
-    ICepService cepService,
-    IAddressService addressService,
-    IPhoneRepository phoneRepository,
-    IEmailRepository emailRepository) 
+    IPhoneRepository<PhonePagedAndSortedRequest> phoneRepository,
+    IEmailRepository<EmailPagedAndSortedRequest> emailRepository,
+    ICongregationOrganistRepository<CongregationPagedAndSortedRequest> congregationRepository,
+    ICepService cepService) 
     : CrudServiceBase<Organist, 
-            OrganistDto, 
-            OrganistPagedAndSortedRequest,
-            OrganistCreateDto, 
-            OrganistUpdateDto>(mapper, repository, unitOfWork),
+            OrganistPagedAndSortedRequest>(repository, unitOfWork),
         IOrganistService
 {
-    public override Task<PagedResultDto<OrganistDto>> GetAllAsync(OrganistPagedAndSortedRequest request, CancellationToken cancellationToken,
+    public override Task<IPagedResult<Organist>> GetAllAsync(
+        OrganistPagedAndSortedRequest request, 
+        CancellationToken cancellationToken,
         ISpecification<Organist>? specification = null)
     {
         specification = new OrganistSpecification(request);
         return base.GetAllAsync(request, cancellationToken, specification);
     }
 
-    public async Task<IEnumerable<Organist>> GetByIdsAsync(List<long> organistIds, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Organist>> GetByIdsAsync(List<long> organistIds, 
+        CancellationToken cancellationToken = default)
     {
-        var organists = await repository.GetByIdsAsync(organistIds, cancellationToken);
-        return organists.ToList();
+        return await repository.GetByIdsAsync(organistIds, cancellationToken);
     }
 
-    public async Task<OrganistDto> CreateAsync(OrganistCreateDto dto, CancellationToken cancellationToken = default)
+    public async Task<IPagedResult<Organist>> GetAvailableOrganistsAsync(
+        long congregationId,
+        OrganistPagedAndSortedRequest request,
+        CancellationToken cancellationToken = default,
+        ISpecification<Organist>? specification = null)
     {
-        Phone? phone = null;
-        Email? email = null;
-        Address address = null;
+        specification = new OrganistSpecification(request);
+        return await repository.GetAvailableOrganistsAsync(
+            request,
+            cancellationToken,
+            specification);
+    }
+    
+    public override async Task<Organist> CreateAsync(Organist entity, CancellationToken cancellationToken = default)
+    {
         
         await using var transaction = await unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
         try
         {
-            if (dto.Address != null)
+            if (entity.Phone != null 
+                && !string.IsNullOrEmpty(entity.Phone.Number))
             {
-                var addressCreateDto = new AddressCreateUpdateDto()
-                {
-                    ZipCode = dto.Address.ZipCode,
-                    StreetNumber = dto.Address.StreetNumber,
-                    Complement = dto.Address.Complement
-                };
-                var addressDto = await addressService.CreateAsync(addressCreateDto, cancellationToken);
-                address = mapper.Map<Address>(addressDto);
-            }
-
-            if (!string.IsNullOrEmpty(dto.PhoneNumber))
-            {
-                phone = await phoneRepository.GetPhoneByNumberAsync(dto.PhoneNumber, cancellationToken);
+                var phone = await phoneRepository.GetPhoneByNumberAsync(entity.Phone.Number, cancellationToken);
                 if (phone == null)
                 {
-                    phone = new Phone()
-                    {
-                        Number = dto.PhoneNumber,
-                        IsPrimary = true
-                    };
-                    phone = await phoneRepository.CreateAsync(phone, cancellationToken);
+                    entity.Phone = await phoneRepository.CreateAsync(entity.Phone, cancellationToken);
                     await unitOfWork.SaveChangesAsync(cancellationToken);
                 }
-                else
-                    throw new BusinessException(Messages.Format(Messages.AlreadyExists, "Número de Telefone"));
-                
             }
             
-            if (!string.IsNullOrEmpty(dto.Email))
+            if (entity.Emails != null && entity.Emails.Any())
             {
-                email = await emailRepository.GetEmailByEmailAddressAsync(dto.Email, cancellationToken);
-                if (email == null)
+                var createdEmails = new List<Email>();
+                foreach (var email in entity.Emails)
                 {
-                    email = new Email()
-                    {
-                        EmailAddress = dto.Email,
-                        IsPrimary = true
-                    };
-                    email = await emailRepository.CreateAsync(email, cancellationToken);
-                    await unitOfWork.SaveChangesAsync(cancellationToken);
+                    var created = await emailRepository.CreateAsync(email, cancellationToken);
+                    createdEmails.Add(created);
                 }
-                else
-                    throw new BusinessException(Messages.Format(Messages.AlreadyExists, "E-mail"));
-                
+                entity.Emails = createdEmails;
             }
 
-            var organist = new Organist(dto.Cpf)
+            if (entity.Cep != null && !string.IsNullOrEmpty(entity.Cep.ZipCode))
             {
-                FullName = dto.FullName,
-                ShortName = dto.ShortName,
-                AddressId = address?.Id,
-                Level = dto.Level,
-                PhoneId = phone?.Id
-            };
+                var cep = await cepService.GetCepByZipCodeAsync(entity.Cep.ZipCode, true, cancellationToken);
+                if (cep == null && !string.IsNullOrWhiteSpace(entity.Cep.ZipCode))
+                {
+                    cep = new Cep()
+                    {
+                        ZipCode = entity.Cep.ZipCode,
+                        Street = "",
+                        District = "",
+                        State = ""
+                    };
+                
+                    cep = await cepService.CreateAsync(cep, cancellationToken);
+                }
+                
+                entity.Cep = cep;
+            }
+
             
-            if (await repository.GetByCpfAsync(dto.Cpf) != null)
-                throw new BusinessException(Messages.Format(Messages.CpfAlreadyExists, "Organista"));
-            
-            organist = await repository.CreateAsync(organist, cancellationToken);
+            entity = await repository.CreateAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            
-            return mapper.Map<OrganistDto>(organist);
+            return entity;
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             await transaction.RollbackAsync(cancellationToken);
             throw;
         }

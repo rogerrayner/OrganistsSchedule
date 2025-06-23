@@ -1,10 +1,9 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application.Interfaces;
-using OrganistsSchedule.Application.Services;
-using OrganistsSchedule.Application.Services.Requests;
-using OrganistsSchedule.Domain.Exceptions;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Bff.Interfaces;
+using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
@@ -12,23 +11,22 @@ namespace OrganistsSchedule.WebApi.Controllers;
 public abstract class ControllerBase<
     TEntity,
     TDto,
-    TRequestDto,
+    TRequest,
     TCreateDto, 
-    TUpdateDto>(ICrudServiceBase<
-                TEntity,
-                TDto, 
-                TRequestDto,
-                TCreateDto, 
-                TUpdateDto> serviceBase, IMapper mapper, IAuthService authService) 
-    : Controller, IControllerBase<TDto, 
-        TRequestDto,
+    TUpdateDto>(ICrudBffServiceBase<TEntity, 
+                    TDto,
+                    TRequest, 
+                    TCreateDto, 
+                    TUpdateDto> serviceBase, IAuthService authService) 
+    : Controller, IControllerBase<TDto,
+        TRequest,
         TCreateDto, 
         TUpdateDto>
     where TDto : class
     where TCreateDto : class
     where TUpdateDto : class
     where TEntity: class 
-    where TRequestDto: PagedAndSortedRequestDto
+    where TRequest: class, IPagedAndSortedRequest
 {
     
     protected virtual string ReadPolicy => null;
@@ -48,15 +46,17 @@ public abstract class ControllerBase<
     }
     
     [HttpGet]
-    public virtual async Task<ActionResult<PagedResultDto<TDto>>> GetAllAsync([FromQuery] TRequestDto request, CancellationToken cancellationToken = default)
+    public virtual async Task<ActionResult<PagedResultDto<TDto>>> GetAllAsync([FromQuery] TRequest request, CancellationToken cancellationToken = default)
     {
         var authorized = await IsAuthorized(ReadPolicy, cancellationToken);
         if (!authorized)
-        {
             return Forbid();
-                
-        }
-        return await serviceBase.GetAllAsync(request, cancellationToken);
+
+        var response = await serviceBase.GetAllAsync(request, cancellationToken);
+        if (response == null)
+            return NotFound();
+
+        return Ok(response);
     }
 
     [HttpGet("{id:long}")]
@@ -81,11 +81,13 @@ public abstract class ControllerBase<
             return Forbid();
                 
         }
-        return mapper.Map<TDto>(await serviceBase.CreateAsync(dto, cancellationToken));
+        return await serviceBase.CreateAsync(dto, cancellationToken);
     }
 
     [HttpPut("{id:long}")]
-    public virtual async Task<ActionResult<TDto>> UpdateAsync([FromBody] TUpdateDto dto, long id, CancellationToken cancellationToken = default)
+    public virtual async Task<ActionResult<TDto>> UpdateAsync([FromBody] TUpdateDto dto, 
+        long id, 
+        CancellationToken cancellationToken = default)
     {
         var authorized = await IsAuthorized(UpdatePolicy, cancellationToken);
         if (!authorized)
@@ -94,11 +96,12 @@ public abstract class ControllerBase<
                 
         }
         
-        return mapper.Map<TDto>(await serviceBase.UpdateAsync(dto, id, cancellationToken));
+        return await serviceBase.UpdateAsync(dto, id, cancellationToken);
     }
 
     [HttpDelete("{id:long}")]
-    public virtual async Task<ActionResult<TDto>> DeleteAsync(int id, CancellationToken cancellationToken = default)
+    public virtual async Task<ActionResult<TDto>> DeleteAsync(int id, 
+        CancellationToken cancellationToken = default)
     {
         var authorized = await IsAuthorized(DeletePolicy, cancellationToken);
         if (!authorized)
@@ -107,6 +110,6 @@ public abstract class ControllerBase<
                 
         }
         
-        return mapper.Map<TDto>(await serviceBase.DeleteAsync(id, cancellationToken));
+        return await serviceBase.DeleteAsync(id, cancellationToken);
     }
 }

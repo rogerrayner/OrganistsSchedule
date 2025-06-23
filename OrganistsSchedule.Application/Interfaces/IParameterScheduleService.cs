@@ -4,9 +4,7 @@ using OrganistsSchedule.Domain.Entities;
 namespace OrganistsSchedule.Application.Interfaces;
 
 public interface IParameterScheduleService: ICrudServiceBase<ParameterSchedule, 
-    ParameterScheduleDto, 
-    ParameterSchedulePagedAndSortedRequest,
-    ParameterScheduleCreateUpdateDto>
+    ParameterSchedulePagedAndSortedRequest>
 {
     Task<ParameterSchedule> GetByRangeDateAndCongregationIdAsync(long congregationId, 
         DateTime startDate, 

@@ -41,7 +41,7 @@ public class CityConfiguration: IEntityTypeConfiguration<City>
 
         builder
             .Property(x => x.Name)
-            .HasMaxLength(150)
+            .HasMaxLength(90)
             .IsRequired();
         
         #endregion
@@ -49,7 +49,11 @@ public class CityConfiguration: IEntityTypeConfiguration<City>
         #region Relationships
 
         builder
-            .HasOne(x => x.Country);
+            .HasOne(x => x.Country)
+            .WithMany()
+            .HasForeignKey(x => x.CountryId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
         #endregion
         

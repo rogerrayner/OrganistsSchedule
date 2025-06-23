@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class CityRepository(ApplicationDbContext context)
-    : RepositoryBase<City>(context), ICityRepository
+public class CityRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<City, TRequest>(context), ICityRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     public async Task<City?> GetByNameAsync(string name)
     {

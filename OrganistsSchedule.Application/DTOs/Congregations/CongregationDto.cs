@@ -15,4 +15,6 @@ public class CongregationDto
     public ICollection<DayOfWeek> DaysOfService { get; set; } = new List<DayOfWeek>();
     
     public bool HasYouthMeetings { get; set; }
+    
+    public bool HasGeneratedSchedule { get; set; }
 }
