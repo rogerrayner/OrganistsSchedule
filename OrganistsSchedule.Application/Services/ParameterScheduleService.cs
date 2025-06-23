@@ -1,4 +1,3 @@
-using AutoMapper;
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
@@ -6,11 +5,12 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Services;
 
-public class ParameterScheduleService(IMapper mapper, IParameterScheduleRepository repository, IUnitOfWork unitOfWork) 
+public class ParameterScheduleService(
+    IParameterScheduleRepository<
+        ParameterSchedulePagedAndSortedRequest> repository, 
+    IUnitOfWork unitOfWork) 
     : CrudServiceBase<ParameterSchedule, 
-            ParameterScheduleDto, 
-            ParameterSchedulePagedAndSortedRequest,
-            ParameterScheduleCreateUpdateDto>(mapper, repository, unitOfWork),
+            ParameterSchedulePagedAndSortedRequest>(repository, unitOfWork),
         IParameterScheduleService
 {
     public async Task<ParameterSchedule> GetByRangeDateAndCongregationIdAsync(long congregationId, 

@@ -1,22 +1,19 @@
-using AutoMapper;
-using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
-
 using Microsoft.AspNetCore.Mvc;
-using OrganistsSchedule.Application;
-using OrganistsSchedule.Application.Services;
-using OrganistsSchedule.Application.Services.Requests;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Bff.Interfaces;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/ceps")]
-public class CepController(ICepService service, IMapper mapper, IAuthService authService) 
+public class CepController(ICepBffService service, IAuthService authService) 
     : ControllerBase<Cep, 
-        CepDto, 
+        CepDto,
         CepPagedAndSortedRequest,
-        CepCreateUpdateRequestDto, 
-        CepCreateUpdateRequestDto>(service, mapper, authService)
+        CepDto,
+        CepDto>(service, authService)
 {
     
     protected override string ReadPolicy => "read:cep";
@@ -28,25 +25,21 @@ public class CepController(ICepService service, IMapper mapper, IAuthService aut
     [Route("viaCeps/{zipCode}")]
     public async Task<CepDto> GetCepByZipCodeAsync(string zipCode)
     {
-        return await service.GetCepByZipCodeAsync(zipCode, false);
-    }
-    
-    [HttpPost]
-    [Route("viaCeps/{zipCode}")]
-    public async Task<CepDto> GenerateCepByZipCode(string zipCode)
-    {
-        return await service.GetCepByZipCodeAsync(zipCode, true);
+        return await service.GetCepByZipCodeAsync(zipCode);
     }
 
     [NonAction]
-    public override Task<ActionResult<CepDto>> CreateAsync(CepCreateUpdateRequestDto dto, CancellationToken cancellationToken = default)
-    {
-        return base.CreateAsync(dto, cancellationToken);
-    }
-
-    [NonAction]
-    public override Task<ActionResult<CepDto>> UpdateAsync(CepCreateUpdateRequestDto dto, long id, CancellationToken cancellationToken = default)
+    public override Task<ActionResult<CepDto>> UpdateAsync(CepDto dto, long id, CancellationToken cancellationToken = default)
     {
         return base.UpdateAsync(dto, id, cancellationToken);
+    }
+    
+    [HttpGet]
+    [Route("cities/{cityId}/districts")]
+    public async Task<PagedResultDto<string>> GetDistrictsByCityIdAsync(long cityId, 
+        CancellationToken cancellationToken = default)
+    {
+        var result = await service.GetDistrictsByCityIdAsync(cityId, cancellationToken);
+        return new PagedResultDto<string>(result, result.Count());
     }
 }

@@ -188,8 +188,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Complement")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -607,13 +607,18 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Property<string>("District")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasMaxLength(70)
+                        .HasColumnType("character varying(70)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(70)
+                        .HasColumnType("character varying(70)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -649,6 +654,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Adhemar Garcia",
+                            State = "SC",
                             Street = "Rua Barra Santa Salete",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -661,6 +667,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Fátima",
+                            State = "SC",
                             Street = "Rua Anêmonas",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -673,6 +680,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Boa Vista",
+                            State = "SC",
                             Street = "Rua Erhard Wetzel",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -685,6 +693,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Bom Retiro",
+                            State = "SC",
                             Street = "Rua Piratuba",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -697,6 +706,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Canto do Rio",
+                            State = "SC",
                             Street = "Rua Volans",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -709,6 +719,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Comasa",
+                            State = "SC",
                             Street = "Servidão São Jerônimo Emiliane",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -721,6 +732,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Costa e Silva",
+                            State = "SC",
                             Street = "Rua Helena Degelmann",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -733,6 +745,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Cubatão",
+                            State = "SC",
                             Street = "Rua Nossa Senhora dos Anjos",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -745,6 +758,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Canela",
+                            State = "SC",
                             Street = "Rua Emílio Hardt",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -757,6 +771,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Centro",
+                            State = "SC",
                             Street = "Rua Joinville",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -769,6 +784,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Distrito Pirabeiraba - Rio Bonito",
+                            State = "SC",
                             Street = "Rua Theodoro Brietzig",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -781,6 +797,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Escolinha",
+                            State = "SC",
                             Street = "Rua Boehmerwald",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -793,6 +810,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Espinheiros",
+                            State = "SC",
                             Street = "Rua Bertoldo Berkembrock",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -805,6 +823,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Fátima",
+                            State = "SC",
                             Street = "Rua Fátima",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -817,6 +836,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Floresta",
+                            State = "SC",
                             Street = "Rua São Lourenço do Oeste",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -829,6 +849,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Iririú",
+                            State = "SC",
                             Street = "Rua Deputado Lauro Carneiro de Loyola",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -841,6 +862,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim das Oliveiras",
+                            State = "SC",
                             Street = "Rua Paula Mayerle Wulf",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -853,6 +875,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Edilene",
+                            State = "SC",
                             Street = "Avenida Aulo Abrahão Francisco",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -865,6 +888,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Iririú",
+                            State = "SC",
                             Street = "Avenida Odilon Rocha Ferreira",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -877,6 +901,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Paraíso",
+                            State = "SC",
                             Street = "Rua Canis Major",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -889,6 +914,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jardim Sofia",
+                            State = "SC",
                             Street = "Rua Professor Eunaldo Verdi",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -901,6 +927,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Jativoca",
+                            State = "SC",
                             Street = "Rua Santa Marta",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -913,6 +940,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Loteamento São Francisco II",
+                            State = "SC",
                             Street = "Rua Delphinus",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -925,6 +953,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Loteamento Tahiti",
+                            State = "SC",
                             Street = "Rua Adele Hille",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -937,6 +966,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Morro do Meio",
+                            State = "SC",
                             Street = "Estrada Lagoinha",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -949,6 +979,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Nova Brasília",
+                            State = "SC",
                             Street = "Rua Minas Gerais",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -961,6 +992,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Paranaguamirim",
+                            State = "SC",
                             Street = "Rua Esmirna",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -973,6 +1005,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Parque Joinville",
+                            State = "SC",
                             Street = "Avenida Miguel Alves Castanha",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -985,6 +1018,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Petrópolis",
+                            State = "SC",
                             Street = "Rua Bauru",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -997,6 +1031,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Pinotti",
+                            State = "SC",
                             Street = "Rua Paranaguamirim",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1009,6 +1044,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Pitaguaras",
+                            State = "SC",
                             Street = "Rua do Campo",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1021,6 +1057,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Profipo",
+                            State = "SC",
                             Street = "Rua Cidade de Sumidouro",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1033,6 +1070,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Santa Barbara",
+                            State = "SC",
                             Street = "Rua Dezoito de Janeiro",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1045,6 +1083,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Ulysses Guimarães",
+                            State = "SC",
                             Street = "Rua Professor Avelino Marcante",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1057,6 +1096,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Vila Nova",
+                            State = "SC",
                             Street = "Rua Joaquim Girardi",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1069,6 +1109,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Vila Paraná",
+                            State = "SC",
                             Street = "Rua Carmem Miranda",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1081,6 +1122,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             District = "Zona Industrial Norte",
+                            State = "SC",
                             Street = "Rua Ricardo Alberto Mebs",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             UpdatedBy = 0L,
@@ -1107,8 +1149,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
+                        .HasMaxLength(90)
+                        .HasColumnType("character varying(90)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1172,8 +1214,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
+                        .HasMaxLength(70)
+                        .HasColumnType("character varying(70)");
 
                     b.Property<string>("RelatorioBrasCode")
                         .IsRequired()
@@ -1187,9 +1229,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
-                    b.HasIndex("Id")
+                    b.HasIndex("AddressId")
                         .IsUnique();
 
                     b.HasIndex("Name")
@@ -1700,8 +1740,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1805,6 +1845,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.Property<long>("OrganistId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ParameterScheduleId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -1820,7 +1863,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasIndex("OrganistId");
 
-                    b.HasIndex("Date", "CongregationId", "OrganistId")
+                    b.HasIndex("ParameterScheduleId");
+
+                    b.HasIndex("Date", "CongregationId", "OrganistId", "IsYouthMeeting")
                         .IsUnique()
                         .HasDatabaseName("IX_DATE_OF_HOLY_SERVICE");
 
@@ -1835,12 +1880,8 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("AddressId")
+                    b.Property<long>("CepId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Cpf")
-                        .HasMaxLength(11)
-                        .HasColumnType("character varying(11)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -1872,12 +1913,13 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("CepId");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
                     b.HasIndex("ShortName", "FullName")
+                        .IsUnique()
                         .HasDatabaseName("IX_ORGANISTS_NAMES");
 
                     b.ToTable("ORGANISTS", (string)null);
@@ -1886,7 +1928,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 1L,
-                            Cpf = "77781670000",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Alzenir da Silva Souza",
@@ -1898,7 +1940,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 2L,
-                            Cpf = "65110149089",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Jemima Oliveira Costa",
@@ -1910,7 +1952,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 3L,
-                            Cpf = "45555585020",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Valdete Pereira Lima",
@@ -1922,7 +1964,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 4L,
-                            Cpf = "73552078061",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Joana Martins Souza",
@@ -1934,7 +1976,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 5L,
-                            Cpf = "49709279017",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Rosemari Alves Pinto",
@@ -1946,7 +1988,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 6L,
-                            Cpf = "02016533030",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Camila Souza Lima",
@@ -1958,7 +2000,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 7L,
-                            Cpf = "33913742093",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Priscila Andrade Melo",
@@ -1970,7 +2012,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 8L,
-                            Cpf = "47085758074",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Joanita Silva Costa",
@@ -1982,7 +2024,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 9L,
-                            Cpf = "23333775000",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Vanderleia Souza Lima",
@@ -1994,7 +2036,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 10L,
-                            Cpf = "91112746030",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Ana Paula Fernandes",
@@ -2006,7 +2048,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 11L,
-                            Cpf = "43417000068",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Amanda Ribeiro Costa",
@@ -2018,7 +2060,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 12L,
-                            Cpf = "87388819002",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Hallen Martins Souza",
@@ -2030,7 +2072,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 13L,
-                            Cpf = "84081083010",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Solange Pereira Lima",
@@ -2042,7 +2084,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 14L,
-                            Cpf = "87771172040",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Dinorá Souza Pinto",
@@ -2054,7 +2096,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 15L,
-                            Cpf = "26516790035",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Rosangela Lima Costa",
@@ -2066,7 +2108,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 16L,
-                            Cpf = "77218566049",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Sarah Martins Souza",
@@ -2078,7 +2120,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 17L,
-                            Cpf = "65914758009",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Luciana Pereira Lima",
@@ -2090,7 +2132,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 18L,
-                            Cpf = "39464202068",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Manoela Souza Pinto",
@@ -2102,7 +2144,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 19L,
-                            Cpf = "56503344040",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Kauany Martins Souza",
@@ -2114,7 +2156,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         new
                         {
                             Id = 20L,
-                            Cpf = "16894804087",
+                            CepId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             CreatedBy = 0L,
                             FullName = "Mônica Pereira Lima",
@@ -2356,7 +2398,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.Cep", "Cep")
                         .WithMany()
                         .HasForeignKey("CepId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Cep");
@@ -2367,7 +2409,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("City");
@@ -2378,7 +2420,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                     b.HasOne("OrganistsSchedule.Domain.Entities.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Country");
@@ -2387,8 +2429,9 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Congregation", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
-                        .WithMany()
-                        .HasForeignKey("AddressId");
+                        .WithOne()
+                        .HasForeignKey("OrganistsSchedule.Domain.Entities.Congregation", "AddressId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Address");
                 });
@@ -2417,18 +2460,28 @@ namespace OrganistsSchedule.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("OrganistsSchedule.Domain.Entities.ParameterSchedule", "ParameterSchedule")
+                        .WithMany("HolyServices")
+                        .HasForeignKey("ParameterScheduleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Congregation");
 
                     b.Navigation("Organist");
+
+                    b.Navigation("ParameterSchedule");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Organist", b =>
                 {
-                    b.HasOne("OrganistsSchedule.Domain.Entities.Address", "Address")
+                    b.HasOne("OrganistsSchedule.Domain.Entities.Cep", "Cep")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("CepId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("Cep");
                 });
 
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
@@ -2445,7 +2498,7 @@ namespace OrganistsSchedule.Infra.Data.Migrations
             modelBuilder.Entity("OrganistsSchedule.Domain.Entities.Phone", b =>
                 {
                     b.HasOne("OrganistsSchedule.Domain.Entities.Organist", "Organist")
-                        .WithOne("PhoneNumber")
+                        .WithOne("Phone")
                         .HasForeignKey("OrganistsSchedule.Domain.Entities.Phone", "OrganistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -2463,7 +2516,12 @@ namespace OrganistsSchedule.Infra.Data.Migrations
 
                     b.Navigation("Emails");
 
-                    b.Navigation("PhoneNumber");
+                    b.Navigation("Phone");
+                });
+
+            modelBuilder.Entity("OrganistsSchedule.Domain.Entities.ParameterSchedule", b =>
+                {
+                    b.Navigation("HolyServices");
                 });
 #pragma warning restore 612, 618
         }

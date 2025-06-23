@@ -1,113 +1,84 @@
-using AutoMapper;
 using OrganistsSchedule.Application.Interfaces;
-using OrganistsSchedule.Application.Services.Requests;
-using OrganistsSchedule.Domain.Exceptions;
 using OrganistsSchedule.Domain.Interfaces;
+using OrganistsSchedule.Domain.Interfaces.Results;
+using OrganistsSchedule.Domain.Utils;
 
 namespace OrganistsSchedule.Application.Services;
 
-public abstract class CrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto, TUpdateDto>(IMapper mapper, 
-    IRepositoryBase<TEntity> repository, IUnitOfWork unitOfWork) 
-    : ICrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto, TUpdateDto>
-    where TDto : class
-    where TCreateDto : class
-    where TUpdateDto : class
-    where TEntity : class
-    where TRequestDto : PagedAndSortedRequestDto
-{
+public abstract class CrudServiceBase<TEntity, TRequest>(
+    IRepositoryBase<TEntity, TRequest> repository, 
+    IUnitOfWork unitOfWork) 
+    : ICrudServiceBase<TEntity, TRequest>
 
-    public virtual async Task<PagedResultDto<TDto>> GetAllAsync(
-        TRequestDto request, 
+    where TEntity : class
+    where TRequest : class, IPagedAndSortedRequest
+{
+    public virtual async Task<IPagedResult<TEntity>> GetAllAsync(
+        TRequest request, 
         CancellationToken cancellationToken,
         ISpecification<TEntity>? specification = null)
     {
-        var listEntities = await repository.GetAllAsync(request, cancellationToken, specification);
-        var totalCount = await repository.CountAsync(request, cancellationToken, specification);
-        var listDtos = mapper.Map<IEnumerable<TDto>>(listEntities);
-
-        return new PagedResultDto<TDto>(listDtos, totalCount);
+        return await repository.GetAllAsync(request, cancellationToken, specification);
     }
 
-    public async Task<TDto?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        var entity = await repository.GetByIdAsync(id, cancellationToken);
-        var response = mapper.Map<TDto>(entity);
-
-        return response;
+        return await repository.GetByIdAsync(id, cancellationToken);
     }
     
-    public async Task<TDto> CreateAsync(TCreateDto dto, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         try
         {
-            var entity = await repository.CreateAsync(mapper.Map<TEntity>(dto), cancellationToken);
+            entity = await repository.CreateAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            var response = mapper.Map<TDto>(entity);
-            return response;
+            return entity;
+
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
         
     }
 
-    public async Task<TDto> UpdateAsync(TUpdateDto dto, long id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> UpdateAsync(TEntity dto, long id, CancellationToken cancellationToken = default)
     {
         try
         {
             var entity = await repository.GetByIdAsync(id, cancellationToken);
             if (entity == null)
-                throw new NotFoundException(Messages.Format(Messages.NotFound, nameof(entity)));
+                ErrorHandler.ThrowNotFoundException(Messages.NotFound, nameof(entity));
             
-            mapper.Map(dto, entity);
             entity = await repository.UpdateAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            return mapper.Map<TDto>(entity);
+            return entity;
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
 
-    public async Task<TDto> DeleteAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity> DeleteAsync(long id, CancellationToken cancellationToken = default)
     {
         try
         {
             var entity = repository.GetByIdAsync(id, cancellationToken).Result;
             if (entity == null)
-                throw new NotFoundException(Messages.Format(Messages.NotFound, nameof(entity)));
+                ErrorHandler.ThrowNotFoundException(Messages.NotFound, nameof(entity));
             
         
             entity = await repository.DeleteAsync(entity, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
-            return mapper.Map<TDto>(entity);
+            return entity;
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             throw;
         }
     }
-}
-
-public abstract class CrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto> 
-    : CrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto, TCreateDto>, ICrudServiceBase<TEntity, TDto, TRequestDto, TCreateDto>
-    where TDto : class
-    where TCreateDto : class
-    where TEntity : class
-    where TRequestDto : PagedAndSortedRequestDto
-{
-    protected CrudServiceBase(IMapper mapper, IRepositoryBase<TEntity> repository, IUnitOfWork _unitOfWork)
-        : base(mapper, repository, _unitOfWork) { }
-}
-
-public abstract class CrudServiceBase<TEntity, TDto, TRequestDto> 
-    : CrudServiceBase<TEntity, TDto, TRequestDto, TDto, TDto>, ICrudServiceBase<TEntity, TDto, TRequestDto>
-    where TDto : class
-    where TEntity : class
-    where TRequestDto : PagedAndSortedRequestDto
-{
-    protected CrudServiceBase(IMapper mapper, IRepositoryBase<TEntity> repository, IUnitOfWork _unitOfWork)
-        : base(mapper, repository, _unitOfWork) { }
 }

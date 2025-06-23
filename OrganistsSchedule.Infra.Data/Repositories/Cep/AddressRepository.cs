@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class AddressRepository(ApplicationDbContext context)
-    : RepositoryBase<Address>(context), IAddressRepository
+public class AddressRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<Address, TRequest>(context), IAddressRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     protected override IQueryable<Address> IncludeChildren(IQueryable<Address> query)
     {

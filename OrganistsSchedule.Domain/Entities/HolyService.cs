@@ -9,4 +9,7 @@ public sealed class HolyService: AuditableEntityBase
     public long OrganistId { get; set; }
     public Organist? Organist { get; set; }
     public required bool IsYouthMeeting { get; set; } 
+    
+    public long ParameterScheduleId { get; set; }
+    public ParameterSchedule? ParameterSchedule { get; set; }
 }

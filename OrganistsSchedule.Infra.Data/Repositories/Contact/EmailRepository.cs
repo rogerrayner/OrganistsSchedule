@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class EmailRepository(ApplicationDbContext context) 
-    : RepositoryBase<Email>(context), IEmailRepository
+public class EmailRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<Email, TRequest>(context), IEmailRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     public async Task<Email> GetEmailByEmailAddressAsync(string email, CancellationToken cancellationToken = default)
     {

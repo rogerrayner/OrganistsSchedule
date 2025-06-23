@@ -1,9 +1,10 @@
 using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Domain.Entities;
+using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Application.Interfaces;
 
-public interface ICountryService: ICrudServiceBase<Country, CountryResponseDto, CountryPagedAndSortedRequest, CountryCreateUpdateRequestDto>
+public interface ICountryService: ICrudServiceBase<Country, CountryPagedAndSortedRequest>
 {
-    Task<CountryResponseDto> GetByNameAsync(string name);
+    Task<Country?> GetByNameAsync(string name);
 }

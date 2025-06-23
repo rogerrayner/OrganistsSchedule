@@ -5,5 +5,6 @@ public enum OrganistsLevelEnum
 {
     None = 0,
     YouthMeeting = 1,
-    HolyService = 2
+    HolyService = 2,
+    YouthMeetingAndHolyService = 3
 }

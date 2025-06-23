@@ -4,8 +4,9 @@ using OrganistsSchedule.Domain.Interfaces;
 
 namespace OrganistsSchedule.Infra.Data.Repositories;
 
-public class PhoneRepository(ApplicationDbContext context) 
-    : RepositoryBase<Phone>(context), IPhoneRepository
+public class PhoneRepository<TRequest>(ApplicationDbContext context)
+    : RepositoryBase<Phone, TRequest>(context), IPhoneRepository<TRequest>
+    where TRequest : class, IPagedAndSortedRequest
 {
     public Task<Phone?> GetPhoneByNumberAsync(string number, CancellationToken cancellationToken = default)
     {

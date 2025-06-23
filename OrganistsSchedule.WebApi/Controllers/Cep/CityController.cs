@@ -1,20 +1,21 @@
-using AutoMapper;
-using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 
 using Microsoft.AspNetCore.Mvc;
 using OrganistsSchedule.Application;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Bff.Interfaces;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/cities")]
-public class CityController(ICityService serviceBase, IMapper mapper, IAuthService authService) 
+public class CityController(ICityBffService serviceBase, IAuthService authService) 
     : ControllerBase<City, 
         CityDto, 
         CityPagedAndSortedRequest,
         CityCreateUpdateRequestDto, 
-        CityCreateUpdateRequestDto>(serviceBase, mapper, authService)
+        CityCreateUpdateRequestDto>(serviceBase, authService)
 {
     
     protected override string ReadPolicy => "read:city";

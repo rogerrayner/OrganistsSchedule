@@ -1,20 +1,20 @@
-using AutoMapper;
-using OrganistsSchedule.Application.DTOs;
 using OrganistsSchedule.Application.Interfaces;
 using OrganistsSchedule.Domain.Entities;
 
 using Microsoft.AspNetCore.Mvc;
-using OrganistsSchedule.Application;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Application.DTOs;
+using OrganistsSchedule.Bff.Interfaces;
 
 namespace OrganistsSchedule.WebApi.Controllers;
 
 [Route("v1/emails")]
-public class EmailController(IEmailService service, IMapper mapper, IAuthService authService)
+public class EmailController(IEmailBffService service, IAuthService authService)
     : ControllerBase<Email, 
         EmailDto, 
         EmailPagedAndSortedRequest,
         EmailCreateUpdateRequestDto, 
-        EmailCreateUpdateRequestDto>(service, mapper, authService)
+        EmailCreateUpdateRequestDto>(service, authService)
 {
     
     protected override string ReadPolicy => "read:email";

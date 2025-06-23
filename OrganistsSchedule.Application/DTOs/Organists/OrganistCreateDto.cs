@@ -11,14 +11,9 @@ public class OrganistCreateDto
     public required string FullName { get; set; }
     [Required(ErrorMessage = "Short Name is required")]
     public required string ShortName { get; set; }
-    
     [Required(ErrorMessage = "Level is required")]
     public OrganistsLevelEnum Level { get; set; }
-    
-    public AddressCreateUpdateDto? Address { get; set; }
-    
-    public string? PhoneNumber { get; set; }
-    
-    public string? Email { get; set; }
+    [Required(ErrorMessage = "Cep is required")]
+    public CepDto Cep { get; set; }
     
 }
