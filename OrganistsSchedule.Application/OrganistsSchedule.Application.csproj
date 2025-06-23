@@ -13,6 +13,9 @@
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="14.0.0" />
       <PackageReference Include="EPPlus" Version="8.0.3" />
+      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.6" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
       <PackageReference Include="ViaCep" Version="4.1.511" />
     </ItemGroup>
 
