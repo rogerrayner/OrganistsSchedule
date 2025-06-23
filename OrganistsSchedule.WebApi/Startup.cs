@@ -17,15 +17,26 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        // Em ConfigureServices
+        
         services.AddCors(options =>
         {
             options.AddDefaultPolicy(builder =>
             {
-                builder
-                    .WithOrigins("http://localhost:3000") // Ou especifique origens com .WithOrigins("https://exemplo.com")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                if (env == "Development")
+                {
+                    builder
+                        .WithOrigins("http://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }
+                else
+                {
+                    builder
+                        .WithOrigins("https://organist-schedule-front.onrender.com")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }
             });
         });
         services.AddAuthentication(options =>
