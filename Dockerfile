@@ -22,11 +22,11 @@ COPY --from=publish /app/publish .
 COPY --from=publish /root/.dotnet/tools /root/.dotnet/tools
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-# Copia os arquivos do projeto para poder rodar migrations
-COPY --from=build /src .
+# Copia os arquivos do projeto para um diretório separado para migrations
+COPY --from=build /src /src
 
 # Script que roda migrations e depois inicia a API
-RUN echo '#!/bin/bash\nset -e\necho "Running migrations..."\ndotnet ef database update --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj\necho "Starting API..."\ncd /app\ndotnet OrganistsSchedule.WebApi.dll' > /app/start.sh
+RUN echo '#!/bin/bash\nset -e\necho "Running migrations..."\ncd /src\ndotnet ef database update --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj\necho "Starting API..."\ncd /app\ndotnet OrganistsSchedule.WebApi.dll' > /app/start.sh
 RUN chmod +x /app/start.sh
 
 CMD ["/app/start.sh"]
