@@ -66,6 +66,14 @@ public class Startup
         , IWebHostEnvironment env, 
         ILoggerFactory loggerFactory)
     {
+
+        // Aplica as migrations automaticamente ao iniciar
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<SeuDbContext>();
+            db.Database.Migrate();
+        }
+        
         // Configure the HTTP request pipeline.
         if (env.IsDevelopment())
         {
