@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
@@ -21,6 +21,9 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=publish /root/.dotnet/tools /root/.dotnet/tools
 ENV PATH="$PATH:/root/.dotnet/tools"
+
+# Install EF Core tools no stage final também
+RUN dotnet tool install --global dotnet-ef
 
 # Copia os arquivos do projeto para um diretório separado para migrations
 COPY --from=build /src /src
