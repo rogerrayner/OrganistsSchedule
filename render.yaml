@@ -1,33 +1,9 @@
 services:
-  - type: worker
-    name: organists-schedule-migrate
-    env: dotnet
-    repo: https://github.com/rogerrayner/OrganistsSchedule
-    plan: free
-    buildCommand: dotnet build OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj
-    startCommand: dotnet ef database update --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj
-    envVars:
-      - key: ConnectionStrings__DefaultConnection
-        sync: false
-      - key: Auth0__Domain
-        sync: false
-      - key: Auth0__ClientSecret
-        sync: false
-      - key: Auth0__ClientId
-        sync: false
-      - key: Auth0__Audience
-        sync: false
-      - key: Auth0__Authority
-        sync: false
-    region: oregon
-
   - type: web
     name: organists-schedule-api
-    env: dotnet
+    runtime: docker
     repo: https://github.com/rogerrayner/OrganistsSchedule
     plan: free
-    buildCommand: dotnet build OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj
-    startCommand: dotnet run --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj
     envVars:
       - key: ConnectionStrings__DefaultConnection
         sync: false
@@ -42,4 +18,7 @@ services:
       - key: Auth0__Authority
         sync: false
     region: oregon
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    autoDeployTrigger: commit
 version: "1"
