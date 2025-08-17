@@ -12,7 +12,6 @@ RUN dotnet build "OrganistsSchedule.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "OrganistsSchedule.WebApi.csproj" -c Release -o /app/publish
-
 # Install EF Core tools
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
@@ -20,12 +19,14 @@ ENV PATH="$PATH:/root/.dotnet/tools"
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /root/.dotnet/tools /root/.dotnet/tools
+COPY --from=publish /root/.dotnet/tools /root/.dotnet/tools
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-# Script que roda migrations e depois inicia a API
+# Copia os arquivos do projeto para poder rodar migrations
 COPY --from=build /src .
-RUN echo '#!/bin/bash\ndotnet ef database update --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj\ndotnet OrganistsSchedule.WebApi.dll' > /app/start.sh
+
+# Script que roda migrations e depois inicia a API
+RUN echo '#!/bin/bash\nset -e\necho "Running migrations..."\ndotnet ef database update --project OrganistsSchedule.WebApi/OrganistsSchedule.WebApi.csproj\necho "Starting API..."\ncd /app\ndotnet OrganistsSchedule.WebApi.dll' > /app/start.sh
 RUN chmod +x /app/start.sh
 
 CMD ["/app/start.sh"]
