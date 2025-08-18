@@ -29,8 +29,18 @@ public class Startup
                     .ToArray() ?? Array.Empty<string>();
                 
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                Console.WriteLine($"CORS Origins: {string.Join(", ", allowedOrigins)}");
+                Console.WriteLine($"Environment: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");                
+                
                 if (env == "Development")
                 {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials();
+                }
+                else if (env == "Production") {
                     if (allowedOrigins.Length > 0)
                     {
                         builder.WithOrigins(allowedOrigins)
@@ -38,12 +48,6 @@ public class Startup
                             .AllowAnyHeader()
                             .AllowCredentials();
                     }
-                }
-                else if (env == "Production") {
-                    builder
-                        .WithOrigins("https://organist-schedule-front.onrender.com")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
                 }
             });
         });
@@ -90,9 +94,6 @@ public class Startup
         app.UseAuthorization();
         
         app.UseEndpoints(x => x.MapControllers());
-        /*app.UseEndpoints(x => 
-            x.MapGroup("/identity")
-             .MapIdentityApi<UserIdentity>());*/
 
     }
 }
