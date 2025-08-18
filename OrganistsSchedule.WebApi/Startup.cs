@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using OrganistsSchedule.Application.Services;
+using OrganistsSchedule.Infra.Data;
 using OrganistsSchedule.Infra.IoC;
 
 namespace OrganistsSchedule.WebApi;
@@ -22,16 +23,23 @@ public class Startup
         {
             options.AddDefaultPolicy(builder =>
             {
+                var allowedOrigins = Configuration["AllowedOrigins"]
+                    ?.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(origin => origin.Trim())
+                    .ToArray() ?? Array.Empty<string>();
+                
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                 if (env == "Development")
                 {
-                    builder
-                        .WithOrigins("http://localhost:3000")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
+                    if (allowedOrigins.Length > 0)
+                    {
+                        builder.WithOrigins(allowedOrigins)
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    }
                 }
-                else
-                {
+                else if (env == "Production") {
                     builder
                         .WithOrigins("https://organist-schedule-front.onrender.com")
                         .AllowAnyMethod()
@@ -77,7 +85,7 @@ public class Startup
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseCors();
+        app.UseCors("AllowSpecificOrigins");
         app.UseAuthentication();
         app.UseAuthorization();
         
