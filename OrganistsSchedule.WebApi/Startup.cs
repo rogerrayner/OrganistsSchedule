@@ -28,11 +28,8 @@ public class Startup
                     .Select(origin => origin.Trim())
                     .ToArray() ?? Array.Empty<string>();
                 
-                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");              
 
-                Console.WriteLine($"CORS Origins: {string.Join(", ", allowedOrigins)}");
-                Console.WriteLine($"Environment: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");                
-                
                 if (env == "Development")
                 {
                     builder.AllowAnyOrigin()
@@ -40,7 +37,7 @@ public class Startup
                         .AllowAnyHeader()
                         .AllowCredentials();
                 }
-                else if (env == "Production") {
+                else {
                     if (allowedOrigins.Length > 0)
                     {
                         builder.WithOrigins(allowedOrigins)
