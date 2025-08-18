@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: organists-schedule-api
+    runtime: docker
+    repo: https://github.com/rogerrayner/OrganistsSchedule
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Auth0__Domain
+        sync: false
+      - key: Auth0__ClientSecret
+        sync: false
+      - key: Auth0__ClientId
+        sync: false
+      - key: Auth0__Audience
+        sync: false
+      - key: Auth0__Authority
+        sync: false
+    region: oregon
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    autoDeployTrigger: commit
+version: "1"
