@@ -29,7 +29,7 @@ public class Startup
                     .ToArray() ?? Array.Empty<string>();
                 
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");              
-                
+
                 if (env == "Development")
                 {
                     builder.AllowAnyOrigin()
