@@ -21,31 +21,35 @@ public class Startup
         
         services.AddCors(options =>
         {
-            options.AddDefaultPolicy(builder =>
+            options.AddPolicy("AllowSpecificOrigins", builder =>
             {
                 var allowedOrigins = Configuration["AllowedOrigins"]
                     ?.Split(',', StringSplitOptions.RemoveEmptyEntries)
                     .Select(origin => origin.Trim())
                     .ToArray() ?? Array.Empty<string>();
                 
-                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");              
-
-                if (env == "Development")
+                if (allowedOrigins.Length > 0)
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
                 }
-                else {
-                    if (allowedOrigins.Length > 0)
-                    {
-                        builder.WithOrigins(allowedOrigins)
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    }
+                else
+                {
+                    // Fallback para desenvolvimento se não houver origens configuradas
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 }
+            });
+            
+            // Política padrão mais permissiva para desenvolvimento
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
             });
         });
         services.AddAuthentication(options =>
