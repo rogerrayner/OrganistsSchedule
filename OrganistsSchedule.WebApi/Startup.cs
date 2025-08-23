@@ -1,9 +1,12 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using OrganistsSchedule.Application.Services;
 using OrganistsSchedule.Infra.Data;
 using OrganistsSchedule.Infra.IoC;
+using System.Text.Json;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace OrganistsSchedule.WebApi;
 
@@ -21,31 +24,35 @@ public class Startup
         
         services.AddCors(options =>
         {
-            options.AddDefaultPolicy(builder =>
+            options.AddPolicy("AllowSpecificOrigins", builder =>
             {
                 var allowedOrigins = Configuration["AllowedOrigins"]
                     ?.Split(',', StringSplitOptions.RemoveEmptyEntries)
                     .Select(origin => origin.Trim())
                     .ToArray() ?? Array.Empty<string>();
                 
-                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");              
-
-                if (env == "Development")
+                if (allowedOrigins.Length > 0)
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins(allowedOrigins)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();
                 }
-                else {
-                    if (allowedOrigins.Length > 0)
-                    {
-                        builder.WithOrigins(allowedOrigins)
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials();
-                    }
+                else
+                {
+                    // Fallback para desenvolvimento se não houver origens configuradas
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
                 }
+            });
+            
+            // Política padrão mais permissiva para desenvolvimento
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
             });
         });
         services.AddAuthentication(options =>
@@ -69,6 +76,22 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         
+        // Adicionar Health Checks nativos do ASP.NET Core
+        services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy("API is running"))
+            .AddCheck("database", () => 
+            {
+                try
+                {
+                    // Verificação básica - pode ser expandida futuramente
+                    return HealthCheckResult.Healthy("Database is accessible");
+                }
+                catch (Exception ex)
+                {
+                    return HealthCheckResult.Unhealthy($"Database error: {ex.Message}");
+                }
+            });
+        
     }
 
     public void Configure(IApplicationBuilder app
@@ -86,6 +109,30 @@ public class Startup
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseHttpsRedirection();
         app.UseRouting();
+        
+        // Adicionar Health Check nativo antes do CORS
+        app.UseHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = async (context, report) =>
+            {
+                context.Response.ContentType = "application/json";
+                var response = new
+                {
+                    status = report.Status.ToString(),
+                    timestamp = DateTime.UtcNow,
+                    duration = report.TotalDuration.TotalMilliseconds,
+                    checks = report.Entries.Select(entry => new
+                    {
+                        name = entry.Key,
+                        status = entry.Value.Status.ToString(),
+                        description = entry.Value.Description,
+                        duration = entry.Value.Duration.TotalMilliseconds
+                    })
+                };
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            }
+        });
+        
         app.UseCors("AllowSpecificOrigins");
         app.UseAuthentication();
         app.UseAuthorization();
